@@ -3,37 +3,76 @@ import java.net.*;
 
 import javax.crypto.Cipher;
 
+import cipher.RSASoftware;
+
 import message.*;
 
 
-public class DumbServerThread extends Thread{
+public class DumbServerThread extends Thread {
+	
 	private String username = "qwer";
 	private String pwd = "1234";
 	private Socket socket = null;
-	
-	//dummy en/decrypt
-	public String doFinal(String str) {
-		return str;
+	private RSASoftware rsa;
 		
+	public DumbServerThread(Socket s) {
+		this.socket = s;
+		this.start();
 	}
+	
+	public RSASoftware loadCryptoInfo(RSASoftware rsa) {
+		try {
+			//TODO use Database
+			FileReader fr = new FileReader("pubkey.txt");
+			BufferedReader in = new BufferedReader(fr);
+			String pubKeyExp = in.readLine();
+			String mod = in.readLine();
+			rsa.setPublicKey(pubKeyExp, mod);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rsa;
+	}
+	
+	public String genSessionKey() {
+		//TODO generate real AES Key
+		return "123456";
+	}
+	
+	public byte[] encrypt(String str) {
+		//TODO change back to byteArray
+		byte plaintext[] = str.getBytes();
+		byte ciphertext[] = rsa.encrypt(plaintext, plaintext.length);
+		return ciphertext;
+	}
+	
 	public void run() {
+		
 		try {
 		    System.out.println("Someone calling...");
 		    ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		    
 		    RequestMessage authReqMsg = (RequestMessage)in.readObject();
-		    String cipherUsername = authReqMsg.username;
-		    String cipherPwd = authReqMsg.password;
-		    
-		    String reUsername = doFinal(cipherUsername);
-		    String rePwd = doFinal(cipherPwd);
-		    
+		    String rePwd = authReqMsg.password;
+		    		    
 		    ResponseMessage reMes = new ResponseMessage();
-		    if (reUsername.equals(username) && rePwd.equals(pwd)) {
+		    if (rePwd.equals(pwd)) {
 		    	reMes.isAuth = true;
 		    	ResponseMessage reSesMes = new ResponseMessage();
-		    	reSesMes.sessionKey = "123456";
+		    	String sKey = genSessionKey();
+		    	
+		    	//TODO use Java Card
+		    	rsa = new RSASoftware();
+		    	rsa = loadCryptoInfo(rsa);
+		    	
+		    	byte[] bsKey = encrypt(sKey);
+		    	reSesMes.sessionKey = bsKey;
+		    	
 		    	out.writeObject(reMes);
 		    	out.writeObject(reSesMes);
 		    } else {
@@ -52,8 +91,5 @@ public class DumbServerThread extends Thread{
 			e.printStackTrace();
 		}		
 	}
-	public DumbServerThread(Socket s) {
-		this.socket = s;
-		this.start();
-	}
+	
 }

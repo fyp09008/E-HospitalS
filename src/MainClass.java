@@ -14,9 +14,9 @@ public class MainClass {
 		int port = 8899;
 		ss = new ServerSocket(port);
 		System.out.println("Listening port: 8899");
-		//while(true) {
+		while(true) {
 			new DumbServerThread(ss.accept());
-		//}
+		}
 	}
 
 }
