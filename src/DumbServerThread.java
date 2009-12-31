@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.*;
@@ -18,6 +19,15 @@ public class DumbServerThread extends Thread {
 	public DumbServerThread(Socket s) {
 		this.socket = s;
 		this.start();
+	}
+	
+	public boolean isUserExist(String str) {
+		//TODO use database
+		if(str.equals(username)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public RSASoftware loadCryptoInfo(RSASoftware rsa) {
@@ -39,7 +49,6 @@ public class DumbServerThread extends Thread {
 	}
 	
 	public SecretKey genSessionKey() {
-		//TODO generate real AES Key
 		KeyGenerator keyGen;
 		try {
 			keyGen = KeyGenerator.getInstance("AES");
@@ -55,13 +64,6 @@ public class DumbServerThread extends Thread {
 		
 	}
 	
-	public byte[] encrypt(String str) {
-		//TODO change back to byteArray
-		byte plaintext[] = str.getBytes();
-		byte ciphertext[] = rsa.encrypt(plaintext, plaintext.length);
-		return ciphertext;
-	}
-	
 	public byte[] encrypt(byte plaintext[]) {
 		byte ciphertext[] = rsa.encrypt(plaintext, plaintext.length);
 		return ciphertext;
@@ -75,35 +77,47 @@ public class DumbServerThread extends Thread {
 		    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		    
 		    RequestMessage authReqMsg = (RequestMessage)in.readObject();
-		    String rePwd = authReqMsg.password;
-		    		    
+		    byte[] rePwd = authReqMsg.password;
+		    MessageDigest md = MessageDigest.getInstance("md5");
+		    byte rawPwdMD[] = md.digest(pwd.getBytes()); 
 		    ResponseMessage reMes = new ResponseMessage();
-		    if (rePwd.equals(pwd)) {
-		    	reMes.isAuth = true;
-		    	ResponseMessage reSesMes = new ResponseMessage();
-		    	SecretKey sKey = genSessionKey();
-		    	
-		    	//TODO use Java Card
-		    	rsa = new RSASoftware();
-		    	rsa = loadCryptoInfo(rsa);
-		    	
-		    	byte[] bsKey = encrypt(sKey.getEncoded());
-		    	reSesMes.sessionKey = bsKey;
-		    	
-		    	out.writeObject(reMes);
-		    	out.writeObject(reSesMes);
+		    if (isUserExist(authReqMsg.username)) {
+			    if (MessageDigest.isEqual(rePwd, rawPwdMD)) {
+			    	reMes.isAuth = true;
+			    	ResponseMessage reSesMes = new ResponseMessage();
+			    	SecretKey sKey = genSessionKey();
+			    	
+			    	//TODO use Java Card
+			    	rsa = new RSASoftware();
+			    	rsa = loadCryptoInfo(rsa);
+			    	
+			    	byte[] bsKey = encrypt(sKey.getEncoded());
+			    	reSesMes.sessionKey = bsKey;
+			    	
+			    	out.writeObject(reMes);
+			    	out.writeObject(reSesMes);
+			    } else {
+			    	reMes.isAuth = false;	
+			    	out.writeObject(reMes);
+			    }
+			    
+			    out.close();
+			    in.close();
+			    socket.close();
 		    } else {
 		    	reMes.isAuth = false;	
 		    	out.writeObject(reMes);
+		    	out.close();
+			    in.close();
+			    socket.close();
 		    }
-		    
-		    out.close();
-		    in.close();
-		    socket.close();
 
 		} catch (IOException e) {
 		    e.printStackTrace();
 		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
