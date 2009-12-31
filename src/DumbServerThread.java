@@ -1,10 +1,10 @@
 import java.io.*;
 import java.net.*;
+import java.security.NoSuchAlgorithmException;
 
-import javax.crypto.Cipher;
+import javax.crypto.*;
 
 import cipher.RSASoftware;
-
 import message.*;
 
 
@@ -38,14 +38,31 @@ public class DumbServerThread extends Thread {
 		return rsa;
 	}
 	
-	public String genSessionKey() {
+	public SecretKey genSessionKey() {
 		//TODO generate real AES Key
-		return "123456";
+		KeyGenerator keyGen;
+		try {
+			keyGen = KeyGenerator.getInstance("AES");
+			keyGen.init(128);
+			SecretKey sessionKey = keyGen.generateKey();
+			return sessionKey;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+		
 	}
 	
 	public byte[] encrypt(String str) {
 		//TODO change back to byteArray
 		byte plaintext[] = str.getBytes();
+		byte ciphertext[] = rsa.encrypt(plaintext, plaintext.length);
+		return ciphertext;
+	}
+	
+	public byte[] encrypt(byte plaintext[]) {
 		byte ciphertext[] = rsa.encrypt(plaintext, plaintext.length);
 		return ciphertext;
 	}
@@ -64,13 +81,13 @@ public class DumbServerThread extends Thread {
 		    if (rePwd.equals(pwd)) {
 		    	reMes.isAuth = true;
 		    	ResponseMessage reSesMes = new ResponseMessage();
-		    	String sKey = genSessionKey();
+		    	SecretKey sKey = genSessionKey();
 		    	
 		    	//TODO use Java Card
 		    	rsa = new RSASoftware();
 		    	rsa = loadCryptoInfo(rsa);
 		    	
-		    	byte[] bsKey = encrypt(sKey);
+		    	byte[] bsKey = encrypt(sKey.getEncoded());
 		    	reSesMes.sessionKey = bsKey;
 		    	
 		    	out.writeObject(reMes);

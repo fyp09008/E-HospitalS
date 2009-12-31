@@ -4,7 +4,7 @@ import java.io.IOException;
 import cipher.RSASoftware;
 
 
-public class KeyGenerator {
+public class KeyGen {
 
 	/**
 	 * @param args
