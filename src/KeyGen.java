@@ -10,6 +10,8 @@ public class KeyGen {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		//TODO change to JavaCard
+		
 		FileWriter fwPubKey;
 		FileWriter fwPrvKey;
 		
