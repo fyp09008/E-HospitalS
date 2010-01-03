@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import message.AuthRequestMessage;
 
@@ -59,17 +60,15 @@ public class AuthHandler {
 		return rsa;
 	}
 	
-	public SecretKey genSessionKey() {
+	public void genSessionKey() {
 		KeyGenerator keyGen;
 		try {
 			keyGen = KeyGenerator.getInstance("AES");
 			keyGen.init(128);
-			SecretKey sessionKey = keyGen.generateKey();
-			return sessionKey;
+			this.sessionKey = keyGen.generateKey().getEncoded();
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		}
 	}
 	
@@ -87,12 +86,9 @@ public class AuthHandler {
 				md = MessageDigest.getInstance("md5");
 				byte[] pwd = md.digest(tmpPwd.getBytes());
 			    if (MessageDigest.isEqual(pwd, mdPwd)) {
-			    	SecretKey sKey = genSessionKey();
+			    	genSessionKey();
 			    	rsa = new RSASoftware();
 			    	rsa = loadCryptoInfo(rsa);
-			    	
-			    	byte[] bsKey = encrypt(sKey.getEncoded());
-			    	this.sessionKey = bsKey;
 			    	return true;
 			    }
 			} catch (NoSuchAlgorithmException e) {
@@ -103,4 +99,17 @@ public class AuthHandler {
 		}
 		return false;
 	}
+
+	public byte[] getEncryptedSessionKey() {
+		byte[] bsKey = encrypt(getSessionKey());
+		return bsKey;
+	}
+
+	/**
+	 * @return the sessionKey
+	 */
+	public byte[] getSessionKey() {
+		return sessionKey;
+	}
+	
 }

@@ -4,6 +4,8 @@
 package ehospital.server;
 
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -108,7 +110,10 @@ public class Register {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_rec", "FYP09", "1234qwer");
 			Statement stmt = conn.createStatement();
-			String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate) VALUES ( '"+this.role+"', '"+this.publicKeyExp+"', '"+this.modulus+"', '"+this.genPassword()+"', CURDATE());";
+			String genPwd = this.genPassword();
+			MessageDigest md = MessageDigest.getInstance("md5");
+			String pwdMD = new String(md.digest(genPwd.getBytes()));
+			String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate) VALUES ( '"+this.role+"', '"+this.publicKeyExp+"', '"+this.modulus+"', '"+pwdMD+"', CURDATE());";
 			System.out.println(q);
 			stmt.executeUpdate(q);
 		} catch (ClassNotFoundException e) {
@@ -119,6 +124,9 @@ public class Register {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return 0;
 	}

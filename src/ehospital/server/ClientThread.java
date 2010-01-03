@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.crypto.spec.SecretKeySpec;
+
 import message.AuthRequestMessage;
 import message.AuthResponseMessage;
 import message.QueryRequestMessage;
@@ -28,7 +30,7 @@ public class ClientThread extends Thread {
 	private ObjectInputStream objIn;
 	private ObjectOutputStream objOut;
 	private String buf;
-	
+	private SecretKeySpec sessionKey;
 	/**
 	 * @param csocket
 	 */
@@ -46,9 +48,8 @@ public class ClientThread extends Thread {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		boolean flag = true;
-		if (flag)
+		while (flag)
 		{
 			try {
 				Object o = objIn.readObject();
@@ -67,7 +68,20 @@ public class ClientThread extends Thread {
 				{
 					AuthRequestMessage request = (AuthRequestMessage) o;
 					AuthHandler ah = new AuthHandler(request);
-					
+					AuthResponseMessage re;
+					if(ah.authenticate()) {
+						ah.genSessionKey();
+						re = new AuthResponseMessage();
+						re.isAuth = true;
+						this.sessionKey = new SecretKeySpec(ah.getSessionKey(), "aes");
+						re.sessionKey = ah.getEncryptedSessionKey();
+						
+					} else {
+						re = new AuthResponseMessage();
+						re.isAuth = false;
+					}
+					objOut.writeObject(re);
+					objOut.flush();
 				}
 				else
 				{
