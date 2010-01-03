@@ -70,7 +70,7 @@ public class DumbServerThread extends Thread {
 	}
 	
 	public void run() {
-		
+		//TODO separate into classes
 		try {
 		    System.out.println("Someone calling...");
 		    ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
