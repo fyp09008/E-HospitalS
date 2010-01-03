@@ -106,10 +106,10 @@ public class Register {
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/hospital_rec", "FYP09", "1234qwer");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_rec", "FYP09", "1234qwer");
 			Statement stmt = conn.createStatement();
-			String q = "INSERT INTO user (Role, pub_key, pwd, RegDate) VALUES ( '"+this.role+"', '"+this.publicKeyExp+"', '"+this.genPassword()+"', CURRENT_DATE());";
-			System.out.println(this.privateKeyExp);
+			String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate) VALUES ( '"+this.role+"', '"+this.publicKeyExp+"', '"+this.modulus+"', '"+this.genPassword()+"', CURDATE());";
+			System.out.println(q);
 			stmt.executeUpdate(q);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
