@@ -19,7 +19,7 @@ import cipher.RSASoftware;
  * @author Gilbert
  *
  */
-public class AuthHandler {
+public class AuthHandler extends Handler{
 
 	private String username;
 	private byte[] mdPwd;
@@ -27,7 +27,7 @@ public class AuthHandler {
 	private RSASoftware rsa;
 	
 	public AuthHandler(AuthRequestMessage msg) {
-		
+		super();
 		this.mdPwd = msg.getPassword();
 		this.username = msg.getUsername();
 		
@@ -76,6 +76,8 @@ public class AuthHandler {
 		byte ciphertext[] = rsa.encrypt(plaintext, plaintext.length);
 		return ciphertext;
 	}
+	
+	
 	
 	public boolean authenticate() {
 		

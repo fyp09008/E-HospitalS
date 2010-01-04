@@ -14,7 +14,7 @@ import message.QueryRequestMessage;
  * @author Gilbert
  *
  */
-public class QueryHandler {
+public class QueryHandler extends Handler {
 
 	private String query;
 	private ResultSet rs;
@@ -22,6 +22,7 @@ public class QueryHandler {
 	private Connection conn;
 	
 	public QueryHandler(QueryRequestMessage msg) {
+		super();
 		byte[] rawQuery = msg.query;
 		String username = msg.username;
 		// TODO query username session & sign, decrypt sign, decrypt session, create query
@@ -31,32 +32,13 @@ public class QueryHandler {
 		// TODO query database for sessionKey
 	}
 	
-	public void connectDB() {
+	public void queryDB() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/hospital_rec", "FYP09", "1234qwer");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			rs = this.dbm.query(query);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		
-	}
-	
-	public void queryDB() {
-		if (conn != null) {
-			Statement stmt;
-			try {
-				stmt = conn.createStatement();
-				rs = stmt.executeQuery(query);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 		}
 	}
 	

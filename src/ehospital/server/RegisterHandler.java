@@ -17,21 +17,23 @@ import cipher.*;
  * @author mc
  *
  */
-public class Register {
+public class RegisterHandler extends Handler{
 	
+	private String username;
 	private String role;
-	private String privateKeyExp;
 	private String publicKeyExp;
 	private String modulus;
+	private String pwdMDExp;
 	private RSAHardware rsaHard;
 	
-	public Register()
+	public RegisterHandler()
 	{
 		
 	}
 	
-	public Register(String role) {
+	public RegisterHandler(String role, String username) {
 		this.role = role;
+		this.username = username;
 		rsaHard = new RSAHardware();
 	}
 	
@@ -96,38 +98,27 @@ public class Register {
 		}
 		
 		modulus = rsaHard.getGeneratedModulus();
-		privateKeyExp = rsaHard.getGeneratedPrivateKeyExp();
 		publicKeyExp = rsaHard.getGeneratedPublicKeyExp();
+		String genPwd = this.genPassword();
+		MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("md5");
+			pwdMDExp = this.byteArrayToString(md.digest(genPwd.getBytes()));
+			
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		System.out.println("Done");
 		
 		return 0;
 	}
 	
-	private int storeToDB()
-	{
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_rec", "FYP09", "1234qwer");
-			Statement stmt = conn.createStatement();
-			String genPwd = this.genPassword();
-			MessageDigest md = MessageDigest.getInstance("md5");
-			String pwdMD = new String(md.digest(genPwd.getBytes()));
-			String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate) VALUES ( '"+this.role+"', '"+this.publicKeyExp+"', '"+this.modulus+"', '"+pwdMD+"', CURDATE());";
-			System.out.println(q);
-			stmt.executeUpdate(q);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return -1;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return -1;
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0;
+	private int storeToDB() {
+		return dbm.storeUser(role, username, pwdMDExp, publicKeyExp, modulus);
 	}
+	
+	
 }

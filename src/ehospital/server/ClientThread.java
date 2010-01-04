@@ -57,7 +57,6 @@ public class ClientThread extends Thread {
 				{
 					QueryRequestMessage request = (QueryRequestMessage) o;
 					QueryHandler qh = new QueryHandler(request);
-					qh.connectDB();
 					qh.queryDB();
 					QueryResponseMessage response = new QueryResponseMessage();
 					response.ResultSet = qh.encryptRS();

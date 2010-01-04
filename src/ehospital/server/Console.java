@@ -75,7 +75,9 @@ public class Console {
 				{
 					System.out.print("Role? ");
 					cmd = cmdreader.readLine();
-					new Register(cmd).register();
+					System.out.print("User name? ");
+					String cmd2 = cmdreader.readLine();
+					new RegisterHandler(cmd,cmd2).register();
 				}
 				else if (cmd.equalsIgnoreCase("test"))	
 				{
