@@ -19,7 +19,7 @@ public class DBManager {
 	private static final String password = "1234qwer";
 	
 	private Connection conn;
-
+	private ResultSet rs;
 	/**
 	 * Build a connection to the database using predefined param.
 	 */
@@ -87,11 +87,12 @@ public class DBManager {
 	
 	public int storeUser(String role, String username, String pwdMDExp, String publicKeyExp, String modulus) {
 		try {
-			this.connect();
-			Statement stmt = conn.createStatement();
-			String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate, username) VALUES ( '"+role+"', '"+publicKeyExp+"', '"+modulus+"', '"+pwdMDExp+"', CURDATE(),'"+username+"');";
-			
-			stmt.executeUpdate(q);
+			if(this.connect()) {
+				Statement stmt = conn.createStatement();
+				String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate, username) VALUES ( '"+role+"', '"+publicKeyExp+"', '"+modulus+"', '"+pwdMDExp+"', CURDATE(),'"+username+"');";
+				
+				stmt.executeUpdate(q);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,12 +103,13 @@ public class DBManager {
 	
 	public boolean isUserExist(String username) {
 		try {
-			this.connect();
-			Statement stmt = conn.createStatement();
-			String q = "SELECT username FROM user WHERE username = '"+username+"';";
-			ResultSet rs = stmt.executeQuery(q);
-			if(rs.first()) {
-				return true;
+			if (this.connect()) {
+				Statement stmt = conn.createStatement();
+				String q = "SELECT username,pwd FROM user WHERE username = '"+username+"';";
+				setRs(stmt.executeQuery(q));
+				if(getRs().first()) {
+					return true;
+				}
 			}
 			return false;
 		} catch (SQLException e) {
@@ -116,5 +118,27 @@ public class DBManager {
 			return false;
 		} 
 	}
+
+	/**
+	 * @param rs the rs to set
+	 */
+	public void setRs(ResultSet rs) {
+		this.rs = rs;
+	}
+
+	/**
+	 * @return the rs
+	 */
+	public ResultSet getRs() {
+		return rs;
+	}
 	
+	public void disconnect() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

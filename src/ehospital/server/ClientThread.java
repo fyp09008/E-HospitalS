@@ -29,14 +29,13 @@ public class ClientThread extends Thread {
 	private Socket csocket;
 	private ObjectInputStream objIn;
 	private ObjectOutputStream objOut;
-	private String buf;
-	private SecretKeySpec sessionKey;
+	private DBManager dbm;
 	/**
 	 * @param csocket
 	 */
 	public ClientThread(Socket csocket) {
 		this.csocket = csocket;
-		this.buf = null;
+		dbm = new DBManager();
 		try {
 			this.objIn = new ObjectInputStream(this.csocket.getInputStream());
 			this.objOut = new ObjectOutputStream(this.csocket.getOutputStream());
@@ -55,26 +54,24 @@ public class ClientThread extends Thread {
 				Object o = objIn.readObject();
 				if (o instanceof QueryRequestMessage)
 				{
-					QueryRequestMessage request = (QueryRequestMessage) o;
+					/*QueryRequestMessage request = (QueryRequestMessage) o;
 					QueryHandler qh = new QueryHandler(request);
 					qh.queryDB();
 					QueryResponseMessage response = new QueryResponseMessage();
 					response.ResultSet = qh.encryptRS();
 					objOut.writeObject(response);
-					objOut.flush();
+					objOut.flush();*/
 				} 
 				else if (o instanceof AuthRequestMessage)
 				{
 					AuthRequestMessage request = (AuthRequestMessage) o;
-					AuthHandler ah = new AuthHandler(request);
+					AuthHandler ah = new AuthHandler(request, dbm);
 					AuthResponseMessage re;
 					if(ah.authenticate()) {
-						ah.genSessionKey();
 						re = new AuthResponseMessage();
 						re.isAuth = true;
-						this.sessionKey = new SecretKeySpec(ah.getSessionKey(), "aes");
+						ah.genSessionKey();
 						re.sessionKey = ah.getEncryptedSessionKey();
-						
 					} else {
 						re = new AuthResponseMessage();
 						re.isAuth = false;

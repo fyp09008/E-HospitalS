@@ -1,11 +1,24 @@
 package ehospital.server;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.ResultSet;
+
+import javax.crypto.spec.SecretKeySpec;
+
+import cipher.RSASoftware;
+
 public class Handler {
-	protected CryptoManager cm;
+
 	protected DBManager dbm;
+
+	private RSASoftware rsa;
+	
+	private SecretKeySpec sessionKeySpec;
 	
 	public Handler() {
-		cm = new CryptoManager();
 		dbm = new DBManager();
 	}
 	
@@ -45,4 +58,67 @@ public class Handler {
 		}	
 		return b;
 	}
+	
+	public byte[] encryptRSA(byte plaintext[]) {
+		byte ciphertext[] = getRsa().encrypt(plaintext, plaintext.length);
+		return ciphertext;
+	}
+	
+	public byte[] decryptRSA(byte ciphertext[]) {
+		byte plaintext[] = getRsa().encrypt(ciphertext, ciphertext.length);
+		return plaintext;
+	}
+	
+	
+	public boolean loadCryptoInfo(String username) {
+		try {
+			if(dbm.isUserExist(username) {
+				ResultSet rs = dbm.query("SELECT pub_key, `mod` FROM user WHERE username='"+username+"';");
+				String pubKeyExp = rs.getString(1);
+				String mod = rs.getString(2);
+				rsa.setPublicKey(pubKeyExp, mod);
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @param sessionKeySpec the sessionKeySpec to set
+	 */
+	protected void setSessionKeySpec(SecretKeySpec sessionKeySpec) {
+		this.sessionKeySpec = sessionKeySpec;
+	}
+
+	/**
+	 * @return the sessionKeySpec
+	 */
+	protected SecretKeySpec getSessionKeySpec() {
+		return sessionKeySpec;
+	}
+
+	/**
+	 * @param rsa the rsa to set
+	 */
+	protected void setRsa(RSASoftware rsa) {
+		this.rsa = rsa;
+	}
+
+	/**
+	 * @return the rsa
+	 */
+	protected RSASoftware getRsa() {
+		return rsa;
+	}
+
+	
+	 
 }

@@ -77,38 +77,26 @@ public class Console {
 					cmd = cmdreader.readLine();
 					System.out.print("User name? ");
 					String cmd2 = cmdreader.readLine();
-					new RegisterHandler(cmd,cmd2).register();
-				}
-				else if (cmd.equalsIgnoreCase("test"))	
-				{
-					try {
-						Class.forName("com.mysql.jdbc.Driver");
-						Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/hospital_rec", "FYP09", "1234qwer");
-						Statement stmt = conn.createStatement();
-						ResultSet rs = stmt.executeQuery("SELECT * FROM medicine;");
-						rs.next();
-						//System.out.println(rs.getString(0));
-						System.out.println(rs.getString(1));
-						System.out.println(rs.getString(2));
-						rs.next();
-						//System.out.println(rs.getString(0));
-						System.out.println(rs.getString(1));
-						System.out.println(rs.getString(2));
-						/*String[][] test = ClientThread.RSparse(rs);
-						for (int i = 0; i < test.length; i++)
-						{
-							for (int j = 0; j < test[0].length; j++)
-								System.out.print(test[i][j]+" ");
-							System.out.println();
-						}*/
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						System.exit(-1);
+					RegisterHandler rh = new RegisterHandler(cmd, cmd2);
+					if(rh.register() == -1) {
+						System.out.println("Username Exists!");
 					}
+					
+				}
+				else if (cmd.equalsIgnoreCase("testauth"))	
+				{
+					System.out.println("Username? ");
+					String username = cmdreader.readLine();
+					System.out.println("Password? ");
+					String pwd = cmdreader.readLine();
+					DBManager dbm = new DBManager();
+					ehospital.server.AuthHandler ah = new ehospital.server.AuthHandler(username,pwd,dbm);
+					if (ah.authenticate()) {
+						System.out.println("User found and authenticated!");
+					} else {
+						System.out.println("Authenticate failed");
+					}
+					
 				}
 				System.out.print("~>");
 			}
