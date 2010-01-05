@@ -100,6 +100,7 @@ public class RegisterHandler extends Handler{
 		
 		modulus = rsaHard.getGeneratedModulus();
 		publicKeyExp = rsaHard.getGeneratedPublicKeyExp();
+		
 		String genPwd = this.genPassword();
 		MessageDigest md;
 		try {

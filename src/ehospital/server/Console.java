@@ -6,13 +6,7 @@ package ehospital.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author mc
@@ -20,10 +14,10 @@ import java.util.List;
  */
 public class Console {
 	
-	private String pri =
-		"10001";
-	private String mod = 
-		"94134257dd13820880b443b653e8c716d6381d5a2683f5961ef0402468f0079202ebd97ac85291bd7971f915ff10e06ed1555dcb6868fcbf60bb89e4fcbb0b20ea7abda29bfaa5a11a0109c44d689f9d188e9cbb62211e5fda65cbd37382bb46c6e72fa889ae366e0c3804509676b61fdc38c4cf05a3646b5deb02a8e4e18daf";
+	//private String pri =
+	//	"10001";
+	//private String mod = 
+	//	"94134257dd13820880b443b653e8c716d6381d5a2683f5961ef0402468f0079202ebd97ac85291bd7971f915ff10e06ed1555dcb6868fcbf60bb89e4fcbb0b20ea7abda29bfaa5a11a0109c44d689f9d188e9cbb62211e5fda65cbd37382bb46c6e72fa889ae366e0c3804509676b61fdc38c4cf05a3646b5deb02a8e4e18daf";
 	
 	private ArrayList<String> cmdList;
 	
@@ -37,7 +31,7 @@ public class Console {
 		cmdList.add(1, "startup");
 		cmdList.add(2, "shoutdown");
 		cmdList.add(3, "register");
-		cmdList.add(4, "test");
+		cmdList.add(4, "testauth");
 		cmdList.add(5, "help");
 	}
 	
@@ -46,7 +40,7 @@ public class Console {
 	 */
 	public static void main(String[] args) {
 		
-		Console c = new Console();
+		//Console c = new Console();
 		
 		String cmd = "";
 		ServerThread sThread = null;

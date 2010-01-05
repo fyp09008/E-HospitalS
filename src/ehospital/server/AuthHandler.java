@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 
+import cipher.RSAHardware;
+
 import message.AuthRequestMessage;
 
 /**
@@ -22,19 +24,28 @@ public class AuthHandler extends Handler{
 	public AuthHandler(AuthRequestMessage msg, DBManager dbm) {
 		super();
 		this.dbm = dbm;
-		this.pwdMDExp = msg.getPassword();
 		this.username = msg.getUsername();
-		
+		byte[] pwdMDCipher = msg.getPassword();
+		if (this.loadCryptoInfo(username)) {
+			this.pwdMDExp = this.getRsa().encrypt(pwdMDCipher, pwdMDCipher.length);
+		}
 	}
 	
 	public AuthHandler(String username, String mdPwd, DBManager dbm) {
 		this.username = username;
 		MessageDigest md;
 		try {
+			this.loadCryptoInfo(username);
 			md = MessageDigest.getInstance("md5");
+			System.out.println(mdPwd);
 			this.pwdMDExp = md.digest(mdPwd.getBytes());
 			//for testing purpose
-			plaintext = this.getRsa().decrypt(this.pwdMDExp, this.pwdMDExp);
+			RSAHardware rsaHard = new RSAHardware();
+			if (rsaHard.initJavaCard("285921800099") != -1) {
+				byte[] plaintext = rsaHard.sign(this.pwdMDExp, this.pwdMDExp.length);
+				this.pwdMDExp = this.getRsa().unsign(plaintext, plaintext.length);
+			}	
+			
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,10 +65,7 @@ public class AuthHandler extends Handler{
 	}
 		
 	public boolean authenticate() {
-		if (this.getRsa().getPublicKeyExp() == null) {
-			this.loadCryptoInfo(username);
-		}
-		//TODO add password auth
+		this.loadCryptoInfo(username);
 		if (dbm.isUserExist(this.username)) {
 			try {
 				String pwdFromDB = dbm.getRs().getString(2);

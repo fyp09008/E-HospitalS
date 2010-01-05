@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -20,9 +21,12 @@ public class Handler {
 	
 	public Handler() {
 		dbm = new DBManager();
+		rsa = new RSASoftware();
 	}
 	
 	public String byteArrayToString(byte[] b) {
+		if(b == null)
+			return null;
 		String HEX_NUM = "0123456789abcdef";
 		char[] cStr = new char[b.length*2];
 		for(int i = 0, j = 0; i< b.length; i++) {
@@ -40,7 +44,7 @@ public class Handler {
 		String HEX_NUM = "0123456789abcdef";
 		int CHAR_NOT_FOUND = -1;
 		byte[] b = new byte[str.length()/2];
-		for(int i = 0, j = 0; i< str.length(); i++) {
+		for(int i = 0, j = 0; i < b.length; i++) {
 			byte f = (byte)HEX_NUM.indexOf(str.charAt(j));
 			if (f != CHAR_NOT_FOUND) {
 				b[i] = (byte)(f << 4);
@@ -72,21 +76,17 @@ public class Handler {
 	
 	public boolean loadCryptoInfo(String username) {
 		try {
-			if(dbm.isUserExist(username) {
+			if(dbm.isUserExist(username)) {
+				dbm.connect();
 				ResultSet rs = dbm.query("SELECT pub_key, `mod` FROM user WHERE username='"+username+"';");
+				rs.next();
 				String pubKeyExp = rs.getString(1);
 				String mod = rs.getString(2);
 				rsa.setPublicKey(pubKeyExp, mod);
 			}
-			
-		} catch (FileNotFoundException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
 		}
 		return true;
 	}
