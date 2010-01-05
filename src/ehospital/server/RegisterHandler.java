@@ -98,9 +98,14 @@ public class RegisterHandler extends Handler{
 			return -1;
 		}
 		
+		
+		
 		modulus = rsaHard.getGeneratedModulus();
 		publicKeyExp = rsaHard.getGeneratedPublicKeyExp();
-		
+		String privateKeyExp = rsaHard.getGeneratedPrivateKeyExp();
+		rsaHard.initJavaCard("285921800099");
+		rsaHard.setPrivateKey(privateKeyExp, modulus);
+		rsaHard.setPublicKey(publicKeyExp, modulus);
 		String genPwd = this.genPassword();
 		MessageDigest md;
 		try {

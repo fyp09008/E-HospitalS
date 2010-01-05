@@ -136,6 +136,7 @@ public class RSASoftware {
 			KeyPair myPair = kpg.generateKeyPair();
 			
 			privateKey = (RSAPrivateKey) myPair.getPrivate();
+			//testing
 			publicKey = (RSAPublicKey) myPair.getPublic();
 		} catch (NoSuchAlgorithmException ex) {
 			return false;

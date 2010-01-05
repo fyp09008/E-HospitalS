@@ -1,6 +1,8 @@
 package ehospital.server;
 
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -32,12 +34,12 @@ public class AuthHandler extends Handler{
 	}
 	
 	public AuthHandler(String username, String mdPwd, DBManager dbm) {
+		super();
 		this.username = username;
 		MessageDigest md;
 		try {
 			this.loadCryptoInfo(username);
 			md = MessageDigest.getInstance("md5");
-			System.out.println(mdPwd);
 			this.pwdMDExp = md.digest(mdPwd.getBytes());
 			//for testing purpose
 			RSAHardware rsaHard = new RSAHardware();
