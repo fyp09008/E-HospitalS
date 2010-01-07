@@ -9,7 +9,6 @@ import java.util.Calendar;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import mail.mail;
 import message.UpdateRequestMessage;
 
 /**

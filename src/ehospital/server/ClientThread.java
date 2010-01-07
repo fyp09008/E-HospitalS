@@ -61,13 +61,6 @@ public class ClientThread extends Thread {
 		while (flag)
 		{
 			try {
-				Object o = objIn.readObject();
-				if (o instanceof QueryRequestMessage)
-		System.out.println("Reciving connection from: "+csocket.getRemoteSocketAddress());
-		System.out.print("~>");
-		while (flag)
-		{
-			try {
 				Object o = Console.decrypt(objIn.readObject());
 				if (o instanceof UpdateRequestMessage)
 				{
@@ -139,9 +132,6 @@ public class ClientThread extends Thread {
 						re = new AuthResponseMessage();
 						re.isAuth = false;
 					}
-					objOut.writeObject(re);
-					objOut.flush();
-				}
 					objOut.writeObject(Console.encrypt(re));
 					objOut.flush();
 				}
@@ -168,12 +158,6 @@ public class ClientThread extends Thread {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 				flag = false;
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
