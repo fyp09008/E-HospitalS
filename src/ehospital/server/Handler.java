@@ -1,12 +1,20 @@
 package ehospital.server;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import cipher.RSASoftware;
@@ -104,7 +112,7 @@ public class Handler {
 	protected SecretKeySpec getSessionKeySpec() {
 		return sessionKeySpec;
 	}
-
+	
 	/**
 	 * @param rsa the rsa to set
 	 */
@@ -118,7 +126,102 @@ public class Handler {
 	protected RSASoftware getRsa() {
 		return rsa;
 	}
-
 	
+	public byte[] encryptAES(byte[] plaintext) {
+		try {
+			Cipher cipher = Cipher.getInstance("aes");
+			cipher.init(Cipher.ENCRYPT_MODE, this.sessionKeySpec);
+			
+			byte[] ciphertext = cipher.doFinal(plaintext);
+			return ciphertext;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	public byte[] decryptAES(byte[] ciphertext) {
+		try {
+			Cipher cipher = Cipher.getInstance("aes");
+			cipher.init(Cipher.DECRYPT_MODE, this.sessionKeySpec);
+			
+			byte[] plaintext = cipher.doFinal(ciphertext);
+			return plaintext;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	public byte[] objToBytes(Object obj){
+	      ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+	      ObjectOutputStream oos;
+		try {
+			oos = new ObjectOutputStream(bos);
+			oos.writeObject(obj);
+			oos.flush(); 
+			oos.close(); 
+			bos.close();
+			byte [] data = bos.toByteArray();
+			return data;
+		} catch (NotSerializableException e){
+			e.printStackTrace();
+			return null;
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} return null;
+	}
+	
+	public Object BytesToObj(byte[] b){
+	      ByteArrayInputStream bis = new ByteArrayInputStream(b); 
+	      ObjectInputStream ois;
+		try {
+			ois = new ObjectInputStream(bis);
+			Object obj = ois.readObject();
+			ois.close(); 
+			bis.close();
+			return obj;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	    return null;
+	}
 	 
 }

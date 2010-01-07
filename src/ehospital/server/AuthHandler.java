@@ -1,10 +1,8 @@
 package ehospital.server;
 
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.crypto.KeyGenerator;
@@ -29,7 +27,7 @@ public class AuthHandler extends Handler{
 		this.username = msg.getUsername();
 		byte[] pwdMDCipher = msg.getPassword();
 		if (this.loadCryptoInfo(username)) {
-			this.pwdMDExp = this.getRsa().encrypt(pwdMDCipher, pwdMDCipher.length);
+			this.pwdMDExp = this.getRsa().unsign(pwdMDCipher, pwdMDCipher.length);
 		}
 	}
 	
@@ -89,6 +87,12 @@ public class AuthHandler extends Handler{
 		}
 		byte[] sessionKey = this.getSessionKeySpec().getEncoded();
 		return encryptRSA(sessionKey);
+	}
+
+	public ResultSet getPrivilege() throws SQLException {
+		// TODO Auto-generated method stub
+		this.dbm.connect();
+		return this.dbm.query("SELECT uid, `Read`, `Write`, `Add` FROM privilege, user WHERE user.Role=privilege.Role AND user.username='"+this.username+"'; ");
 	}
 	
 }

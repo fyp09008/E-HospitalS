@@ -19,6 +19,7 @@ public class ServerThread extends Thread {
 	private int port;
 	private boolean flag;
 	private ArrayList<Socket> clientls;
+	private static ArrayList<ClientThread> ctls;
 
 	/**
 	 * 
@@ -29,6 +30,7 @@ public class ServerThread extends Thread {
 		ssocket = null;
 		flag = true;
 		clientls = new ArrayList<Socket>();
+		ctls = new ArrayList<ClientThread>();
 	}
 
 	/**
@@ -39,6 +41,7 @@ public class ServerThread extends Thread {
 		ssocket = null;
 		flag = true;
 		clientls = new ArrayList<Socket>();
+		ctls = new ArrayList<ClientThread>();
 	}
 
 	@Override
@@ -54,20 +57,22 @@ public class ServerThread extends Thread {
 					Socket csocket = ssocket.accept();
 					ClientThread ct = new ClientThread(csocket);
 					clientls.add(csocket);
+					ctls.add(ct);
 					ct.start();
 				} catch (IOException e) {
 					// TODO add Logger
 					System.out.println("Server Socket Closed");
 					System.out.print("~>");
-					Iterator<Socket> i = clientls.iterator();
-					
+//					Iterator<Socket> i = clientls.iterator();
+					Iterator<ClientThread> i = ctls.iterator();
+					ClientThread tmpct = null;
 					while (i.hasNext())
 					{
-						try {
-							i.next().close();
-						} catch (IOException e1) {
-							// TODO add Logger
-							System.out.println("ClientSocket closed unexpectedly");
+						tmpct = i.next();
+						if (!tmpct.CloseSocket())
+						{
+							System.out.println("Cannot close Socket of "+tmpct.getUsername()+" from "+tmpct.getRemoteIP());
+							System.out.print("~>");
 						}
 					}
 				}
@@ -103,18 +108,36 @@ public class ServerThread extends Thread {
 		} catch (IOException e) {
 			// TODO Add Logger
 			System.out.println("Server Socket Closed");
-			Iterator<Socket> i = clientls.iterator();
-			
+			System.out.print("~>");
+//			Iterator<Socket> i = clientls.iterator();
+			Iterator<ClientThread> i = ctls.iterator();
+			ClientThread tmpct = null;
 			while (i.hasNext())
 			{
-				try {
-					i.next().close();
-				} catch (IOException e1) {
-					// TODO add Logger
-					System.out.println("ClientSocket closed unexpectedly");
+				tmpct = i.next();
+				if (!tmpct.CloseSocket())
+				{
+					System.out.println("Cannot close Socket of "+tmpct.getUsername()+" from "+tmpct.getRemoteIP());
+					System.out.print("~>");
 				}
 			}
 		}
-		
+	}
+	
+	public void printUserList()
+	{
+		Iterator<ClientThread> i = ctls.iterator();
+		ClientThread tmpct = null;
+		while (i.hasNext())
+		{
+			tmpct = i.next();
+			System.out.println(tmpct.getUsername()+" from "+tmpct.getRemoteIP());
+		}
+		System.out.println("~>");
+	}
+	
+	public static void RemoveThread(ClientThread ct)
+	{
+		ctls.remove(ct);
 	}
 }
