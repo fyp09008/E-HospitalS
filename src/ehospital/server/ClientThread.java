@@ -67,6 +67,7 @@ public class ClientThread extends Thread {
 				if (o instanceof UpdateRequestMessage)
 				{
 					UpdateHandler uh = new UpdateHandler((UpdateRequestMessage) o, dbm, this.sks);
+					uh.setIP(this.csocket.getRemoteSocketAddress().toString());
 					if (uh.update())
 					{
 						objOut.writeObject(Console.encrypt(new UpdateResponseMessage(true)));
