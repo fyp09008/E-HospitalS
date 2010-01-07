@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="/Javacard/lib/offcard.jar"/>
 	<classpathentry kind="lib" path="/Javacard/lib/jpcsc.jar"/>
 	<classpathentry kind="lib" path="C:/Documents and Settings/mhchung/Desktop/HKU_Project/dev_env/mysql-connector-java-5.1.10/mysql-connector-java-5.1.10-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/mhchung/Desktop/HKU_Project/dev_env/javamail-1.4.3/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

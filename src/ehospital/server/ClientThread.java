@@ -97,10 +97,14 @@ public class ClientThread extends Thread {
 					objOut.writeObject(Console.encrypt(response));
 					objOut.flush();
 				} 
-				else if (o instanceof AuthRequestMessage)
+				else if (o instanceof ServerAuthRequestMessage)
 				{
-					AuthRequestMessage request = (AuthRequestMessage) o;
-					AuthHandler ah = new AuthHandler(request, dbm);
+					ServerAuthHandler sah = new ServerAuthHandler();
+					byte[] fingerprint = sah.getSignedFingerprint();
+					ServerAuthResponseMessage response = new ServerAuthResponseMessage(fingerprint);
+					this.objOut.writeObject(Console.encrypt(response));
+					AuthRequestMessage authRequest = (AuthRequestMessage)Console.decrypt(this.objIn.readObject());
+					AuthHandler ah = new AuthHandler(authRequest, dbm);
 					AuthResponseMessage re;
 					if(ah.authenticate()) {
 						re = new AuthResponseMessage();
@@ -117,7 +121,7 @@ public class ClientThread extends Thread {
 						int i = new Random().nextInt();
 						this.lomsg = this.intToByteArray(i);
 						re.logoutmsg = ah.encryptAES(intToByteArray(i));
-						this.username = request.getUsername();
+						this.username = authRequest.getUsername();
 						//*********************
 					} else {
 						re = new AuthResponseMessage();
@@ -182,7 +186,7 @@ public class ClientThread extends Thread {
 		}
 		System.out.println(this+"GG");
 		ServerThread.RemoveThread(this);
-		System.out.println("~>");
+		System.out.print("~>");
 	}
 	
 	// pos: return a byte array representation of integer
