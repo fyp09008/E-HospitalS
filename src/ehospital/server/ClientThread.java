@@ -3,19 +3,34 @@
  */
 package ehospital.server;
 
+<<<<<<< HEAD
+=======
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+>>>>>>> 15afeb000fdb47bc1286d3dd24a7c944129f43a5
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+<<<<<<< HEAD
+=======
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+>>>>>>> 15afeb000fdb47bc1286d3dd24a7c944129f43a5
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+<<<<<<< HEAD
+
+import javax.crypto.spec.SecretKeySpec;
+
+import message.AuthRequestMessage;
+import message.AuthResponseMessage;
+import message.QueryRequestMessage;
+import message.QueryResponseMessage;
+=======
 import java.util.Random;
 
 import javax.crypto.BadPaddingException;
@@ -26,6 +41,7 @@ import javax.crypto.spec.SecretKeySpec;
 import com.sun.rowset.CachedRowSetImpl;
 
 import message.*;
+>>>>>>> 15afeb000fdb47bc1286d3dd24a7c944129f43a5
 
 /**
  * @author mc Gilbert
@@ -37,9 +53,12 @@ public class ClientThread extends Thread {
 	private ObjectInputStream objIn;
 	private ObjectOutputStream objOut;
 	private DBManager dbm;
+<<<<<<< HEAD
+=======
 	private SecretKeySpec sks;
 	private String username;
 	private byte[] lomsg;
+>>>>>>> 15afeb000fdb47bc1286d3dd24a7c944129f43a5
 	/**
 	 * @param csocket
 	 */
@@ -58,6 +77,13 @@ public class ClientThread extends Thread {
 	@Override
 	public void run() {
 		boolean flag = true;
+<<<<<<< HEAD
+		while (flag)
+		{
+			try {
+				Object o = objIn.readObject();
+				if (o instanceof QueryRequestMessage)
+=======
 		System.out.println("Reciving connection from: "+csocket.getRemoteSocketAddress());
 		System.out.print("~>");
 		while (flag)
@@ -67,6 +93,7 @@ public class ClientThread extends Thread {
 				if (o instanceof UpdateRequestMessage)
 				{
 					UpdateHandler uh = new UpdateHandler((UpdateRequestMessage) o, dbm, this.sks);
+					uh.setIP(this.csocket.getRemoteSocketAddress().toString());
 					if (uh.update())
 					{
 						objOut.writeObject(Console.encrypt(new UpdateResponseMessage(true)));
@@ -79,6 +106,7 @@ public class ClientThread extends Thread {
 					}
 				}
 				else if (o instanceof QueryRequestMessage)
+>>>>>>> 15afeb000fdb47bc1286d3dd24a7c944129f43a5
 				{
 					/*QueryRequestMessage request = (QueryRequestMessage) o;
 					QueryHandler qh = new QueryHandler(request);
@@ -87,6 +115,13 @@ public class ClientThread extends Thread {
 					response.ResultSet = qh.encryptRS();
 					objOut.writeObject(response);
 					objOut.flush();*/
+<<<<<<< HEAD
+				} 
+				else if (o instanceof AuthRequestMessage)
+				{
+					AuthRequestMessage request = (AuthRequestMessage) o;
+					AuthHandler ah = new AuthHandler(request, dbm);
+=======
 					QueryRequestMessage req = (QueryRequestMessage) o;
 					QueryHandler qh = new QueryHandler(req, this.sks);
 					ResultSet rs = qh.query();
@@ -97,15 +132,23 @@ public class ClientThread extends Thread {
 					objOut.writeObject(Console.encrypt(response));
 					objOut.flush();
 				} 
-				else if (o instanceof AuthRequestMessage)
+				else if (o instanceof ServerAuthRequestMessage)
 				{
-					AuthRequestMessage request = (AuthRequestMessage) o;
-					AuthHandler ah = new AuthHandler(request, dbm);
+					ServerAuthHandler sah = new ServerAuthHandler();
+					byte[] fingerprint = sah.getSignedFingerprint();
+					ServerAuthResponseMessage response = new ServerAuthResponseMessage(fingerprint);
+					this.objOut.writeObject(Console.encrypt(response));
+					AuthRequestMessage authRequest = (AuthRequestMessage)Console.decrypt(this.objIn.readObject());
+					AuthHandler ah = new AuthHandler(authRequest, dbm);
+>>>>>>> 15afeb000fdb47bc1286d3dd24a7c944129f43a5
 					AuthResponseMessage re;
 					if(ah.authenticate()) {
 						re = new AuthResponseMessage();
 						re.isAuth = true;
 						ah.genSessionKey();
+<<<<<<< HEAD
+						re.sessionKey = ah.getEncryptedSessionKey();
+=======
 						this.sks = ah.getSessionKeySpec();
 						re.sessionKey = ah.getEncryptedSessionKey();
 						ResultSet tmpPri = ah.getPrivilege();
@@ -117,12 +160,18 @@ public class ClientThread extends Thread {
 						int i = new Random().nextInt();
 						this.lomsg = this.intToByteArray(i);
 						re.logoutmsg = ah.encryptAES(intToByteArray(i));
-						this.username = request.getUsername();
+						this.username = authRequest.getUsername();
 						//*********************
+>>>>>>> 15afeb000fdb47bc1286d3dd24a7c944129f43a5
 					} else {
 						re = new AuthResponseMessage();
 						re.isAuth = false;
 					}
+<<<<<<< HEAD
+					objOut.writeObject(re);
+					objOut.flush();
+				}
+=======
 					objOut.writeObject(Console.encrypt(re));
 					objOut.flush();
 				}
@@ -141,6 +190,7 @@ public class ClientThread extends Thread {
 						flag = false;
 					}
 				}
+>>>>>>> 15afeb000fdb47bc1286d3dd24a7c944129f43a5
 				else
 				{
 					System.out.println("Wrong Msg Format");
@@ -149,6 +199,15 @@ public class ClientThread extends Thread {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+<<<<<<< HEAD
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+=======
 				flag = false;
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -182,7 +241,7 @@ public class ClientThread extends Thread {
 		}
 		System.out.println(this+"GG");
 		ServerThread.RemoveThread(this);
-		System.out.println("~>");
+		System.out.print("~>");
 	}
 	
 	// pos: return a byte array representation of integer
@@ -218,4 +277,5 @@ public class ClientThread extends Thread {
 	{
 		return this.csocket.getRemoteSocketAddress().toString();
 	}
+>>>>>>> 15afeb000fdb47bc1286d3dd24a7c944129f43a5
 }
