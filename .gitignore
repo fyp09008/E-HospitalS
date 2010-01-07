@@ -1,14 +1,3 @@
-<<<<<<< HEAD
 #This file allowed git to ignore certain file to be versioned.
 *.class
 Echo.java
-.classpath
-.project
-=======
-#This file allowed git to ignore certain file to be versioned.
-*.class
-Echo.java
-.classpath
-.project
-
->>>>>>> a4f420ed1c2cbfef9ef305a3afc04b2a11c2c894
