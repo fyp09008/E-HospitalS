@@ -56,16 +56,17 @@ public class UpdateHandler extends Handler {
 			}
 			else
 			{
-				String subj = "Instruction Detected!";
-				String msg = "Time: " + Calendar.getInstance().getTime().toString() + "\r\n";
-				msg += "User: " + m.username +"\r\n";
-				msg += "From: " + this.IP + "\r\n";
-				msg += "Action: " + new String(this.decryptAES(m.type)) + "\r\n";
-				ResultSet rs = dbm.query("SELECT user.Role, `Read`, `Write`, `Add` FROM privilege, user WHERE user.Role=privilege.Role AND user.username='"+m.username+"'; ");
+				String Subj = "Intrusion Detected!";
+				String msg = "Time: "+Calendar.getInstance().getTime().toString()+"\r\n";
+				msg += "User: "+m.username+"\r\n";
+				msg += "From: "+this.IP+"\r\n";
+				msg += "Action: "+ new String(this.decryptAES(m.type))+"\r\n";
+				ResultSet rs = dbm.query("SELECT user.Role, `Read`, `Write`, `Add` FROM privilege, user WHERE user.Role=privilege.Role AND user.username='"+m.username+"';" );
 				rs.next();
-				msg += "Role: " + rs.getString(1) + "\r\n";
-				msg += "Privilege(Read|Write|Add): " + rs.getString(2) + "|" + rs.getString(3) + "|" + rs.getString(4) + "\r\n";
-				new mail(subj, msg).sendmail();
+				msg += "Role: "+rs.getString(1)+"\r\n";
+				msg += "Privilege(Read|Write|Add): "+rs.getString(2)+"|"+rs.getString(3)+"|"+rs.getString(4)+"\r\n";
+				
+				new mail(Subj, msg).sendmail();
 				return false;
 			}
 		} catch (SQLException e) {

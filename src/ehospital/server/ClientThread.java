@@ -58,6 +58,8 @@ public class ClientThread extends Thread {
 	@Override
 	public void run() {
 		boolean flag = true;
+		System.out.println("Reciving connection from: "+csocket.getRemoteSocketAddress());
+		System.out.print("~>");
 		while (flag)
 		{
 			try {
@@ -79,13 +81,6 @@ public class ClientThread extends Thread {
 				}
 				else if (o instanceof QueryRequestMessage)
 				{
-					/*QueryRequestMessage request = (QueryRequestMessage) o;
-					QueryHandler qh = new QueryHandler(request);
-					qh.queryDB();
-					QueryResponseMessage response = new QueryResponseMessage();
-					response.ResultSet = qh.encryptRS();
-					objOut.writeObject(response);
-					objOut.flush();*/
 				} 
 				else if (o instanceof AuthRequestMessage)
 				{
