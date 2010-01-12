@@ -14,14 +14,14 @@ public class ServerAuthHandler extends Handler {
 		
 	}
 	
-	private byte[] encryptServerPri(byte[] plaintext) {
+	private byte[] signServerPri(byte[] plaintext) {
 		RSASoftware rsa = new RSASoftware();
 		rsa.setPrivateKey(pri, mod);
-		byte[] ciphertext = rsa.encrypt(plaintext, plaintext.length);
+		byte[] ciphertext = rsa.sign(plaintext, plaintext.length);
 		return ciphertext;
 	}
 	
-	public byte[] getEncryptedFingerprint() {
-		return this.encryptServerPri(this.fingerprint);
+	public byte[] getSignedFingerprint() {
+		return this.signServerPri(this.fingerprint);
 	}
 }

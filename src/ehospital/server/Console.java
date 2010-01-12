@@ -28,20 +28,14 @@ public class Console {
 	private static final String mod = "a89877a7e5150456b696d40a9a35ac5ce72cf331ed6463bb05a658a98962739a244d770e78f70e0dd1c07404e2e77aaf9dba6ff3ee21a38a5555c1cbd28a2f7fed603b25a9cf8a6ff1a330503c882b300d855a9c315aa7eec4fca5ee3e7ca351b7e086309de90d2ad4183a606352b052b0c990856df7b3a106f76a48ea004a19";
 	private static final byte[] key = {-19, -11, 122, 111, -37, -13, 16, -47, -65, 78, -126, -128, -88, 54, 101, 86};
 	private static final SecretKeySpec ProgramKey = new SecretKeySpec(key, "AES");
-	private ArrayList<String> cmdList;
+	public static ArrayList<String> cmdList;
 	
 	/**
 	 * @author Gilbert
 	 */
 	public Console() {
 		//init commandList
-		cmdList = new ArrayList<String>();
-		cmdList.add(0, "exit");
-		cmdList.add(1, "startup");
-		cmdList.add(2, "shoutdown");
-		cmdList.add(3, "register");
-		cmdList.add(4, "testauth");
-		cmdList.add(5, "help");
+		
 	}
 	
 	/**
@@ -49,12 +43,23 @@ public class Console {
 	 */
 	public static void main(String[] args) {
 		
-		//Console c = new Console();
+		cmdList = new ArrayList<String>();
+		cmdList.add(0, "exit");
+		cmdList.add(1, "startup");
+		cmdList.add(2, "shoutdown");
+		cmdList.add(3, "register");
+		cmdList.add(4, "testauth");
+		cmdList.add(5, "Threadchk");
+		cmdList.add(6, "show client");
+		cmdList.add(7, "help");
 		
 		String cmd = "";
 		ServerThread sThread = null;
 		BufferedReader cmdreader = new BufferedReader(new InputStreamReader(System.in));
 		try {
+			for (int i = 0 ; i < Console.cmdList.size(); i++ ) {
+				System.out.println(i+ ". " + Console.cmdList.get(i));
+			}
 			System.out.print("~>");
 			while ((cmd = cmdreader.readLine()) != null)
 			{
@@ -72,6 +77,10 @@ public class Console {
 					System.out.print("port?");
 					sThread = new ServerThread(Integer.parseInt(cmdreader.readLine()));
 					sThread.start();
+				}
+				else if (cmd.equalsIgnoreCase("mail"))
+				{
+					
 				}
 				else if (cmd.equalsIgnoreCase("genkey"))
 				{
@@ -123,6 +132,10 @@ public class Console {
 						System.out.println("Authenticate failed");
 					}
 					
+				} else if (cmd.equalsIgnoreCase("help")) {
+					for (int i = 0 ; i < Console.cmdList.size(); i++ ) {
+						System.out.println(Console.cmdList.get(i));
+					}
 				}
 				System.out.print("~>");
 			}

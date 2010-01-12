@@ -20,9 +20,9 @@ public class UpdateHandler extends Handler {
 	
 	private String updatesql;
 	private DBManager dbm;
-	private boolean isGranted;
 	private UpdateRequestMessage m;
 	private String IP;
+	private boolean isGranted;
 	
 	public UpdateHandler(UpdateRequestMessage m, DBManager dbm, SecretKeySpec sks) throws SQLException {
 		this.dbm = dbm;
