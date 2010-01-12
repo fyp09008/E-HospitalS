@@ -67,6 +67,7 @@ public class ClientThread extends Thread {
 				if (o instanceof UpdateRequestMessage)
 				{
 					UpdateHandler uh = new UpdateHandler((UpdateRequestMessage) o, dbm, this.sks);
+					uh.setIP(this.csocket.getRemoteSocketAddress().toString());
 					if (uh.update())
 					{
 						objOut.writeObject(Console.encrypt(new UpdateResponseMessage(true)));
@@ -80,13 +81,7 @@ public class ClientThread extends Thread {
 				}
 				else if (o instanceof QueryRequestMessage)
 				{
-					/*QueryRequestMessage request = (QueryRequestMessage) o;
-					QueryHandler qh = new QueryHandler(request);
-					qh.queryDB();
-					QueryResponseMessage response = new QueryResponseMessage();
-					response.ResultSet = qh.encryptRS();
-					objOut.writeObject(response);
-					objOut.flush();*/
+
 					QueryRequestMessage req = (QueryRequestMessage) o;
 					QueryHandler qh = new QueryHandler(req, this.sks);
 					ResultSet rs = qh.query();
