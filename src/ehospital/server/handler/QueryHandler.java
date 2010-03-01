@@ -1,4 +1,4 @@
-package ehospital.server;
+package ehospital.server.handler;
 
 import java.io.*;
 import java.security.InvalidKeyException;
@@ -14,6 +14,8 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+
+import ehospital.server.db.DBManager;
 
 import message.QueryRequestMessage;
 /**

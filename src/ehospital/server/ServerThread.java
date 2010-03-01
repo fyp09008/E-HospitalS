@@ -25,7 +25,6 @@ public class ServerThread extends Thread {
 	 * 
 	 */
 	public ServerThread() {
-		// TODO Auto-generated constructor stub
 		port = 8888;
 		ssocket = null;
 		flag = true;
@@ -63,7 +62,6 @@ public class ServerThread extends Thread {
 					// TODO add Logger
 					System.out.println("Server Socket Closed");
 					System.out.print("~>");
-//					Iterator<Socket> i = clientls.iterator();
 					Iterator<ClientThread> i = ctls.iterator();
 					ClientThread tmpct = null;
 					while (i.hasNext())

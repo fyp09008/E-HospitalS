@@ -3,6 +3,7 @@
  */
 package ehospital.server;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +17,10 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+
+import ehospital.server.db.DBManager;
+import ehospital.server.handler.Handler;
+import ehospital.server.handler.RegisterHandler;
 
 /**
  * @author mc
@@ -40,15 +45,6 @@ public class Console {
 	 * @author Gilbert
 	 */
 	public Console() {
-		//init commandList
-		cmdList = new ArrayList<String>();
-		cmdList.add(0, "exit");
-		cmdList.add(1, "startup");
-		cmdList.add(2, "shoutdown");
-		cmdList.add(3, "register");
-		cmdList.add(4, "testauth");
-		cmdList.add(5, "help");
-		
 	}
 	
 	/**
@@ -138,7 +134,7 @@ public class Console {
 					System.out.println("Password? ");
 					String pwd = cmdreader.readLine();
 					DBManager dbm = new DBManager();
-					ehospital.server.AuthHandler ah = new ehospital.server.AuthHandler(username,pwd,dbm);
+					ehospital.server.handler.AuthHandler ah = new ehospital.server.handler.AuthHandler(username,pwd,dbm);
 					if (ah.authenticate()) {
 						System.out.println("User found and authenticated!");
 					} else {

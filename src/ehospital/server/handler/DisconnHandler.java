@@ -1,9 +1,10 @@
 /**
  * 
  */
-package ehospital.server;
+package ehospital.server.handler;
 
 import javax.crypto.spec.SecretKeySpec;
+
 
 import message.DisconnRequestMessage;
 

@@ -1,13 +1,16 @@
 /**
  * 
  */
-package ehospital.server;
+package ehospital.server.handler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
 import javax.crypto.spec.SecretKeySpec;
+
+import ehospital.server.mail;
+import ehospital.server.db.DBManager;
 
 import message.UpdateRequestMessage;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ehospital.server;
+package ehospital.server.db;
 
 import java.sql.*;
 

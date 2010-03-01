@@ -1,4 +1,4 @@
-package ehospital.server;
+package ehospital.server.handler;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,6 +9,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 
 import cipher.RSAHardware;
+import ehospital.server.db.DBManager;
 
 import message.AuthRequestMessage;
 

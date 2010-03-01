@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ehospital.server;
+package ehospital.server.handler;
 
 import java.io.*;
 import java.security.MessageDigest;

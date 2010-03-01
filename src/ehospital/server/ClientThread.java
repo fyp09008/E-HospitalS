@@ -3,6 +3,7 @@
  */
 package ehospital.server;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
+import java.util.Timer;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -24,6 +26,13 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.sun.rowset.CachedRowSetImpl;
+
+import ehospital.server.db.DBManager;
+import ehospital.server.handler.AuthHandler;
+import ehospital.server.handler.DisconnHandler;
+import ehospital.server.handler.QueryHandler;
+import ehospital.server.handler.ServerAuthHandler;
+import ehospital.server.handler.UpdateHandler;
 
 import message.*;
 
@@ -40,12 +49,15 @@ public class ClientThread extends Thread {
 	private SecretKeySpec sks;
 	private String username;
 	private byte[] lomsg;
+	private Timer timeout;
 	/**
 	 * @param csocket
 	 */
 	public ClientThread(Socket csocket) {
 		this.csocket = csocket;
 		dbm = new DBManager();
+		timeout = new Timer();
+		timeout.schedule(new Session(this), 600000);
 		try {
 			this.objIn = new ObjectInputStream(this.csocket.getInputStream());
 			this.objOut = new ObjectOutputStream(this.csocket.getOutputStream());
@@ -55,6 +67,11 @@ public class ClientThread extends Thread {
 		}
 	}
 
+	private void resetTimeout() {
+		timeout.cancel();
+		timeout.schedule(new Session(this), 600000);
+	}
+	
 	@Override
 	public void run() {
 		boolean flag = true;
@@ -64,6 +81,7 @@ public class ClientThread extends Thread {
 		{
 			try {
 				Object o = Console.decrypt(objIn.readObject());
+				resetTimeout();
 				if (o instanceof UpdateRequestMessage)
 				{
 					UpdateHandler uh = new UpdateHandler((UpdateRequestMessage) o, dbm, this.sks);

@@ -1,4 +1,4 @@
-package ehospital.server;
+package ehospital.server.handler;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,6 +18,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import cipher.RSASoftware;
+import ehospital.server.db.DBManager;
 
 public class Handler {
 
@@ -102,14 +103,14 @@ public class Handler {
 	/**
 	 * @param sessionKeySpec the sessionKeySpec to set
 	 */
-	protected void setSessionKeySpec(SecretKeySpec sessionKeySpec) {
+	public void setSessionKeySpec(SecretKeySpec sessionKeySpec) {
 		this.sessionKeySpec = sessionKeySpec;
 	}
 
 	/**
 	 * @return the sessionKeySpec
 	 */
-	protected SecretKeySpec getSessionKeySpec() {
+	public SecretKeySpec getSessionKeySpec() {
 		return sessionKeySpec;
 	}
 	

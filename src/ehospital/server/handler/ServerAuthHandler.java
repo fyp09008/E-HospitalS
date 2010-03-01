@@ -1,4 +1,4 @@
-package ehospital.server;
+package ehospital.server.handler;
 
 import cipher.RSASoftware;
 
