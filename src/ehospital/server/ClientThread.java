@@ -12,11 +12,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Random;
 import java.util.Timer;
 
@@ -24,6 +21,17 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+
+import message.AuthRequestMessage;
+import message.AuthResponseMessage;
+import message.DisconnRequestMessage;
+import message.DisconnResponseMessage;
+import message.QueryRequestMessage;
+import message.QueryResponseMessage;
+import message.ServerAuthRequestMessage;
+import message.ServerAuthResponseMessage;
+import message.UpdateRequestMessage;
+import message.UpdateResponseMessage;
 
 import com.sun.rowset.CachedRowSetImpl;
 
@@ -34,13 +42,12 @@ import ehospital.server.handler.QueryHandler;
 import ehospital.server.handler.ServerAuthHandler;
 import ehospital.server.handler.UpdateHandler;
 
-import message.*;
-
 /**
  * @author mc Gilbert
  *
  */
 public class ClientThread extends Thread {
+	
 
 	private Socket csocket;
 	private ObjectInputStream objIn;
@@ -99,6 +106,15 @@ public class ClientThread extends Thread {
 				}
 				else if (o instanceof QueryRequestMessage)
 				{
+					QueryRequestMessage req = (QueryRequestMessage) o;
+					QueryHandler qh = new QueryHandler(req, this.sks);
+					ResultSet rs = qh.query();
+					CachedRowSetImpl crs = new CachedRowSetImpl();
+					crs.populate(rs);
+					QueryResponseMessage response = new QueryResponseMessage();
+					response.resultSet = qh.encryptAES(qh.objToBytes(crs));
+					objOut.writeObject(Console.encrypt(response));
+					objOut.flush();
 				} 
 				else if (o instanceof AuthRequestMessage)
 				{

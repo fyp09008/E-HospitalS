@@ -101,9 +101,7 @@ public class QueryHandler extends Handler{
 	public void setRs(ResultSet rs) {
 		this.rs = rs;
 	}
-	public void setSecretKeySpec() {
-		// TODO query database for sessionKey
-	}
+	
 	/**
 	 * This method is used to convert the byte[] raw query
 	 * to query in string

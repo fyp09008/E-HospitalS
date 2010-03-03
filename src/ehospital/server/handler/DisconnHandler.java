@@ -41,17 +41,7 @@ public class DisconnHandler extends Handler {
 		else return -1;
 	}
 	
-	private boolean compareByte(byte[] b1, byte[] b2)
-	{
-		if (b1.length != b2.length)
-			return false;
-		
-		for (int i = 0; i < b1.length; ++i)
-			if (b1[i] != b2[i])
-				return false;
-		
-		return true;
-	}
+	
 
 	public void setSks(SecretKeySpec sks) {
 		this.setSessionKeySpec(sks);
