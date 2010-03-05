@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.sql.SQLException;
+
 import javax.crypto.spec.SecretKeySpec;
 import ehospital.server.db.DBManager;
 import ehospital.server.handler.Handler;
@@ -170,10 +172,23 @@ public class Console {
 					for (int i = 0 ; i < Console.cmdList.size(); i++ ) {
 						System.out.println(Console.cmdList.get(i));
 					}
+				} else if (cmd.equalsIgnoreCase("testsql"))
+				{
+					DBManager dbm = new DBManager();
+					ehospital.server.db.DBManager.Param[] pList = new ehospital.server.db.DBManager.Param[1];
+					pList[0] = dbm.new Param("name", "medicine A';");
+					ehospital.server.db.DBManager.Param[] pList2 = new ehospital.server.db.DBManager.Param[1];
+					pList2[0] = dbm.new Param("id", "1");
+					dbm.Update("Update medicine", pList, pList2);
+					//while (rs.next())
+					//	System.out.println(rs.getString(1)+" "+rs.getString(2));
 				}
 				System.out.print("~>");
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
