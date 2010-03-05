@@ -22,6 +22,9 @@ import ehospital.server.db.DBManager;
 
 public class Handler {
 
+	
+	
+	
 	protected DBManager dbm;
 
 	private RSASoftware rsa;
