@@ -16,7 +16,15 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import java.sql.*;
 
+//For logging by Wilson
+//DBManager, add a function "log(String,String,String)"for loging
+//Add these few libraries 
+//logged exit,startup,startwith,shutdown,register,show_client, testauth and threadchk
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 /**
  * @author mc
  *
@@ -78,18 +86,46 @@ public class Console {
 			{
 				if (cmd.equalsIgnoreCase("exit"))
 				{
+					//log***********
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			        Date date = new Date();
+			        String datetime = dateFormat.format(date);
+
+					DBManager log = new DBManager();
+					log.log( datetime, "admin", "Server exists!");
+					//log************
+					
 					System.exit(0);
 				}
 				else if (cmd.equalsIgnoreCase("startup"))
 				{
 					sThread = new ServerThread();
 					sThread.start();
+					//log***********
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			        Date date = new Date();
+			        String datetime = dateFormat.format(date);
+
+					DBManager log = new DBManager();
+					log.log( datetime, "admin", "Server starts up!");
+					//log************
+					
 				}
 				else if (cmd.equalsIgnoreCase("startwith"))
 				{
 					System.out.print("port?");
-					sThread = new ServerThread(Integer.parseInt(cmdreader.readLine()));
+					String port = cmdreader.readLine();
+					sThread = new ServerThread(Integer.parseInt(port));
 					sThread.start();
+					
+					//log***********
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			        Date date = new Date();
+			        String datetime = dateFormat.format(date);
+
+					DBManager log = new DBManager();
+					log.log( datetime, "admin", "Server starts with port:"+port);
+					//log************
 				}
 				else if (cmd.equalsIgnoreCase("mail"))
 				{
@@ -100,40 +136,91 @@ public class Console {
 					cipher.RSASoftware rsaSoft = new cipher.RSASoftware();
 					rsaSoft.genKey();
 					System.out.println("pub: "+rsaSoft.getPublicKeyExp());
-					System.out.println("pri: "+rsaSoft.getPrivateKeyExp());
+
+					System.out.println("pri: "+rsaSoft.getPrivateKeyExp());	
+
 					System.out.println("mod: "+rsaSoft.getModulus());
-					
+			
 				}
 				else if (cmd.equalsIgnoreCase("shutdown"))
 				{
-					if (sThread != null)
+					if (sThread != null){
 						sThread.closeServerSocket();
+					
+					//log***********
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			        Date date = new Date();
+			        String datetime = dateFormat.format(date);
+
+					DBManager log = new DBManager();
+					log.log( datetime, "admin", "Server is shut down");
+					//log************
+					}
 					else 
 						System.out.println("Server is not started yet!");
+					
+					
+					
 				}
 				else if (cmd.equalsIgnoreCase("register"))
 				{
 					System.out.print("Role? ");
+					
+					
 					cmd = cmdreader.readLine();
 					System.out.print("User name? ");
+					
+					
+					
 					String cmd2 = cmdreader.readLine();
+					
 					RegisterHandler rh = new RegisterHandler(cmd, cmd2);
 					if(rh.register() == -1) {
 						System.out.println("Username Exists!");
+						
+						//log***********
+						DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				        Date date = new Date();
+				        String datetime = dateFormat.format(date);
+
+						DBManager log = new DBManager();
+						log.log( datetime, cmd2, "failed to register "+cmd+"as existing user");
+						//log************
 					}
 					
 				}
 				else if (cmd.equalsIgnoreCase("Threadchk"))
 				{
 					System.out.println(Thread.activeCount());
+				
+					//log***********
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			        Date date = new Date();
+			        String datetime = dateFormat.format(date);
+
+					DBManager log = new DBManager();
+					log.log( datetime, "admin", Thread.activeCount()+"");
+					//log************
+
+					
 				}
 				else if (cmd.equalsIgnoreCase("show client"))
 				{
 					sThread.printUserList();
+					//log***********
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			        Date date = new Date();
+			        String datetime = dateFormat.format(date);
+
+					DBManager log = new DBManager();
+					log.log( datetime, "admin", "Cients is shown");
+					//log************
+					
 				}
 				else if (cmd.equalsIgnoreCase("testauth"))	
 				{
 					System.out.println("Username? ");
+					
 					String username = cmdreader.readLine();
 					System.out.println("Password? ");
 					String pwd = cmdreader.readLine();
@@ -141,8 +228,27 @@ public class Console {
 					ehospital.server.AuthHandler ah = new ehospital.server.AuthHandler(username,pwd,dbm);
 					if (ah.authenticate()) {
 						System.out.println("User found and authenticated!");
+						
+						//log***********
+						DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				        Date date = new Date();
+				        String datetime = dateFormat.format(date);
+
+						DBManager log = new DBManager();
+						log.log( datetime, username, "is found and authenticated!");
+						//log************
+
+						
 					} else {
 						System.out.println("Authenticate failed");
+						//log***********
+						DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				        Date date = new Date();
+				        String datetime = dateFormat.format(date);
+
+						DBManager log = new DBManager();
+						log.log( datetime, username, " failed to authenticate");
+						//log************
 					}
 					
 				} else if (cmd.equalsIgnoreCase("help")) {

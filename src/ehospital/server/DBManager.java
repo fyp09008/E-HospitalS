@@ -15,8 +15,8 @@ public class DBManager {
 	
 	private static final String dbdriver = "com.mysql.jdbc.Driver";
 	private static final String dbstr = "jdbc:mysql://localhost/hospital_rec";
-	private static final String username = "FYP09";
-	private static final String password = "1234qwer";
+	private static final String username = "root";//"FYP09";
+	private static final String password = "";//"1234qwer";
 	
 	private Connection conn;
 	private ResultSet rs;
@@ -89,7 +89,9 @@ public class DBManager {
 		try {
 			if(this.connect()) {
 				Statement stmt = conn.createStatement();
-				String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate, username) VALUES ( '"+role+"', '"+publicKeyExp+"', '"+modulus+"', '"+pwdMDExp+"', CURDATE(),'"+username+"');";
+				java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
+				String time = sqlDate+"";
+				String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate, username) VALUES ( '"+role+"', '"+publicKeyExp+"', '"+modulus+"', '"+pwdMDExp+"', '"+time+"','"+username+"');"; // CURDATE(),
 				
 				stmt.executeUpdate(q);
 			}
@@ -100,6 +102,28 @@ public class DBManager {
 		} 
 		return 0;
 	}
+	
+	//Logging************************
+	public int log( String datetime, String user1, String content) {
+		try {
+			if(this.connect()) {
+				Statement stmt = conn.createStatement();
+				String q = "INSERT INTO log (id,date,user,content) VALUES ( null, '"+datetime+"', '"+user1+"', '"+content+"');";
+				
+				stmt.executeUpdate(q);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		} 
+		return 0;
+	}
+	
+	//Logging****************************
+	
+	
+	
 	
 	public boolean isUserExist(String username) {
 		try {
