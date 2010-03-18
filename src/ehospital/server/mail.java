@@ -1,12 +1,12 @@
 package ehospital.server;
+
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 
 /**
@@ -21,6 +21,8 @@ public class mail {
 	
 	private String Subject = null;
 	private String Msg = null;
+	
+	
 	
 	/**
 	 * @param subject
@@ -80,7 +82,7 @@ public class mail {
 	public static void main(String[] args)
 	{
 		mail m = new mail("Sub", "Msg");
-		//m.sendmail();
+		m.sendmail();
 	}
 
 }
