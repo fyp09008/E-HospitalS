@@ -178,6 +178,27 @@ public class DBManager {
 		} 
 		return 0;
 	}
+	//Logging************************
+	public int log( String datetime, String user1, String content) {
+		try {
+			if(this.connect()) {
+				Statement stmt = conn.createStatement();
+				String q = "INSERT INTO log (id,date,user,content) VALUES ( null, '"+datetime+"', '"+user1+"', '"+content+"');";
+				
+				stmt.executeUpdate(q);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		} 
+		return 0;
+	}
+	
+	//Logging****************************
+	
+	
+	
 	
 	public boolean isUserExist(String username) {
 		try {

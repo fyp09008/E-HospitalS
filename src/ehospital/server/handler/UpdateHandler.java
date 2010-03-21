@@ -12,6 +12,7 @@ import javax.crypto.spec.SecretKeySpec;
 import ehospital.server.db.DBManager;
 
 import message.UpdateRequestMessage;
+import message.UpdateResponseMessage;
 
 /**
  * @author mc

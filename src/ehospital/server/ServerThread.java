@@ -1,7 +1,8 @@
+package ehospital.server;
+
 /**
  * 
  */
-package ehospital.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;

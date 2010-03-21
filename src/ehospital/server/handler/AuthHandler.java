@@ -22,7 +22,7 @@ public class AuthHandler extends Handler{
 
 	private String username;
 	private byte[] pwdMDExp;
-	public AuthHandler(AuthRequestMessage msg, DBManager dbm) {
+	public AuthHandler(AuthRequestMessage msg, ehospital.server.db.DBManager dbm) {
 		super();
 		this.dbm = dbm;
 		this.username = msg.getUsername();
