@@ -9,7 +9,6 @@ import java.util.Calendar;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import ehospital.server.mail;
 import ehospital.server.db.DBManager;
 
 import message.UpdateRequestMessage;
@@ -69,7 +68,6 @@ public class UpdateHandler extends Handler {
 				msg += "Role: "+rs.getString(1)+"\r\n";
 				msg += "Privilege(Read|Write|Add): "+rs.getString(2)+"|"+rs.getString(3)+"|"+rs.getString(4)+"\r\n";
 				
-				new mail(Subj, msg).sendmail();
 				return false;
 			}
 		} catch (SQLException e) {
