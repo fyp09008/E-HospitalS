@@ -32,7 +32,7 @@ public class DBManager {
 	public boolean connect() {
 		try {
 			Class.forName(dbdriver);
-			this.conn = DriverManager.getConnection(dbstr, username, password);
+			this.setConn(DriverManager.getConnection(dbstr, username, password));
 			return true;
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -52,7 +52,7 @@ public class DBManager {
 	public ResultSet query(String query) throws SQLException
 	{
 		this.connect();
-		ResultSet rs = conn.createStatement().executeQuery(query);
+		ResultSet rs = getConn().createStatement().executeQuery(query);
 		return rs;
 	}
 	
@@ -74,7 +74,7 @@ public class DBManager {
 				whereclause += " AND "+param[i].getName()+param[i].getOp()+"?";
 			}
 		}
-		PreparedStatement prep = this.conn.prepareStatement(whereclause == null ? query : query+" "+whereclause);
+		PreparedStatement prep = this.getConn().prepareStatement(whereclause == null ? query : query+" "+whereclause);
 		if (param != null && param.length != 0)
 		{
 			for (int i = 0; i < param.length; i++)
@@ -89,7 +89,7 @@ public class DBManager {
 	public void Update(String query) throws SQLException
 	{
 		this.connect();
-		conn.createStatement().executeUpdate(query);
+		getConn().createStatement().executeUpdate(query);
 	}
 	
 	public void Update(String query, Param [] SETparam, Param [] WHEREparam) throws SQLException
@@ -114,7 +114,7 @@ public class DBManager {
 		}
 		if (WHEREparam != null && WHEREparam.length != 0)
 			query += whereclause;
-		PreparedStatement prep = this.conn.prepareStatement(query);
+		PreparedStatement prep = this.getConn().prepareStatement(query);
 		for (int i = 0; (SETparam != null && SETparam.length != 0) && i < SETparam.length; i++)
 		{
 			prep.setString(i+1, SETparam[i].getVal());
@@ -136,7 +136,7 @@ public class DBManager {
 		}
 		if (param != null && param.length != 0)
 		{
-			PreparedStatement prep = this.conn.prepareStatement(query+values);
+			PreparedStatement prep = this.getConn().prepareStatement(query+values);
 			prep.executeUpdate();
 		}
 		
@@ -148,6 +148,7 @@ public class DBManager {
 	 */
 	public String [] getPubKeyAndMod(String username)
 	{
+		//TODO change to callable statement
 		String [] buf = new String[2];
 		try {
 			this.connect();
@@ -165,8 +166,9 @@ public class DBManager {
 	
 	public int storeUser(String role, String username, String pwdMDExp, String publicKeyExp, String modulus) {
 		try {
+			//TODO change to callable statement
 			if(this.connect()) {
-				Statement stmt = conn.createStatement();
+				Statement stmt = getConn().createStatement();
 				String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate, username) VALUES ( '"+role+"', '"+publicKeyExp+"', '"+modulus+"', '"+pwdMDExp+"', CURDATE(),'"+username+"');";
 				
 				stmt.executeUpdate(q);
@@ -179,21 +181,22 @@ public class DBManager {
 		return 0;
 	}
 	
-	public boolean isUserExist(String username) {
+	public ResultSet isUserExist(String username) {
+		//TODO change to callable statement
 		try {
 			if (this.connect()) {
-				Statement stmt = conn.createStatement();
-				String q = "SELECT username,pwd FROM user WHERE username = '"+username+"';";
-				setRs(stmt.executeQuery(q));
-				if(getRs().first()) {
-					return true;
+				Statement stmt = getConn().createStatement();
+				String q = "SELECT username,pwd,pub_key,mod FROM user WHERE username = '"+username+"';";
+				ResultSet rs =  stmt.executeQuery(q);
+				if(rs.first()) {
+					return rs;
 				}
+				
 			}
-			return false;
+			return null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
+			return null;
 		} 
 	}
 
@@ -213,7 +216,7 @@ public class DBManager {
 	
 	public void disconnect() {
 		try {
-			conn.close();
+			getConn().close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -299,7 +302,7 @@ public class DBManager {
 	public int log( String datetime, String user1, String content) {
 		try {
 			if(this.connect()) {
-				Statement stmt = conn.createStatement();
+				Statement stmt = getConn().createStatement();
 				String q = "INSERT INTO log (id,date,user,content) VALUES ( null, '"+datetime+"', '"+user1+"', '"+content+"');";
 				
 				stmt.executeUpdate(q);
@@ -310,6 +313,14 @@ public class DBManager {
 			return -1;
 		} 
 		return 0;
+	}
+
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
+
+	public Connection getConn() {
+		return conn;
 	}
 	
 	//Logging****************************
