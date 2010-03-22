@@ -86,13 +86,13 @@ public class DBManager {
 		return rs;
 	}
 	
-	public void Update(String query) throws SQLException
+	public void update(String query) throws SQLException
 	{
 		this.connect();
 		getConn().createStatement().executeUpdate(query);
 	}
 	
-	public void Update(String query, Param [] SETparam, Param [] WHEREparam) throws SQLException
+	public void update(String query, Param [] SETparam, Param [] WHEREparam) throws SQLException
 	{
 		this.connect();
 		String setclause = " SET ";
@@ -126,7 +126,7 @@ public class DBManager {
 		prep.executeUpdate();
 	}
 	
-	public void Insert(String query, Param[] param) throws SQLException
+	public void insert(String query, Param[] param) throws SQLException
 	{
 		this.connect();
 		String values = " (";

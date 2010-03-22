@@ -1,28 +1,34 @@
 package ehospital.server.remote.impl;
 
 import java.rmi.RemoteException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import ehospital.server.Console;
 import ehospital.server.Session;
+import ehospital.server.Utility;
 import ehospital.server.db.DBManager;
 
 import message.QueryRequestMessage;
 
 import remote.obj.DataHandler;
 
-public class DataHandlerImpl extends ehospital.server.handler.QueryHandler implements DataHandler {
+public class DataHandlerImpl implements DataHandler {
 
 	public DataHandlerImpl(QueryRequestMessage msg, SecretKeySpec sks) {
-		super(msg, sks);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public DataHandlerImpl() {
-		super(null, null);
+		
 	}
 	public byte[] insert(String username, byte[] insertStmt)
 			throws RemoteException {
@@ -34,20 +40,38 @@ public class DataHandlerImpl extends ehospital.server.handler.QueryHandler imple
 			throws RemoteException {
 		Session s = ehospital.server.SessionList.findClient(username);
 		SecretKeySpec sks = s.getSessionKey();
-		this.setSessionKeySpec(Console.ProgramKey);
-		byte[] rawQuery = this.decryptAES(encQueryStmt);
-		this.setSessionKeySpec(sks);
-		rawQuery = this.decryptAES(encQueryStmt);
-		this.dbm = new DBManager();
-		dbm.connect();
-		ResultSet rs;
+		Cipher cipher;
 		try {
+			cipher = Cipher.getInstance("aes");
+			cipher.init(Cipher.DECRYPT_MODE, Console.ProgramKey);
+			byte[] rawQuery = cipher.doFinal(encQueryStmt);
+			cipher.init(Cipher.DECRYPT_MODE, sks);
+			rawQuery = cipher.doFinal(encQueryStmt);
+			DBManager dbm = new DBManager();
+			dbm.connect();
+			ResultSet rs;
 			rs = dbm.query(new String(rawQuery));
-			return this.objToBytes(rs);
+			return Utility.objToBytes(rs);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoSuchPaddingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		//dbman.disconnect();
 		return null;
 	}

@@ -45,11 +45,11 @@ public class AuthHandlerImpl implements remote.obj.AuthHandler{
 					SecretKeySpec sks = this.genSessionKey();
 					byte[] s = sks.getEncoded();
 					//add session
-					Session session = new Session(username, sks);
-					ehospital.server.SessionList.clientList.add(session);
-					RSASoftware rsa = new RSASoftware();
 					String exp = user.getString(3);
 					String mod = user.getString(4);
+					Session session = new Session(username, sks, exp, mod);
+					ehospital.server.SessionList.clientList.add(session);
+					RSASoftware rsa = new RSASoftware();
 					rsa.setPublicKey(exp, mod);
 					return rsa.encrypt(s, s.length);
 				} 
@@ -63,8 +63,10 @@ public class AuthHandlerImpl implements remote.obj.AuthHandler{
 
 	public byte[] getEncryptedSessionKey(String username) {
 		Session s = SessionList.findClient(username);
-		byte[] sessionKey = s.getSessionKeySpec().getEncoded();
-		return encryptRSA(sessionKey);
+		byte[] sessionKey = s.getSessionKey().getEncoded();
+		RSASoftware rsa = new RSASoftware();
+		rsa.setPublicKey(s.getExp(), s.getMod());
+		return rsa.encrypt(sessionKey, sessionKey.length);
 	}
 
 	public ResultSet getPrivilege(String username) {					

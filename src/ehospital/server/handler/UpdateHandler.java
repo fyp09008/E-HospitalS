@@ -54,7 +54,7 @@ public class UpdateHandler extends Handler {
 		try {
 			if (isGranted)
 			{
-				dbm.Update(this.updatesql);
+				dbm.update(this.updatesql);
 				return true;
 			}
 			else
