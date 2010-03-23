@@ -101,7 +101,7 @@ public class Handler {
 	
 	public boolean loadCryptoInfo(String username) {
 		try {
-			if(dbm.isUserExist(username)) {
+			if(dbm.isUserExist(username) != null) {
 				dbm.connect();
 				ResultSet rs = dbm.query("SELECT pub_key, `mod` FROM user WHERE username='"+username+"';");
 				rs.next();

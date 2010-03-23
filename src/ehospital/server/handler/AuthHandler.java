@@ -67,9 +67,10 @@ public class AuthHandler extends Handler{
 		
 	public boolean authenticate() {
 		this.loadCryptoInfo(username);
-		if (dbm.isUserExist(this.username)) {
+		ResultSet user = dbm.isUserExist(this.username);
+		if (user != null) {
 			try {
-				String pwdFromDB = dbm.getRs().getString(2);
+				String pwdFromDB = user.getString(2);
 				String pwdReceived = this.byteArrayToString(this.pwdMDExp);
 				if (pwdFromDB.equals(pwdReceived)) {
 					return true;

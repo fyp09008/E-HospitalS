@@ -293,7 +293,7 @@ public class Console {
 					pList[0] = dbm.new Param("name", "medicine A';");
 					ehospital.server.db.DBManager.Param[] pList2 = new ehospital.server.db.DBManager.Param[1];
 					pList2[0] = dbm.new Param("id", "1");
-					dbm.Update("Update medicine", pList, pList2);
+					dbm.update("Update medicine", pList, pList2);
 					//while (rs.next())
 					//	System.out.println(rs.getString(1)+" "+rs.getString(2));
 				}

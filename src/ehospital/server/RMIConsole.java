@@ -11,6 +11,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ExportException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -80,11 +81,19 @@ public class RMIConsole {
 				}
 				else if (cmd.equalsIgnoreCase("start"))
 				{
-					reg = LocateRegistry.createRegistry(1099);
+					try {
+						reg = LocateRegistry.createRegistry(1099);
+					} catch (ExportException e) {
+						reg = LocateRegistry.getRegistry(1099);
+					}
 					try {
 			            String name = "AuthHandler";
 			            remote.obj.AuthHandler engine = new AuthHandlerImpl();
-			            reg.rebind(name, engine);
+			            try {
+			            	reg.lookup(name);
+			            } catch (NotBoundException e) {
+			            	reg.bind(name, engine);			            	
+			            }
 			            System.out.println("AuthenticatorImpl bound");
 			            
 			        } catch (Exception e) {
@@ -170,7 +179,7 @@ public class RMIConsole {
 					pList[0] = dbm.new Param("name", "medicine A';");
 					ehospital.server.db.DBManager.Param[] pList2 = new ehospital.server.db.DBManager.Param[1];
 					pList2[0] = dbm.new Param("id", "1");
-					dbm.Update("Update medicine", pList, pList2);
+					dbm.update("Update medicine", pList, pList2);
 				}
 				System.out.print("~>");
 			}

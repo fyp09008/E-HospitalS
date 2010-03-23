@@ -39,7 +39,7 @@ public class RegisterHandler extends Handler{
 	
 	public int register()
 	{
-		if (dbm.isUserExist(username)) return -1;
+		if (dbm.isUserExist(username) != null) return -1;
 		if (genKey() < 0) return -1;
 		if (storeToDB() < 0) return -1;
 		return 0;
