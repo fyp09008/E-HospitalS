@@ -14,6 +14,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.ExportException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -175,7 +176,10 @@ public class RMIConsole {
 				}
 				else if (cmd.equalsIgnoreCase("show client"))
 				{
-					//TODO add to 
+					Vector<Session> s = SessionList.clientList;
+					for (int i = 0; i < s.size(); i++) {
+						System.out.println(s.get(i));
+					}
 				}
 				else if (cmd.equalsIgnoreCase("testauth"))	
 				{
