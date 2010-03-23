@@ -3,6 +3,7 @@
  */
 package ehospital.server.db;
 
+import java.io.Serializable;
 import java.sql.*;
 
 
@@ -12,10 +13,10 @@ import java.sql.*;
  * This class is used to manage the database
  *
  */
-public class DBManager {
+public class DBManager{
 	
 	private static final String dbdriver = "com.mysql.jdbc.Driver";
-	private static final String dbstr = "jdbc:mysql://localhost/hospital_rec";
+	private static final String dbstr = "jdbc:mysql://127.0.0.1/hospital_rec";
 	private static final String username = "FYP09";
 	private static final String password = "1234qwer";
 	
@@ -325,8 +326,4 @@ public class DBManager {
 	
 	//Logging****************************
 	
-	
-	
-	
-
 }

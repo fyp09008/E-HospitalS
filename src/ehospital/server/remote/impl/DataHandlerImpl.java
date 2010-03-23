@@ -1,6 +1,7 @@
 package ehospital.server.remote.impl;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
@@ -12,22 +13,22 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
+import message.QueryRequestMessage;
+import remote.obj.DataHandler;
 import ehospital.server.Console;
 import ehospital.server.Session;
 import ehospital.server.Utility;
 import ehospital.server.db.DBManager;
 
-import message.QueryRequestMessage;
+public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler {
 
-import remote.obj.DataHandler;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8533375570405499715L;
+	
 
-public class DataHandlerImpl implements DataHandler {
-
-	public DataHandlerImpl(QueryRequestMessage msg, SecretKeySpec sks) {
-		
-	}
-
-	public DataHandlerImpl() {
+	public DataHandlerImpl() throws RemoteException{
 		
 	}
 	public byte[] insert(String username, byte[] insertStmt)

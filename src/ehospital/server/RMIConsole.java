@@ -22,6 +22,7 @@ import ehospital.server.db.Logger;
 import ehospital.server.handler.RegisterHandler;
 import ehospital.server.remote.impl.AuthHandlerImpl;
 import ehospital.server.remote.impl.DataHandlerImpl;
+import ehospital.server.remote.impl.DisconnHandlerImpl;
 /**
  * @author mc
  *
@@ -61,7 +62,8 @@ public class RMIConsole {
 		cmdList.add("shutdown");
 		cmdList.add("register");
 		cmdList.add("testauth");
-		cmdList.add("Threadchk");
+		cmdList.add("threadchk");
+		cmdList.add("status");
 		cmdList.add("show client");
 		cmdList.add("help");
 		
@@ -89,11 +91,8 @@ public class RMIConsole {
 					try {
 			            String name = "AuthHandler";
 			            remote.obj.AuthHandler engine = new AuthHandlerImpl();
-			            try {
-			            	reg.lookup(name);
-			            } catch (NotBoundException e) {
-			            	reg.bind(name, engine);			            	
-			            }
+			            reg.rebind(name, engine);			            	
+			            
 			            System.out.println("AuthenticatorImpl bound");
 			            
 			        } catch (Exception e) {
@@ -111,6 +110,19 @@ public class RMIConsole {
 			            System.err.println("DataHandlerImpl exception:");
 			            e.printStackTrace();
 			        }
+			        
+			        try {
+			            String name = "DisconnHandler";
+			            remote.obj.DisconnHandler engine = new DisconnHandlerImpl();
+			            reg.rebind(name, engine);			            	
+			            
+			            System.out.println("DisconnHandlerImpl bound");
+			            
+			        } catch (Exception e) {
+			            System.err.println("DisconnHandlerImpl exception:");
+			            e.printStackTrace();
+			        }
+			        
 					log.log("admin", "Server starts");
 				}
 				else if (cmd.equalsIgnoreCase("genkey"))
@@ -145,6 +157,21 @@ public class RMIConsole {
 				{
 					System.out.println(Thread.activeCount());
 					log.log("admin", Thread.activeCount()+"");					
+				}
+				else if (cmd.equalsIgnoreCase("status"))
+				{
+					if (reg != null) {
+						String[] s = reg.list();
+						if (s != null) {
+							for(int i = 0; i < s.length; i++) {
+								System.out.println(s[i]);
+							}
+						} else {
+							System.out.println("Server Not Started");
+						}
+					} else {
+						System.out.println("Server Not Started");
+					}
 				}
 				else if (cmd.equalsIgnoreCase("show client"))
 				{
@@ -196,9 +223,11 @@ public class RMIConsole {
 		try {
 			reg.unbind("AuthHandler");
 			reg.unbind("DataHandler");
+			reg.unbind("DisconnHandler");
+			System.out.println("Server is shut down");
 			log.log("admin", "Server is shut down");
 		} catch (NotBoundException e) {
-			System.out.println("DataHandler is not bind.");
+			System.out.println("Some of the Handlers are not bind.");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

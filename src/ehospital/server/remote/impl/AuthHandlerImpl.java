@@ -1,6 +1,7 @@
 package ehospital.server.remote.impl;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,16 +10,21 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 
 import cipher.RSASoftware;
-
 import ehospital.server.Session;
 import ehospital.server.SessionList;
 import ehospital.server.Utility;
 import ehospital.server.db.DBManager;
 
-public class AuthHandlerImpl implements remote.obj.AuthHandler{
+public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.AuthHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 40327953895437380L;
+	
 	private DBManager dbm;
-	public AuthHandlerImpl() {
+	
+	public AuthHandlerImpl() throws RemoteException{
 		dbm = new DBManager();
 	}
 
