@@ -46,17 +46,21 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 		if (user != null) {
 			try {
 				String pwdFromDB = user.getString(2);
+				RSASoftware rsa = new RSASoftware();
+				String exp = user.getString(3);
+				String mod = user.getString(4);
+
+				rsa.setPublicKey(exp, mod);
+				
+				HEPwd = rsa.unsign(HEPwd, HEPwd.length);
+				
 				String pwdReceived = Utility.byteArrayToString(HEPwd);
 				if (pwdFromDB.equals(pwdReceived)) {
 					SecretKeySpec sks = this.genSessionKey();
 					byte[] s = sks.getEncoded();
 					//add session
-					String exp = user.getString(3);
-					String mod = user.getString(4);
 					Session session = new Session(username, sks, exp, mod);
 					ehospital.server.SessionList.clientList.add(session);
-					RSASoftware rsa = new RSASoftware();
-					rsa.setPublicKey(exp, mod);
 					return rsa.encrypt(s, s.length);
 				} 
 			} catch (SQLException e) {

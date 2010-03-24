@@ -44,7 +44,6 @@ public class RMIConsole {
 	public static final byte[] key = {-19, -11, 122, 111, -37, -13, 16, -47, -65, 78, -126, -128, -88, 54, 101, 86};
 	public static final SecretKeySpec ProgramKey = new SecretKeySpec(key, "AES");
 	public static ArrayList<String> cmdList;
-	public static Logger log = new Logger();
 	public static Registry reg;
 	/**
 	 * @author Gilbert
@@ -79,7 +78,7 @@ public class RMIConsole {
 			{
 				if (cmd.equalsIgnoreCase("exit"))
 				{
-					log.log("admin", "Server exit.");
+					Logger.log("admin", "Server exit.");
 					System.exit(0);
 				}
 				else if (cmd.equalsIgnoreCase("start"))
@@ -124,7 +123,7 @@ public class RMIConsole {
 			            e.printStackTrace();
 			        }
 			        
-					log.log("admin", "Server starts");
+					Logger.log("admin", "Server starts");
 				}
 				else if (cmd.equalsIgnoreCase("genkey"))
 				{
@@ -150,14 +149,14 @@ public class RMIConsole {
 					if(rh.register() == -1) {
 						System.out.println("Username Exists!");
 						
-						log.log(cmd2, "failed to register "+cmd+"as existing user");
+						Logger.log(cmd2, "failed to register "+cmd+"as existing user");
 					}
 					
 				}
 				else if (cmd.equalsIgnoreCase("Threadchk"))
 				{
 					System.out.println(Thread.activeCount());
-					log.log("admin", Thread.activeCount()+"");					
+					Logger.log("admin", Thread.activeCount()+"");					
 				}
 				else if (cmd.equalsIgnoreCase("status"))
 				{
@@ -192,11 +191,11 @@ public class RMIConsole {
 					ehospital.server.handler.AuthHandler ah = new ehospital.server.handler.AuthHandler(username,pwd,dbm);
 					if (ah.authenticate()) {
 						System.out.println("User found and authenticated!");
-						log.log(username, "is tested authenticated by admin.");
+						Logger.log(username, "is tested authenticated by admin.");
 						
 					} else {
 						System.out.println("Authenticate failed");
-						log.log(username, "is tested failed to authenticate by admin.");
+						Logger.log(username, "is tested failed to authenticate by admin.");
 					}
 					
 				} else if (cmd.equalsIgnoreCase("help")) {
@@ -229,7 +228,7 @@ public class RMIConsole {
 			reg.unbind("DataHandler");
 			reg.unbind("DisconnHandler");
 			System.out.println("Server is shut down");
-			log.log("admin", "Server is shut down");
+			Logger.log("admin", "Server is shut down");
 		} catch (NotBoundException e) {
 			System.out.println("Some of the Handlers are not bind.");
 		} catch (RemoteException e) {

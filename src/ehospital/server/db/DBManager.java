@@ -189,7 +189,7 @@ public class DBManager{
 		try {
 			if (this.connect()) {
 				Statement stmt = getConn().createStatement();
-				String q = "SELECT username,pwd,pub_key,mod FROM user WHERE username = '"+username+"';";
+				String q = "SELECT `username`,`pwd`,`pub_key`,`mod` FROM `user` WHERE `username` LIKE '"+username+"';";
 				ResultSet rs =  stmt.executeQuery(q);
 				if(rs.first()) {
 					return rs;
@@ -286,25 +286,6 @@ public class DBManager{
 		}
 	}
 	
-
-	//Logging************************
-
-	public int log( String datetime, String user1, String content) {
-		try {
-			if(this.connect()) {
-				Statement stmt = getConn().createStatement();
-				String q = "INSERT INTO log (id,date,user,content) VALUES ( null, '"+datetime+"', '"+user1+"', '"+content+"');";
-				
-				stmt.executeUpdate(q);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return -1;
-		} 
-		return 0;
-	}
-
 	public void setConn(Connection conn) {
 		this.conn = conn;
 	}
@@ -312,7 +293,5 @@ public class DBManager{
 	public Connection getConn() {
 		return conn;
 	}
-	
-	//Logging****************************
 	
 }

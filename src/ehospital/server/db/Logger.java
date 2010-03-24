@@ -8,12 +8,11 @@ import java.util.Date;
 
 public class Logger {
 	
-	private DBManager dbm;
-	public Logger() {
-		this.dbm = new DBManager();
+	private Logger() {
 	}
 	
-	public int log(String user1, String content) {
+	public static int log(String user1, String content) {
+		DBManager dbm = new DBManager();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         String datetime = dateFormat.format(date);

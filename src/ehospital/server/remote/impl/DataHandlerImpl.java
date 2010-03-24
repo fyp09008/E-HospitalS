@@ -13,7 +13,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import message.QueryRequestMessage;
 import remote.obj.DataHandler;
 import ehospital.server.Console;
 import ehospital.server.Session;
@@ -83,7 +82,6 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 			raw = cipher.doFinal(raw);
 			return raw;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e1) {
 			// TODO Auto-generated catch block
@@ -119,7 +117,6 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 			rawQuery = cipher.doFinal(updateStmt);
 			DBManager dbm = new DBManager();
 			dbm.connect();
-			ResultSet rs;
 			dbm.update(new String(rawQuery));
 			return 0;
 		} catch (SQLException e) {
