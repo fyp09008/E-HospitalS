@@ -3,8 +3,12 @@
  */
 package ehospital.server.db;
 
-import java.io.Serializable;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 /**
@@ -21,8 +25,6 @@ public class DBManager{
 	private static final String password = "1234qwer";
 	
 	private Connection conn;
-	private ResultSet rs;
-	
 	/**
 	 * Build a connection to the database using predefined param.
 	 */
@@ -201,19 +203,6 @@ public class DBManager{
 		} 
 	}
 
-	/**
-	 * @param rs the rs to set
-	 */
-	public void setRs(ResultSet rs) {
-		this.rs = rs;
-	}
-
-	/**
-	 * @return the rs
-	 */
-	public ResultSet getRs() {
-		return rs;
-	}
 	
 	public void disconnect() {
 		try {

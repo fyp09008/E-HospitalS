@@ -45,7 +45,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 		ResultSet user = dbm.isUserExist(username);
 		if (user != null) {
 			try {
-				String pwdFromDB = dbm.getRs().getString(2);
+				String pwdFromDB = user.getString(2);
 				String pwdReceived = Utility.byteArrayToString(HEPwd);
 				if (pwdFromDB.equals(pwdReceived)) {
 					SecretKeySpec sks = this.genSessionKey();
