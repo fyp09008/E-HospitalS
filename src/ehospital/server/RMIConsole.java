@@ -23,7 +23,6 @@ import ehospital.server.db.Logger;
 import ehospital.server.handler.RegisterHandler;
 import ehospital.server.remote.impl.AuthHandlerImpl;
 import ehospital.server.remote.impl.DataHandlerImpl;
-import ehospital.server.remote.impl.DisconnHandlerImpl;
 /**
  * @author mc
  *
@@ -110,19 +109,7 @@ public class RMIConsole {
 			            System.err.println("DataHandlerImpl exception:");
 			            e.printStackTrace();
 			        }
-			        
-			        try {
-			            String name = "DisconnHandler";
-			            remote.obj.DisconnHandler engine = new DisconnHandlerImpl();
-			            reg.rebind(name, engine);			            	
-			            
-			            System.out.println("DisconnHandlerImpl bound");
-			            
-			        } catch (Exception e) {
-			            System.err.println("DisconnHandlerImpl exception:");
-			            e.printStackTrace();
-			        }
-			        
+			        			        
 					Logger.log("admin", "Server starts");
 				}
 				else if (cmd.equalsIgnoreCase("genkey"))
@@ -177,7 +164,7 @@ public class RMIConsole {
 				{
 					Vector<Session> s = SessionList.clientList;
 					for (int i = 0; i < s.size(); i++) {
-						System.out.println(s.get(i));
+						System.out.println(s.get(i).getUsername());
 					}
 				}
 				else if (cmd.equalsIgnoreCase("testauth"))	
@@ -229,6 +216,7 @@ public class RMIConsole {
 			reg.unbind("DisconnHandler");
 			System.out.println("Server is shut down");
 			Logger.log("admin", "Server is shut down");
+			SessionList.clientList = new Vector<Session>();
 		} catch (NotBoundException e) {
 			System.out.println("Some of the Handlers are not bind.");
 		} catch (RemoteException e) {

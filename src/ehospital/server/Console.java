@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 import javax.crypto.spec.SecretKeySpec;
 import ehospital.server.db.DBManager;
+import ehospital.server.db.Logger;
 import ehospital.server.handler.Handler;
 import ehospital.server.handler.RegisterHandler;
 import ehospital.server.remote.impl.AuthHandlerImpl;
@@ -84,12 +85,7 @@ public class Console {
 				if (cmd.equalsIgnoreCase("exit"))
 				{
 					//log***********
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			        Date date = new Date();
-			        String datetime = dateFormat.format(date);
-
-					DBManager log = new DBManager();
-					log.log( datetime, "admin", "Server exists!");
+					Logger.log("admin", "Server exits!");
 					//log************
 					
 					System.exit(0);
@@ -99,12 +95,7 @@ public class Console {
 					sThread = new ServerThread();
 					sThread.start();
 					//log***********
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			        Date date = new Date();
-			        String datetime = dateFormat.format(date);
-
-					DBManager log = new DBManager();
-					log.log( datetime, "admin", "Server starts up!");
+					Logger.log("admin", "Server starts up!");
 					//log************
 					
 				}
@@ -115,13 +106,7 @@ public class Console {
 					sThread = new ServerThread(Integer.parseInt(port));
 					sThread.start();
 					
-					//log***********
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			        Date date = new Date();
-			        String datetime = dateFormat.format(date);
-
-					DBManager log = new DBManager();
-					log.log( datetime, "admin", "Server starts with port:"+port);
+					Logger.log("admin", "Server starts with port:"+port);
 					//log************
 				}
 				else if (cmd.equalsIgnoreCase("start rmi"))
@@ -164,13 +149,7 @@ public class Console {
 					if (sThread != null){
 						sThread.closeServerSocket();
 					
-					//log***********
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			        Date date = new Date();
-			        String datetime = dateFormat.format(date);
-
-					DBManager log = new DBManager();
-					log.log( datetime, "admin", "Server is shut down");
+						Logger.log("admin", "Server is shut down");
 					//log************
 					}
 					else 
@@ -209,13 +188,7 @@ public class Console {
 					if(rh.register() == -1) {
 						System.out.println("Username Exists!");
 						
-						//log***********
-						DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				        Date date = new Date();
-				        String datetime = dateFormat.format(date);
-
-						DBManager log = new DBManager();
-						log.log( datetime, cmd2, "failed to register "+cmd+"as existing user");
+						Logger.log(cmd2, "failed to register "+cmd+"as existing user");
 						//log************
 					}
 					
@@ -224,13 +197,7 @@ public class Console {
 				{
 					System.out.println(Thread.activeCount());
 				
-					//log***********
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			        Date date = new Date();
-			        String datetime = dateFormat.format(date);
-
-					DBManager log = new DBManager();
-					log.log( datetime, "admin", Thread.activeCount()+"");
+					Logger.log("admin", Thread.activeCount()+"");
 					//log************
 
 					
@@ -238,13 +205,7 @@ public class Console {
 				else if (cmd.equalsIgnoreCase("show client"))
 				{
 					sThread.printUserList();
-					//log***********
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			        Date date = new Date();
-			        String datetime = dateFormat.format(date);
-
-					DBManager log = new DBManager();
-					log.log( datetime, "admin", "Cients is shown");
+					Logger.log("admin", "Cients is shown");
 					//log************
 					
 				}
@@ -260,25 +221,13 @@ public class Console {
 					if (ah.authenticate()) {
 						System.out.println("User found and authenticated!");
 						
-						//log***********
-						DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				        Date date = new Date();
-				        String datetime = dateFormat.format(date);
-
-						DBManager log = new DBManager();
-						log.log( datetime, username, "is found and authenticated!");
+						Logger.log(username, "is found and authenticated!");
 						//log************
 
 						
 					} else {
 						System.out.println("Authenticate failed");
-						//log***********
-						DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				        Date date = new Date();
-				        String datetime = dateFormat.format(date);
-
-						DBManager log = new DBManager();
-						log.log( datetime, username, " failed to authenticate");
+						Logger.log(username, " failed to authenticate");
 						//log************
 					}
 					
@@ -302,7 +251,6 @@ public class Console {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

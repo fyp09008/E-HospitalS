@@ -1,9 +1,16 @@
 package ehospital.server;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.Random;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.crypto.spec.SecretKeySpec;
+
+import remote.obj.ClientCallback;
 
 public class Session extends TimerTask {
 	
@@ -12,13 +19,6 @@ public class Session extends TimerTask {
 	private byte[] lomsg;
 	private String exp;
 	private String mod;
-	
-	
-	
-
-	public Session() {
-		
-	}
 
 	public Session(String username, SecretKeySpec sessionKey, String exp, String mod) {
 		this.username = username;
@@ -27,9 +27,25 @@ public class Session extends TimerTask {
 		this.lomsg = Utility.intToByteArray(i);
 		this.mod = mod;
 		this.exp = exp;
+		new Timer().schedule(this, 1000);
 	}
 	@Override
 	public void run() {
+		try {
+			Registry r = LocateRegistry.getRegistry(11111);
+			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
+			ccb.timeout();
+			SessionList.deleteSession(username);
+			this.cancel();
+			
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 
@@ -63,5 +79,9 @@ public class Session extends TimerTask {
 
 	public void setLomsg(byte[] lomsg) {
 		this.lomsg = lomsg;
+	}
+
+	public void setSessionKey(SecretKeySpec sessionKey) {
+		this.sessionKey = sessionKey;
 	}
 }
