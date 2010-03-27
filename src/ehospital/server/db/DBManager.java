@@ -29,7 +29,6 @@ public class DBManager{
 	 * Build a connection to the database using predefined param.
 	 */
 	public DBManager() {
-		
 	}
 	
 	public boolean connect() {
@@ -157,7 +156,8 @@ public class DBManager{
 	
 	/**
 	 * Example:
-	 * update("UPDATE tbl SET field1=?", {"1"});
+	 * update("UPDATE tbl SET field1=?", param);
+	 * where param is a array of parameter
 	 * @param query The update or insert query
 	 * @param param The parameters
 	 * @throws SQLException 

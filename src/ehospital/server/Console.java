@@ -238,13 +238,13 @@ public class Console {
 				} else if (cmd.equalsIgnoreCase("testsql"))
 				{
 					DBManager dbm = new DBManager();
-					ehospital.server.db.DBManager.Param[] pList = new ehospital.server.db.DBManager.Param[1];
-					pList[0] = dbm.new Param("name", "medicine A';");
-					ehospital.server.db.DBManager.Param[] pList2 = new ehospital.server.db.DBManager.Param[1];
-					pList2[0] = dbm.new Param("id", "1");
-					dbm.update("Update medicine", pList, pList2);
+					Object[] param = {"1", "h'); DROP TABLE medicine; -- "};
+					//java.sql.ResultSet rs = dbm.query("SELECT * FROM medicine WHERE id=?", param);
+					//java.sql.ResultSet rs = dbm.query("SELECT * FROM medicine WHERE id=1 OR TRUE");
 					//while (rs.next())
 					//	System.out.println(rs.getString(1)+" "+rs.getString(2));
+					dbm.update("INSERT INTO medicine (name, description) VALUES (?, ?)", param );
+					//dbm.update("INSERT INTO medicine (name, description) VALUES ('1', 'h'); DROP TABLE medicine; -- ');");
 				}
 				System.out.print("~>");
 			}
