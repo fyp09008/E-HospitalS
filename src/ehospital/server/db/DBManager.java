@@ -89,6 +89,32 @@ public class DBManager{
 		return rs;
 	}
 	
+	/**
+	 * This query method is used as follow:
+	 * ResultSet rs = query("SELECT * FROM tbl1 WHERE field1=?, field2=?", param);
+	 * where param is the array of parameters
+	 * @param query The query with all parameters set to ?
+	 * @param param The val of each parameters.  
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ResultSet query(String query, Object[] param) throws SQLException
+	{
+		PreparedStatement prep = this.getConn().prepareStatement(query);
+		if (param != null && param.length != 0)
+		{
+			for (int i = 0; i < param.length; i++)
+			{
+				// Check wt instance is the param..
+				if (param[i] instanceof String)
+					prep.setString(i+1, (String) param[i]);
+				else if (param[i] instanceof Integer)
+					prep.setInt(i+1, Integer.parseInt(param[i].toString()));
+			}
+		}
+		return prep.executeQuery();
+	}
+	
 	public void update(String query) throws SQLException
 	{
 		this.connect();
@@ -125,6 +151,30 @@ public class DBManager{
 		for (int i = 0; (WHEREparam != null && WHEREparam.length != 0) &&  i < WHEREparam.length; i++)
 		{
 			prep.setString(i+SETparam.length+1, WHEREparam[i].getVal());
+		}
+		prep.executeUpdate();
+	}
+	
+	/**
+	 * Example:
+	 * update("UPDATE tbl SET field1=?", {"1"});
+	 * @param query The update or insert query
+	 * @param param The parameters
+	 * @throws SQLException 
+	 */
+	public void update(String query, Object[] param) throws SQLException
+	{
+		PreparedStatement prep = this.getConn().prepareStatement(query);
+		if (param != null && param.length != 0)
+		{
+			for (int i = 0; i < param.length; i++)
+			{
+				// Check wt instance is the param..
+				if (param[i] instanceof String)
+					prep.setString(i+1, (String) param[i]);
+				else if (param[i] instanceof Integer)
+					prep.setInt(i+1, Integer.parseInt(param[i].toString()));
+			}
 		}
 		prep.executeUpdate();
 	}
