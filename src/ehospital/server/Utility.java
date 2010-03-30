@@ -20,18 +20,23 @@ public class Utility {
 	
 	private Utility() {}
 	
-	public static Object encrypt(Object o)
+	public static byte[] encrypt(Object o)
 	{
 		Handler h = new Handler();
 		h.setSessionKeySpec(ProgramKey);
-		return (Object) h.encryptAES(h.objToBytes(o));
+		return  h.encryptAES(h.objToBytes(o));
 	}
-	
-	public static Object decrypt(Object o)
+	public static byte[] encryptBytes(byte[] o)
 	{
 		Handler h = new Handler();
 		h.setSessionKeySpec(ProgramKey);
-		return (Object) h.BytesToObj(h.decryptAES((byte[]) o));
+		return  h.encryptAES(o);
+	}
+	public static byte[] decrypt(byte[] o)
+	{
+		Handler h = new Handler();
+		h.setSessionKeySpec(ProgramKey);
+		return h.decryptAES( o);
 	}
 	
 	public static String byteArrayToString(byte[] b) {
