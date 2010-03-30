@@ -53,8 +53,8 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	
 	public byte[] authenticate(byte[] usernameIn, byte[] HEPwdIn)
 			throws RemoteException {
-		String username = new String((byte[])Console.decrypt(usernameIn));
-		byte[] HEPwd = (byte[])Console.decrypt(HEPwdIn);
+		String username = new String((byte[])Utility.decrypt(usernameIn));
+		byte[] HEPwd = (byte[])Utility.decrypt(HEPwdIn);
 		dbm = new DBManager();
 		ResultSet user = dbm.isUserExist(username);
 		if (user != null && HEPwd != null) {
@@ -80,7 +80,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 					} else {
 						sessionExist.setSessionKey(sks);
 					}
-					return (byte[]) Console.encrypt(rsa.encrypt(s, s.length));
+					return (byte[]) Utility.encrypt(rsa.encrypt(s, s.length));
 				} 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -91,12 +91,12 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	}
 
 	public byte[] getEncryptedSessionKey(byte[] usernameIn) {
-		String username = new String((byte[])Console.decrypt(usernameIn));
+		String username = new String((byte[])Utility.decrypt(usernameIn));
 		Session s = SessionList.findClient(username);
 		byte[] sessionKey = s.getSessionKey().getEncoded();
 		RSASoftware rsa = new RSASoftware();
 		rsa.setPublicKey(s.getExp(), s.getMod());
-		return (byte[]) Console.encrypt(rsa.encrypt(sessionKey, sessionKey.length));
+		return (byte[]) Utility.encrypt(rsa.encrypt(sessionKey, sessionKey.length));
 	}
 
 	private byte[] objToBytes(Object obj){
@@ -120,7 +120,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	public byte[] getPrivilege(byte[] usernameIn) {	
 
 			try {
-				String username = new String((byte[])Console.decrypt(usernameIn));
+				String username = new String((byte[])Utility.decrypt(usernameIn));
 				Session s = SessionList.findClient(username);
 				Cipher c;
 				c = Cipher.getInstance("aes");
@@ -129,7 +129,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 				ResultSet rs = this.dbm.query("SELECT uid, `Read`, `Write`, `Add` FROM privilege, user WHERE user.Role=privilege.Role AND user.username='"+username+"'; ");
 				CachedRowSetImpl crs = new CachedRowSetImpl();
 				crs.populate(rs);
-				return (byte[]) Console.encrypt(c.doFinal(this.objToBytes(crs)));
+				return (byte[]) Utility.encrypt(c.doFinal(this.objToBytes(crs)));
 
 				} catch (NoSuchAlgorithmException e) {
 					// TODO Auto-generated catch block
@@ -156,7 +156,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	}
 
 	public byte[] getLoMsg(byte[] usernameIn) {
-		String username = new String((byte[])Console.decrypt(usernameIn));
+		String username = new String((byte[])Utility.decrypt(usernameIn));
 		Session s = SessionList.findClient(username);
 		if (s != null) {
 			try {
@@ -166,7 +166,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 				//TODO add program key
 				//lomsg = c.doFinal(lomsg);
 				//c.init(Cipher.ENCRYPT_MODE, ehospital.server.Console.ProgramKey);
-				return (byte[]) Console.encrypt(c.doFinal(lomsg));
+				return (byte[]) Utility.encrypt(c.doFinal(lomsg));
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			} catch (IllegalBlockSizeException e) {
@@ -188,7 +188,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	}
 	
 public byte[] logout(byte[] usernameIn, byte[] lomsg) throws RemoteException {
-		String username = new String((byte[])Console.decrypt(usernameIn));
+		String username = new String((byte[])Utility.decrypt(usernameIn));
 		Session s = ehospital.server.SessionList.findClient(username);
 		Cipher c = null;
 		try {
@@ -206,13 +206,13 @@ public byte[] logout(byte[] usernameIn, byte[] lomsg) throws RemoteException {
 			}
 		if (s == null || lomsg == null) {
 			Boolean b = new Boolean(false);
-			return (byte[])Console.encrypt(b);
+			return (byte[])Utility.encrypt(b);
 		}
 		RSASoftware rsa = new RSASoftware();
 		rsa.setPublicKey(s.getExp(), s.getMod());
 		byte[] decMsg = null;
 		try {
-			decMsg = rsa.unsign(c.doFinal((byte[])Console.decrypt(lomsg)), lomsg.length);
+			decMsg = rsa.unsign(c.doFinal((byte[])Utility.decrypt(lomsg)), lomsg.length);
 		} catch (IllegalBlockSizeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -223,10 +223,10 @@ public byte[] logout(byte[] usernameIn, byte[] lomsg) throws RemoteException {
 		if (Utility.compareByte(decMsg, s.getLomsg())) {
 			ehospital.server.SessionList.deleteSession(username);
 			Boolean b = new Boolean(true);
-			return (byte[])Console.encrypt(b);
+			return (byte[])Utility.encrypt(b);
 		}
 		Boolean b = new Boolean(false);
-		return (byte[])Console.encrypt(b);
+		return (byte[])Utility.encrypt(b);
 	}
 
 

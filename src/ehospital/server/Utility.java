@@ -7,11 +7,32 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import javax.crypto.spec.SecretKeySpec;
+
+import ehospital.server.handler.Handler;
 /*
  * This class provide utility for all classes, 
  */
 public class Utility {
+	public static final byte[] key = {-19, -11, 122, 111, -37, -13, 16, -47, -65, 78, -126, -128, -88, 54, 101, 86};
+	public static final SecretKeySpec ProgramKey = new SecretKeySpec(key, "AES");
+	
 	private Utility() {}
+	
+	public static Object encrypt(Object o)
+	{
+		Handler h = new Handler();
+		h.setSessionKeySpec(ProgramKey);
+		return (Object) h.encryptAES(h.objToBytes(o));
+	}
+	
+	public static Object decrypt(Object o)
+	{
+		Handler h = new Handler();
+		h.setSessionKeySpec(ProgramKey);
+		return (Object) h.BytesToObj(h.decryptAES((byte[]) o));
+	}
 	
 	public static String byteArrayToString(byte[] b) {
 		if(b == null)
