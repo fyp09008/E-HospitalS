@@ -20,7 +20,7 @@ public class Logger {
 		try {
 			if(dbm.connect()) {
 				Statement stmt = dbm.getConn().createStatement();
-				String q = "INSERT INTO log (id,date,user,content) VALUES ( null, '"+datetime+"', '"+user1+"', '"+content+"');";
+				String q = "INSERT INTO log (id,datetime,user,content) VALUES ( null, '"+datetime+"', '"+user1+"', '"+content+"');";
 				
 				stmt.executeUpdate(q);
 				dbm.disconnect();
@@ -32,5 +32,4 @@ public class Logger {
 		} 
 		return 0;
 	}
-	
 }
