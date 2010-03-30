@@ -64,29 +64,29 @@ public class DBManager{
 	 * @return
 	 * @throws SQLException
 	 */
-	public ResultSet query(String query, Param [] param) throws SQLException
-	{
-		this.connect();
-		String whereclause = null;
-		if (param != null && param.length != 0)
-		{
-			whereclause = " WHERE "+param[0].getName()+param[0].getOp()+"?";
-			for (int i = 1; i < param.length; i++)
-			{
-				whereclause += " AND "+param[i].getName()+param[i].getOp()+"?";
-			}
-		}
-		PreparedStatement prep = this.getConn().prepareStatement(whereclause == null ? query : query+" "+whereclause);
-		if (param != null && param.length != 0)
-		{
-			for (int i = 0; i < param.length; i++)
-			{
-				prep.setString(i+1, param[i].getVal());
-			}
-		}
-		ResultSet rs = prep.executeQuery();
-		return rs;
-	}
+//	public ResultSet query(String query, Param [] param) throws SQLException
+//	{
+//		this.connect();
+//		String whereclause = null;
+//		if (param != null && param.length != 0)
+//		{
+//			whereclause = " WHERE "+param[0].getName()+param[0].getOp()+"?";
+//			for (int i = 1; i < param.length; i++)
+//			{
+//				whereclause += " AND "+param[i].getName()+param[i].getOp()+"?";
+//			}
+//		}
+//		PreparedStatement prep = this.getConn().prepareStatement(whereclause == null ? query : query+" "+whereclause);
+//		if (param != null && param.length != 0)
+//		{
+//			for (int i = 0; i < param.length; i++)
+//			{
+//				prep.setString(i+1, param[i].getVal());
+//			}
+//		}
+//		ResultSet rs = prep.executeQuery();
+//		return rs;
+//	}
 	
 	/**
 	 * This query method is used as follow:

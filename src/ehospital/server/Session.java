@@ -27,7 +27,7 @@ public class Session extends TimerTask {
 		this.lomsg = Utility.intToByteArray(i);
 		this.mod = mod;
 		this.exp = exp;
-		new Timer().schedule(this, 1000);
+		new Timer().schedule(this, 1000000);
 	}
 	@Override
 	public void run() {

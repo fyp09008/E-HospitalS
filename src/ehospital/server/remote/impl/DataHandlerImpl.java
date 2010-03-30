@@ -13,6 +13,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.sun.rowset.CachedRowSetImpl;
+
 import remote.obj.DataHandler;
 import ehospital.server.Console;
 import ehospital.server.Session;
@@ -70,7 +72,7 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 			cipher.init(Cipher.DECRYPT_MODE, Console.ProgramKey);
 			byte[] rawQuery = cipher.doFinal(encQueryStmt);
 			cipher.init(Cipher.DECRYPT_MODE, sks);
-			rawQuery = cipher.doFinal(encQueryStmt);
+			rawQuery = cipher.doFinal(rawQuery);
 			DBManager dbm = new DBManager();
 			dbm.connect();
 			ResultSet rs;
@@ -141,6 +143,91 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+	}
+	@Override
+	public byte[] query(String username, byte[] encQueryStmt, byte[] param)
+			throws RemoteException {
+		Session s = ehospital.server.SessionList.findClient(username);
+		SecretKeySpec sks = s.getSessionKey();
+		Cipher cipher;
+		try {
+			cipher = Cipher.getInstance("aes");
+			cipher.init(Cipher.DECRYPT_MODE, sks);
+			byte[] rawQuery = cipher.doFinal(encQueryStmt);
+			byte[] p = cipher.doFinal(param);
+//			cipher.init(Cipher.DECRYPT_MODE, sks);
+//			rawQuery = cipher.doFinal(rawQuery);
+//			p = cipher.doFinal(p);
+			DBManager dbm = new DBManager();
+			dbm.connect();
+			ResultSet rs = dbm.query(new String(rawQuery), (Object[]) Utility.BytesToObj(p));
+//			System.out.println(rs.is);
+			CachedRowSetImpl crs = new CachedRowSetImpl();
+			crs.populate(rs);
+			byte[] raw = Utility.objToBytes(crs);
+			cipher.init(Cipher.ENCRYPT_MODE, sks);
+			raw = cipher.doFinal(raw);
+//			cipher.init(Cipher.ENCRYPT_MODE, Console.ProgramKey);
+//			raw = cipher.doFinal(raw);
+			return raw;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public int update(String username, byte[] encUpdateStmt, byte[] param)
+			throws RemoteException {
+		Session s = ehospital.server.SessionList.findClient(username);
+		SecretKeySpec sks = s.getSessionKey();
+		Cipher cipher;
+		try {
+			cipher = Cipher.getInstance("aes");
+			cipher.init(Cipher.DECRYPT_MODE, sks);
+			byte[] rawQuery = cipher.doFinal(encUpdateStmt);
+			byte[] p = cipher.doFinal(param);
+//			cipher.init(Cipher.DECRYPT_MODE, sks);
+//			rawQuery = cipher.doFinal(rawQuery);
+//			p = cipher.doFinal(p);
+			DBManager dbm = new DBManager();
+			dbm.connect();
+			dbm.update(new String(rawQuery), (Object[]) Utility.BytesToObj(p));
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 }
