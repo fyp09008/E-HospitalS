@@ -27,11 +27,11 @@ public class Session extends TimerTask {
 		this.lomsg = Utility.intToByteArray(i);
 		this.mod = mod;
 		this.exp = exp;
-		new Timer().schedule(this, 1000);
+		new Timer().schedule(this, 1000000);
 	}
 	@Override
 	public void run() {
-		try {
+		/*try {
 			Registry r = LocateRegistry.getRegistry(11111);
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
 			ccb.timeout();
@@ -42,10 +42,10 @@ public class Session extends TimerTask {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
+			 TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		
 	}
 
