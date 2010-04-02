@@ -7,7 +7,13 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import ehospital.server.handler.Handler;
@@ -28,9 +34,30 @@ public class Utility {
 	}
 	public static byte[] encryptBytes(byte[] o)
 	{
-		Handler h = new Handler();
-		h.setSessionKeySpec(ProgramKey);
-		return  h.encryptAES(o);
+//		Handler h = new Handler();
+//		h.setSessionKeySpec(ProgramKey);
+//		return  h.encryptAES(o);
+		try {
+			Cipher cipher = Cipher.getInstance("aes");
+			cipher.init(Cipher.ENCRYPT_MODE, ProgramKey);
+			return cipher.doFinal(o);
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return o;
 	}
 	public static byte[] decrypt(byte[] o)
 	{

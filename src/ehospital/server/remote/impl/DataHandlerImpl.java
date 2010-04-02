@@ -153,22 +153,19 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 		try {
 			cipher = Cipher.getInstance("aes");
 			cipher.init(Cipher.DECRYPT_MODE, sks);
-			byte[] rawQuery = cipher.doFinal(encQueryStmt);
-			byte[] p = cipher.doFinal(param);
-//			cipher.init(Cipher.DECRYPT_MODE, sks);
-//			rawQuery = cipher.doFinal(rawQuery);
-//			p = cipher.doFinal(p);
+			byte[] rawQuery = cipher.doFinal(Utility.decrypt(encQueryStmt));
+			byte[] p = cipher.doFinal(Utility.decrypt(param));
 			DBManager dbm = new DBManager();
 			dbm.connect();
 			ResultSet rs = dbm.query(new String(rawQuery), (Object[]) Utility.BytesToObj(p));
-//			System.out.println(rs.is);
 			CachedRowSetImpl crs = new CachedRowSetImpl();
 			crs.populate(rs);
 			byte[] raw = Utility.objToBytes(crs);
 			cipher.init(Cipher.ENCRYPT_MODE, sks);
 			raw = cipher.doFinal(raw);
-//			cipher.init(Cipher.ENCRYPT_MODE, Console.ProgramKey);
-//			raw = cipher.doFinal(raw);
+//			raw = Utility.encryptBytes(raw);
+			cipher.init(Cipher.ENCRYPT_MODE, Utility.ProgramKey);
+			raw = cipher.doFinal(raw);
 			return raw;
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
@@ -192,7 +189,7 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 		return null;
 	}
 	@Override
-	public int update(String username, byte[] encUpdateStmt, byte[] param)
+	public boolean update(String username, byte[] encUpdateStmt, byte[] param)
 			throws RemoteException {
 		Session s = ehospital.server.SessionList.findClient(username);
 		SecretKeySpec sks = s.getSessionKey();
@@ -200,14 +197,12 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 		try {
 			cipher = Cipher.getInstance("aes");
 			cipher.init(Cipher.DECRYPT_MODE, sks);
-			byte[] rawQuery = cipher.doFinal(encUpdateStmt);
-			byte[] p = cipher.doFinal(param);
-//			cipher.init(Cipher.DECRYPT_MODE, sks);
-//			rawQuery = cipher.doFinal(rawQuery);
-//			p = cipher.doFinal(p);
+			byte[] rawQuery = cipher.doFinal(Utility.decrypt(encUpdateStmt));
+			byte[] p = cipher.doFinal(Utility.decrypt(param));
 			DBManager dbm = new DBManager();
 			dbm.connect();
 			dbm.update(new String(rawQuery), (Object[]) Utility.BytesToObj(p));
+			return true;
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -227,7 +222,7 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0;
+		return false;
 	}
 
 }
