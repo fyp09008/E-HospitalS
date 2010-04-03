@@ -14,6 +14,8 @@ import remote.obj.ClientCallback;
 
 public class Session extends TimerTask {
 	
+	private static int TIMEOUT = 1000;
+	
 	private String username;
 	private SecretKeySpec sessionKey;
 	private byte[] lomsg;
@@ -27,7 +29,7 @@ public class Session extends TimerTask {
 		this.lomsg = Utility.intToByteArray(i);
 		this.mod = mod;
 		this.exp = exp;
-		new Timer().schedule(this, 1000);
+		new Timer().schedule(this, Session.TIMEOUT);
 	}
 	@Override
 	public void run() {
