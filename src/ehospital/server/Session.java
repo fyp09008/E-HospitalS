@@ -33,7 +33,7 @@ public class Session extends TimerTask {
 	}
 	@Override
 	public void run() {
-		try {
+		/*try {
 			Registry r = LocateRegistry.getRegistry(11111);
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
 			ccb.timeout();
@@ -44,10 +44,10 @@ public class Session extends TimerTask {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
+			 TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		
 	}
 

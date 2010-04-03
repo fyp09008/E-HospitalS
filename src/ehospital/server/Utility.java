@@ -7,7 +7,13 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import ehospital.server.handler.Handler;
@@ -20,18 +26,44 @@ public class Utility {
 	
 	private Utility() {}
 	
-	public static Object encrypt(Object o)
+	public static byte[] encrypt(Object o)
 	{
 		Handler h = new Handler();
 		h.setSessionKeySpec(ProgramKey);
-		return (Object) h.encryptAES(h.objToBytes(o));
+		return  h.encryptAES(h.objToBytes(o));
 	}
-	
-	public static Object decrypt(Object o)
+	public static byte[] encryptBytes(byte[] o)
+	{
+//		Handler h = new Handler();
+//		h.setSessionKeySpec(ProgramKey);
+//		return  h.encryptAES(o);
+		try {
+			Cipher cipher = Cipher.getInstance("aes");
+			cipher.init(Cipher.ENCRYPT_MODE, ProgramKey);
+			return cipher.doFinal(o);
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return o;
+	}
+	public static byte[] decrypt(byte[] o)
 	{
 		Handler h = new Handler();
 		h.setSessionKeySpec(ProgramKey);
-		return (Object) h.BytesToObj(h.decryptAES((byte[]) o));
+		return h.decryptAES( o);
 	}
 	
 	public static String byteArrayToString(byte[] b) {
