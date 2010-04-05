@@ -23,23 +23,13 @@ import ehospital.server.db.Logger;
 import ehospital.server.handler.RegisterHandler;
 import ehospital.server.remote.impl.AuthHandlerImpl;
 import ehospital.server.remote.impl.DataHandlerImpl;
+import ehospital.server.remote.impl.ProgramAuthHandlerImpl;
 /**
  * @author mc
  *
  */
 public class RMIConsole {
-	
 
-	
-	//private String pri =
-	//	"10001";
-	//private String mod = 
-	//	"94134257dd13820880b443b653e8c716d6381d5a2683f5961ef0402468f0079202ebd97ac85291bd7971f915ff10e06ed1555dcb6868fcbf60bb89e4fcbb0b20ea7abda29bfaa5a11a0109c44d689f9d188e9cbb62211e5fda65cbd37382bb46c6e72fa889ae366e0c3804509676b61fdc38c4cf05a3646b5deb02a8e4e18daf";
-	
-	//private static final String pub =
-	//	"10001";
-	//private static final String pri = "8a68d95af9c3be531e0547410906e56143dc702f5defdbbc4f50185bded0f78ce51ebf8e1f1adbebd67644093aeac49ae64787df5f71385cb9dff480cb70ecbaa95d88797bd7c1abd9903745abe8e3202c053d2d9295ce382447444d6b1f98e5d0a45fd3548e7f1902d5e0aa82ef4c21cf5761705828222b78836a3b7f33090d";
-	//private static final String mod = "a89877a7e5150456b696d40a9a35ac5ce72cf331ed6463bb05a658a98962739a244d770e78f70e0dd1c07404e2e77aaf9dba6ff3ee21a38a5555c1cbd28a2f7fed603b25a9cf8a6ff1a330503c882b300d855a9c315aa7eec4fca5ee3e7ca351b7e086309de90d2ad4183a606352b052b0c990856df7b3a106f76a48ea004a19";
 	public static final byte[] key = {-19, -11, 122, 111, -37, -13, 16, -47, -65, 78, -126, -128, -88, 54, 101, 86};
 	public static final SecretKeySpec ProgramKey = new SecretKeySpec(key, "AES");
 	public static ArrayList<String> cmdList;
@@ -109,7 +99,19 @@ public class RMIConsole {
 			            System.err.println("DataHandlerImpl exception:");
 			            e.printStackTrace();
 			        }
-			        			        
+			        	
+			        try {
+			            String name = "ProgramAuthHandler";
+			            remote.obj.ProgramAuthHandler engine = new ProgramAuthHandlerImpl();
+			            reg.rebind(name, engine);			            	
+			            
+			            System.out.println("ProgramAuthHandlerImpl bound");
+			            
+			        } catch (Exception e) {
+			            System.err.println("ProgramAuthHandlerImpl exception:");
+			            e.printStackTrace();
+			        }
+			        System.out.println("Server Started");
 					Logger.log("admin", "Server starts");
 				}
 				else if (cmd.equalsIgnoreCase("genkey"))

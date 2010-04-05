@@ -144,7 +144,8 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 		// TODO Auto-generated method stub
 
 	}
-	@Override
+	
+	
 	public byte[] query(String username, byte[] encQueryStmt, byte[] param)
 			throws RemoteException {
 		Session s = ehospital.server.SessionList.findClient(username);
@@ -188,7 +189,7 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 		}
 		return null;
 	}
-	@Override
+	
 	public boolean update(String username, byte[] encUpdateStmt, byte[] param)
 			throws RemoteException {
 		Session s = ehospital.server.SessionList.findClient(username);
