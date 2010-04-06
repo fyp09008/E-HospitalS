@@ -215,7 +215,7 @@ public class RMIConsole {
 		try {
 			reg.unbind("AuthHandler");
 			reg.unbind("DataHandler");
-			reg.unbind("DisconnHandler");
+			reg.unbind("ProgramAuthHandler");
 			System.out.println("Server is shut down");
 			Logger.log("admin", "Server is shut down");
 			SessionList.clientList = new Vector<Session>();
