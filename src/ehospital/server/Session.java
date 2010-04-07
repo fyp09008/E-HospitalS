@@ -4,7 +4,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.ServerNotActiveException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,12 +42,7 @@ public class Session extends TimerTask {
 	@Override
 	public void run() {
 		try {
-<<<<<<< HEAD
-			
-			Registry r = LocateRegistry.getRegistry(11111);
-=======
 			Registry r = LocateRegistry.getRegistry(host,7788);
->>>>>>> fd043a9affb1fb63b2e678494170c2dd6f30df62
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
 			SessionList.deleteSession(username);
 			t.cancel();
@@ -58,11 +52,6 @@ public class Session extends TimerTask {
 		} catch (NotBoundException e) {
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		
-		
-=======
->>>>>>> fd043a9affb1fb63b2e678494170c2dd6f30df62
 	}
 
 	public String getUsername() {
