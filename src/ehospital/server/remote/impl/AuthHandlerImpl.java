@@ -118,6 +118,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 			e.printStackTrace();
 		} return null;
 	}
+	
 	public byte[] getPrivilege(byte[] usernameIn) {	
 
 			try {
