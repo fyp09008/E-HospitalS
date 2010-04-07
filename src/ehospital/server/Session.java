@@ -23,7 +23,11 @@ public class Session extends TimerTask {
 	private String exp;
 	private String mod;
 	private String host;
+	private Timer t;
 
+	public Timer getTimer(){
+		return t;
+	}
 	public Session(String username, SecretKeySpec sessionKey, String exp, String mod, String host) {
 		this.username = username;
 		this.sessionKey = sessionKey;
@@ -32,18 +36,17 @@ public class Session extends TimerTask {
 		this.mod = mod;
 		this.exp = exp;
 		this.host = host;
-		new Timer().schedule(this, Session.TIMEOUT);
+		t = new Timer();
+		t.schedule(this, Session.TIMEOUT);
 	}
 	@Override
 	public void run() {
 		try {
-
 			Registry r = LocateRegistry.getRegistry(host,7788);
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
-			ccb.timeout();
 			SessionList.deleteSession(username);
-			this.cancel();
-			
+			t.cancel();
+			ccb.timeout();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
