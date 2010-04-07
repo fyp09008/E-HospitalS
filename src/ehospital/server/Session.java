@@ -39,22 +39,32 @@ public class Session extends TimerTask {
 		t = new Timer();
 		t.schedule(this, Session.TIMEOUT);
 	}
+	
 	@Override
 	public void run() {
 		try {
+<<<<<<< HEAD
+			
+			Registry r = LocateRegistry.getRegistry(11111);
+=======
 			Registry r = LocateRegistry.getRegistry(host,7788);
+>>>>>>> fd043a9affb1fb63b2e678494170c2dd6f30df62
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
 			SessionList.deleteSession(username);
 			t.cancel();
 			ccb.timeout();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NotBoundException e) {
 			e.printStackTrace();
 		} catch (Exception e){
 			SessionList.deleteSession(username);
 		}
+<<<<<<< HEAD
+		
+		
+=======
+>>>>>>> fd043a9affb1fb63b2e678494170c2dd6f30df62
 	}
 
 	public String getUsername() {

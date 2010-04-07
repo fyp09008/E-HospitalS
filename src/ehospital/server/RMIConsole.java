@@ -14,12 +14,14 @@ import java.rmi.registry.Registry;
 import java.rmi.server.ExportException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Timer;
 import java.util.Vector;
 
 import javax.crypto.spec.SecretKeySpec;
 
 import ehospital.server.db.DBManager;
 import ehospital.server.db.Logger;
+import ehospital.server.db.TmpUserChecker;
 import ehospital.server.handler.RegisterHandler;
 import ehospital.server.remote.impl.AuthHandlerImpl;
 import ehospital.server.remote.impl.DataHandlerImpl;
@@ -44,6 +46,10 @@ public class RMIConsole {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		//start timer thread
+		Timer t = new Timer();
+		t.schedule(new TmpUserChecker(), 60000);
 		
 		cmdList = new ArrayList<String>();
 		cmdList.add("exit");
