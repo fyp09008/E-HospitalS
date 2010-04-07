@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
+import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -54,7 +55,13 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	public byte[] authenticate(byte[] usernameIn, byte[] HEPwdIn)
 			throws RemoteException {
 		String username = new String(Utility.decrypt(usernameIn));
-		System.out.println(username);
+		//Session sessionExist1 = ehospital.server.SessionList.findClient(username); 
+		//if (sessionExist1 == null) {
+			//System.out.println("fine");
+		//} else {
+			//System.out.println("fuck");
+		//}
+		//System.out.println(username);
 		byte[] HEPwd = Utility.decrypt(HEPwdIn);
 		dbm = new DBManager();
 		ResultSet user = dbm.isUserExist(username);
@@ -73,10 +80,26 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 				if (pwdFromDB.equals(pwdReceived)) {
 					SecretKeySpec sks = this.genSessionKey();
 					byte[] s = sks.getEncoded();
+					//get client hostname
+					String host = "";
+					try {
+						host = java.rmi.server.RemoteServer.getClientHost();
+					} catch (ServerNotActiveException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Session sessionExist2 = ehospital.server.SessionList.findClient(username); 
+					//if (sessionExist2 == null) {
+					//	System.out.println("still fine");
+					//} else {
+						//System.out.println("fuck");
+					//}
 					//add session
-					Session session = new Session(username, sks, exp, mod);
+					System.out.println("add new session");
+					Session session = new Session(username, sks, exp, mod,host);
 					Session sessionExist = ehospital.server.SessionList.findClient(username); 
 					if (sessionExist == null) {
+						System.out.println("no such session, create new now");
 						ehospital.server.SessionList.clientList.add(session);
 					} else {
 						sessionExist.setSessionKey(sks);
@@ -123,7 +146,9 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 
 			try {
 				String username = new String((byte[])Utility.decrypt(usernameIn));
+				//System.out.println("in getprivilege");
 				Session s = SessionList.findClient(username);
+				//System.out.println("in getprivilege get session ok");
 				Cipher c;
 				c = Cipher.getInstance("aes");
 				c.init(Cipher.ENCRYPT_MODE, s.getSessionKey());
@@ -160,6 +185,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	public byte[] getLoMsg(byte[] usernameIn) {
 		String username = new String((byte[])Utility.decrypt(usernameIn));
 		Session s = SessionList.findClient(username);
+		//System.out.println("get session ok in get log out msg");
 		if (s != null) {
 			try {
 				byte[] lomsg = s.getLomsg();
@@ -229,6 +255,7 @@ public byte[] logout(byte[] usernameIn, byte[] lomsg) throws RemoteException {
 			Boolean b = new Boolean(true);
 			return (byte[])Utility.encrypt(b);
 		}
+		s.getTimer().cancel();
 		Boolean b = new Boolean(false);
 		return (byte[])Utility.encrypt(b);
 	}
