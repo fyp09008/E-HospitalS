@@ -4,6 +4,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ServerNotActiveException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,27 +15,30 @@ import remote.obj.ClientCallback;
 
 public class Session extends TimerTask {
 	
-	private static int TIMEOUT = 1000;
+	private static int TIMEOUT = 10000;
 	
 	private String username;
 	private SecretKeySpec sessionKey;
 	private byte[] lomsg;
 	private String exp;
 	private String mod;
+	private String host;
 
-	public Session(String username, SecretKeySpec sessionKey, String exp, String mod) {
+	public Session(String username, SecretKeySpec sessionKey, String exp, String mod, String host) {
 		this.username = username;
 		this.sessionKey = sessionKey;
 		int i = new Random().nextInt();
 		this.lomsg = Utility.intToByteArray(i);
 		this.mod = mod;
 		this.exp = exp;
+		this.host = host;
 		new Timer().schedule(this, Session.TIMEOUT);
 	}
 	@Override
 	public void run() {
-		/*try {
-			Registry r = LocateRegistry.getRegistry(11111);
+		try {
+
+			Registry r = LocateRegistry.getRegistry(host,7788);
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
 			ccb.timeout();
 			SessionList.deleteSession(username);
@@ -44,11 +48,8 @@ public class Session extends TimerTask {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NotBoundException e) {
-			 TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
-		
 	}
 
 	public String getUsername() {

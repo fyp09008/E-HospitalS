@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
+import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -73,8 +74,16 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 				if (pwdFromDB.equals(pwdReceived)) {
 					SecretKeySpec sks = this.genSessionKey();
 					byte[] s = sks.getEncoded();
+					//get client hostname
+					String host = "";
+					try {
+						host = java.rmi.server.RemoteServer.getClientHost();
+					} catch (ServerNotActiveException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					//add session
-					Session session = new Session(username, sks, exp, mod);
+					Session session = new Session(username, sks, exp, mod,host);
 					Session sessionExist = ehospital.server.SessionList.findClient(username); 
 					if (sessionExist == null) {
 						ehospital.server.SessionList.clientList.add(session);
