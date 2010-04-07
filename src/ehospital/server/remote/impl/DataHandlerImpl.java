@@ -166,6 +166,7 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 //			raw = Utility.encryptBytes(raw);
 			cipher.init(Cipher.ENCRYPT_MODE, Utility.ProgramKey);
 			raw = cipher.doFinal(raw);
+			//System.out.println("before return raw");
 			return raw;
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
