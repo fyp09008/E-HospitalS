@@ -31,9 +31,11 @@ public class Session extends TimerTask {
 		this.exp = exp;
 		new Timer().schedule(this, Session.TIMEOUT);
 	}
+	
 	@Override
 	public void run() {
-		/*try {
+		try {
+			
 			Registry r = LocateRegistry.getRegistry(11111);
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
 			ccb.timeout();
@@ -41,13 +43,11 @@ public class Session extends TimerTask {
 			this.cancel();
 			
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NotBoundException e) {
-			 TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
+		
 		
 	}
 
