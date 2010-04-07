@@ -215,7 +215,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 		return null;
 	}
 	
-public byte[] logout(byte[] usernameIn, byte[] lomsg) throws RemoteException {
+	public byte[] logout(byte[] usernameIn, byte[] lomsg) throws RemoteException {
 		String username = new String((byte[])Utility.decrypt(usernameIn));
 		Session s = ehospital.server.SessionList.findClient(username);
 		Cipher c = null;
@@ -259,7 +259,14 @@ public byte[] logout(byte[] usernameIn, byte[] lomsg) throws RemoteException {
 		Boolean b = new Boolean(false);
 		return (byte[])Utility.encrypt(b);
 	}
-
+	public void unplugCard(byte[] usernameIn) throws RemoteException{
+		String username = new String((byte[])Utility.decrypt(usernameIn));
+		Session s = ehospital.server.SessionList.findClient(username);
+		if ( s != null){
+			s.getTimer().cancel();
+			ehospital.server.SessionList.deleteSession(username);
+		}
+	}
 
 
 }

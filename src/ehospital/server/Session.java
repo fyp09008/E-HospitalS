@@ -51,6 +51,8 @@ public class Session extends TimerTask {
 			e.printStackTrace();
 		} catch (NotBoundException e) {
 			e.printStackTrace();
+		} catch (Exception e){
+			SessionList.deleteSession(username);
 		}
 	}
 
