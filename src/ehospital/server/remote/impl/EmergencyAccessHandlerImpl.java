@@ -3,6 +3,7 @@ package ehospital.server.remote.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import ehospital.server.Utility;
 import ehospital.server.db.DBManager;
 import remote.obj.EmergencyAccessHandler;
 
@@ -18,7 +19,9 @@ public class EmergencyAccessHandlerImpl implements EmergencyAccessHandler {
 				ResultSet emergencyUserData = dbm.isUserExist(emergencyUser);
 				if (dbm.isUserExist(username) != null  && emergencyUserData != null ){
 					try {
-						
+						if (!Utility.compareByte(emergencyUserData.getString(4).getBytes(), emergencyPwd)) {
+							return 1;
+						}
 						ResultSet tmpUser = dbm.query("select * from `tmp_user` where `isTaken` = 0 AND id = " + tmpCardNum, null);
 						dbm.update("update from `tmp_user` set `isTaken` = 1 where `id` = " + tmpUser.getString(0));
 						String [] n = {emergencyUserData.getString(0),emergencyUserData.getString(2),emergencyUserData.getString(3)};

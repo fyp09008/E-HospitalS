@@ -127,5 +127,18 @@ public class RegisterHandler extends Handler{
 		return dbm.storeUser(role, username, pwdMDExp, publicKeyExp, modulus);
 	}
 	
+	public int regTmpUser() {
+		if (genKey() < 0) return 2;
+		String [] str = {rsaHard.getGeneratedPublicKeyExp(),rsaHard.getGeneratedModulus()};
+		try {
+			dbm.update("insert into `tmp_user` ( `pub_key`, `mod` ) VALUE (?,?)", str);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 4;
+		}
+		return 0;
+	}
+	
 	
 }
