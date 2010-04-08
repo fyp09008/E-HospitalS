@@ -13,8 +13,8 @@ import javax.crypto.spec.SecretKeySpec;
 import remote.obj.ClientCallback;
 
 public class Session extends TimerTask {
-	
-	private static int TIMEOUT = 100000;
+	//5 minutes
+	private static int TIMEOUT = 300000;
 	
 	private String username;
 	private SecretKeySpec sessionKey;
