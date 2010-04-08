@@ -56,6 +56,7 @@ public class RMIConsole {
 		cmdList.add("start");
 		cmdList.add("shutdown");
 		cmdList.add("register");
+		cmdList.add("register temp");
 		cmdList.add("testauth");
 		cmdList.add("threadchk");
 		cmdList.add("status");
@@ -146,6 +147,14 @@ public class RMIConsole {
 						Logger.log(cmd2, "failed to register "+cmd+"as existing user");
 					}
 					
+				}
+				else if (cmd.equalsIgnoreCase("register temp")) {
+					RegisterHandler rh = new RegisterHandler();
+					if(rh.regTmpUser() == 0) {
+						System.out.println("Register Temp Card Success!");
+					} else {
+						System.out.println("Register Temp Card Failed!");
+					}
 				}
 				else if (cmd.equalsIgnoreCase("Threadchk"))
 				{

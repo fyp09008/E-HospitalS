@@ -45,12 +45,8 @@ public class Session extends TimerTask {
 			Registry r = LocateRegistry.getRegistry(host,7788);
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
 			SessionList.deleteSession(username);
-			t.cancel();
 			ccb.timeout();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			e.printStackTrace();
+			t.cancel();
 		} catch (Exception e){
 			SessionList.deleteSession(username);
 		}

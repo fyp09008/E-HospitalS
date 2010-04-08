@@ -24,6 +24,8 @@ public class ProgramAuthHandlerImpl extends UnicastRemoteObject implements Progr
 	public int authProgram(byte[] num, byte[] hashValue) throws RemoteException {
 		try {
 			ProKeyGen pkg = new ProKeyGen(num, "common.jar");
+//			System.out.println(new String(hashValue));
+//			System.out.println(new String(pkg.getProgramKey().getEncoded()));
 			if (ehospital.server.Utility.compareByte(pkg.getProgramKey().getEncoded(), hashValue)) {
 				return 0;
 			} else {

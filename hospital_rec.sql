@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- ??: localhost
--- ????: Apr 05, 2010, 02:01 PM
+-- ????: Apr 08, 2010, 09:01 AM
 -- ?????: 5.1.37
 -- PHP ??: 5.3.0
 
@@ -19,7 +19,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- ?????: `allergy`
 --
 
-CREATE TABLE IF NOT EXISTS `allergy` (
+DROP TABLE IF EXISTS `allergy`;
+CREATE TABLE `allergy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
@@ -32,7 +33,8 @@ CREATE TABLE IF NOT EXISTS `allergy` (
 -- ?????: `dia-allergy_rec`
 --
 
-CREATE TABLE IF NOT EXISTS `dia-allergy_rec` (
+DROP TABLE IF EXISTS `dia-allergy_rec`;
+CREATE TABLE `dia-allergy_rec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pat_id` int(11) NOT NULL,
   `allergy_id` int(11) NOT NULL,
@@ -45,7 +47,8 @@ CREATE TABLE IF NOT EXISTS `dia-allergy_rec` (
 -- ?????: `dia-disease_rec`
 --
 
-CREATE TABLE IF NOT EXISTS `dia-disease_rec` (
+DROP TABLE IF EXISTS `dia-disease_rec`;
+CREATE TABLE `dia-disease_rec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pat_id` int(11) NOT NULL,
   `dis_id` int(11) NOT NULL,
@@ -58,7 +61,8 @@ CREATE TABLE IF NOT EXISTS `dia-disease_rec` (
 -- ?????: `disease`
 --
 
-CREATE TABLE IF NOT EXISTS `disease` (
+DROP TABLE IF EXISTS `disease`;
+CREATE TABLE `disease` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
@@ -71,13 +75,14 @@ CREATE TABLE IF NOT EXISTS `disease` (
 -- ?????: `log`
 --
 
-CREATE TABLE IF NOT EXISTS `log` (
+DROP TABLE IF EXISTS `log`;
+CREATE TABLE `log` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `date` varchar(20) NOT NULL,
   `user` varchar(20) NOT NULL,
   `content` varchar(50) NOT NULL,
   KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=65 ;
 
 -- --------------------------------------------------------
 
@@ -85,7 +90,8 @@ CREATE TABLE IF NOT EXISTS `log` (
 -- ?????: `medicine`
 --
 
-CREATE TABLE IF NOT EXISTS `medicine` (
+DROP TABLE IF EXISTS `medicine`;
+CREATE TABLE `medicine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
@@ -98,7 +104,8 @@ CREATE TABLE IF NOT EXISTS `medicine` (
 -- ?????: `patient_personal`
 --
 
-CREATE TABLE IF NOT EXISTS `patient_personal` (
+DROP TABLE IF EXISTS `patient_personal`;
+CREATE TABLE `patient_personal` (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `gender` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
@@ -116,7 +123,8 @@ CREATE TABLE IF NOT EXISTS `patient_personal` (
 -- ?????: `privilege`
 --
 
-CREATE TABLE IF NOT EXISTS `privilege` (
+DROP TABLE IF EXISTS `privilege`;
+CREATE TABLE `privilege` (
   `Role` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `Read` tinyint(1) NOT NULL,
   `Write` tinyint(1) NOT NULL,
@@ -130,14 +138,16 @@ CREATE TABLE IF NOT EXISTS `privilege` (
 -- ?????: `swapped_user`
 --
 
-CREATE TABLE IF NOT EXISTS `swapped_user` (
+DROP TABLE IF EXISTS `swapped_user`;
+CREATE TABLE `swapped_user` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `ori_pub_key` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `ori_mod` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `start_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isValid` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`cid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -145,7 +155,8 @@ CREATE TABLE IF NOT EXISTS `swapped_user` (
 -- ?????: `t-m_rec`
 --
 
-CREATE TABLE IF NOT EXISTS `t-m_rec` (
+DROP TABLE IF EXISTS `t-m_rec`;
+CREATE TABLE `t-m_rec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tid` int(11) NOT NULL,
   `mid` int(11) NOT NULL,
@@ -155,10 +166,26 @@ CREATE TABLE IF NOT EXISTS `t-m_rec` (
 -- --------------------------------------------------------
 
 --
+-- ?????: `tmp_user`
+--
+
+DROP TABLE IF EXISTS `tmp_user`;
+CREATE TABLE `tmp_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pub_key` text COLLATE utf8_unicode_ci NOT NULL,
+  `mod` text COLLATE utf8_unicode_ci NOT NULL,
+  `isTaken` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- ?????: `treatment`
 --
 
-CREATE TABLE IF NOT EXISTS `treatment` (
+DROP TABLE IF EXISTS `treatment`;
+CREATE TABLE `treatment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
   `pic` int(11) NOT NULL,
@@ -173,7 +200,8 @@ CREATE TABLE IF NOT EXISTS `treatment` (
 -- ?????: `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `Role` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `pub_key` text COLLATE utf8_unicode_ci NOT NULL,
