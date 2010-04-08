@@ -47,6 +47,7 @@ public class RegisterHandler extends Handler{
 	
 	private String genPassword()
 	{
+		
 		String pwd = null;
 		char[] c = new char[8];
 		Random r = new Random();

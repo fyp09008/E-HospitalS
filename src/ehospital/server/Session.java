@@ -14,7 +14,7 @@ import remote.obj.ClientCallback;
 
 public class Session extends TimerTask {
 	
-	private static int TIMEOUT = 10000;
+	private static int TIMEOUT = 100000;
 	
 	private String username;
 	private SecretKeySpec sessionKey;

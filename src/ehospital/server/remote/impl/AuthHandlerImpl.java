@@ -255,6 +255,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 			Boolean b = new Boolean(true);
 			return (byte[])Utility.encrypt(b);
 		}
+		
 		s.getTimer().cancel();
 		Boolean b = new Boolean(false);
 		return (byte[])Utility.encrypt(b);

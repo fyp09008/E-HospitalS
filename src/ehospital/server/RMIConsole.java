@@ -137,7 +137,6 @@ public class RMIConsole {
 					System.out.print("User name? ");
 					
 					
-					
 					String cmd2 = cmdreader.readLine();
 					
 					RegisterHandler rh = new RegisterHandler(cmd, cmd2);
