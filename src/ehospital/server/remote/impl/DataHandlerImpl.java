@@ -144,7 +144,56 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		DBManager dbm = new DBManager();
+		dbm.connect();
+		String username = "mcfung";
+		String[] param = {"fuck u"};
+		String q = "UPDATE allergy SET name=?";
+		String substr = q.substring(0, 6);
+		System.out.println(substr);
+		boolean valid = false;
+		if (substr.equalsIgnoreCase("insert"))
+			try {
+				System.out.println("DEBUGGGGG");
+				valid = chkPriv(username, INSERT);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		else if (substr.equalsIgnoreCase("update"))
+			try {
+				valid = chkPriv(username, UPDATE);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		if (valid)
+		{
+			try {
+				dbm.update(q, param);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			String subject = "Privilege violation!";
+			String msg = "";
+			msg += "User: "+username+"\n";
+			msg += "Time: "+new java.sql.Time(System.currentTimeMillis())+"\n";
+			msg += "Action: "+q+"\n";
+			msg += "Param: ";
+			for (int i = 0; i < param.length; i++)
+			{
+				msg += param[i]+" ";
+			}
+			msg += "\n";
+			System.out.println("I am HERE!");
+			mail.mail m = new mail.mail(subject, msg);
+			m.sendmail();
+		}
 	}
 	
 	
@@ -204,14 +253,16 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 			byte[] rawQuery = cipher.doFinal(Utility.decrypt(encUpdateStmt));
 			byte[] p = cipher.doFinal(Utility.decrypt(param));
 			DBManager dbm = new DBManager();
+			
 			// Check privilege
 			String q = new String(rawQuery);
-			String substr = q.substring(0, 5);
+			String substr = q.substring(0, 6);
 			boolean valid = false;
 			if (substr.equalsIgnoreCase("insert"))
 				valid = chkPriv(username, INSERT);
 			else if (substr.equalsIgnoreCase("update"))
 				valid = chkPriv(username, UPDATE);
+			
 			if (valid)
 			{
 				dbm.update(new String(rawQuery), (Object[]) Utility.BytesToObj(p));
@@ -220,11 +271,19 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 			else
 			{
 				String subject = "Privilege violation!";
+				String[] param1 = (String[]) Utility.BytesToObj(p);
 				String msg = "";
 				msg += "User: "+username+"\n";
 				msg += "Time: "+new java.sql.Time(System.currentTimeMillis())+"\n";
 				msg += "Action: "+new String(rawQuery)+"\n";
+				msg += "Param: ";
+				for (int i = 0; i < param1.length; i++)
+				{
+					msg += param1[i]+" ";
+				}
+				msg += "\n";
 				mail.mail m = new mail.mail(subject, msg);
+				m.sendmail();
 				return false;
 			}
 		} catch (NoSuchAlgorithmException e) {
@@ -249,7 +308,7 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 		return false;
 	}
 	
-	private boolean chkPriv(String username, int type) throws SQLException
+	private static boolean chkPriv(String username, int type) throws SQLException
 	{
 		DBManager dbm = new DBManager();
 		String[] param = {username};
