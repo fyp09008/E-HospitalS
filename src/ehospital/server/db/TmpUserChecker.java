@@ -16,11 +16,10 @@ public class TmpUserChecker extends TimerTask {
 				if (rs == null) {
 					do {
 						dbm.update("update `user` set `pub_key`="+rs.getString(1)+",`mod` = "+ rs.getString(2) + "where id = "+rs.getString(0));
-						dbm.query("update `swapped_user` set isValid = 0 where `user_id` = "+rs.getString(0));
+						dbm.update("update `swapped_user` set isValid = 0 where `user_id` = "+rs.getString(0));
 					} while (rs.next());
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
