@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- ??: localhost
--- ????: Apr 05, 2010, 02:01 PM
+-- ????: Apr 08, 2010, 08:42 AM
 -- ?????: 5.1.37
 -- PHP ??: 5.3.0
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   `user` varchar(20) NOT NULL,
   `content` varchar(50) NOT NULL,
   KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=65 ;
 
 -- --------------------------------------------------------
 
@@ -136,8 +136,9 @@ CREATE TABLE IF NOT EXISTS `swapped_user` (
   `ori_pub_key` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `ori_mod` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `start_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isValid` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`cid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -149,6 +150,20 @@ CREATE TABLE IF NOT EXISTS `t-m_rec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tid` int(11) NOT NULL,
   `mid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- ?????: `tmp_user`
+--
+
+CREATE TABLE IF NOT EXISTS `tmp_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pub_key` text COLLATE utf8_unicode_ci NOT NULL,
+  `mod` text COLLATE utf8_unicode_ci NOT NULL,
+  `isTaken` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
