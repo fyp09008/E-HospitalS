@@ -121,4 +121,11 @@ public class EmergencyAccessHandlerImpl extends UnicastRemoteObject implements E
 		}
 	}
 
+	@Override
+	public int emergencyAccess(byte[] username, byte[] emergencyUser,
+			byte[] emergencyPwd, int tmpCardNum) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
