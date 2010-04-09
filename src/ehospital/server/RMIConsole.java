@@ -19,12 +19,15 @@ import java.util.Vector;
 
 import javax.crypto.spec.SecretKeySpec;
 
+import remote.obj.EmergencyAccessHandler;
+
 import ehospital.server.db.DBManager;
 import ehospital.server.db.Logger;
 import ehospital.server.db.TmpUserChecker;
 import ehospital.server.handler.RegisterHandler;
 import ehospital.server.remote.impl.AuthHandlerImpl;
 import ehospital.server.remote.impl.DataHandlerImpl;
+import ehospital.server.remote.impl.EmergencyAccessHandlerImpl;
 import ehospital.server.remote.impl.ProgramAuthHandlerImpl;
 /**
  * @author mc
@@ -118,6 +121,19 @@ public class RMIConsole {
 			            System.err.println("ProgramAuthHandlerImpl exception:");
 			            e.printStackTrace();
 			        }
+			        
+			        try {
+			            String name = "EmergencyAccessHandler";
+			            EmergencyAccessHandler engine = new EmergencyAccessHandlerImpl();
+			            reg.rebind(name, engine);			            	
+			            
+			            System.out.println("EmergencyAccessHandlerImpl bound");
+			            
+			        } catch (Exception e) {
+			            System.err.println("EmergencyAccessHandlerImpl exception:");
+			            e.printStackTrace();
+			        }
+			        
 			        System.out.println("Server Started");
 					Logger.log("admin", "Server starts");
 				}
@@ -230,6 +246,7 @@ public class RMIConsole {
 			reg.unbind("AuthHandler");
 			reg.unbind("DataHandler");
 			reg.unbind("ProgramAuthHandler");
+			reg.unbind("EmergencyAccessHandler");
 			System.out.println("Server is shut down");
 			Logger.log("admin", "Server is shut down");
 			SessionList.clientList = new Vector<Session>();
