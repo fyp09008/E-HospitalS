@@ -255,6 +255,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 			Boolean b = new Boolean(true);
 			return (byte[])Utility.encrypt(b);
 		}
+		
 		s.getTimer().cancel();
 		Boolean b = new Boolean(false);
 		return (byte[])Utility.encrypt(b);
@@ -268,5 +269,51 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 		}
 	}
 
+	@Override
+	public byte[] changePassword(byte[] usernameIn, byte[] hashedOld,
+			byte[] hashedNew) throws RemoteException {
+		String username = new String((byte[])Utility.decrypt(usernameIn));
+		Session s = ehospital.server.SessionList.findClient(username);
+		byte[] oldPW = Utility.decrypt(hashedOld);
+		byte[] newPW = Utility.decrypt(hashedNew);
+		dbm = new DBManager();
+		ResultSet user = dbm.isUserExist(username);
+		if (user != null && oldPW!= null) {
+			try {
+				String pwdFromDB = user.getString(2);
+				RSASoftware rsa = new RSASoftware();
+				String exp = user.getString(3);
+				String mod = user.getString(4);
+				
+				rsa.setPublicKey(exp, mod);
+				
+				oldPW = rsa.unsign(oldPW, oldPW.length);
+				newPW = rsa.unsign(newPW, newPW.length);
+				//System.out.println("unsigned 2 passwords");
+				String pwdReceived = Utility.byteArrayToString(oldPW);
+				//System.out.println("after pwdReceived");
+				if (pwdFromDB.equals(pwdReceived)) {
+					DBManager dbm = new DBManager();
+					dbm.connect();
+					//System.out.println("after new dmb");
+					String query = "UPDATE user SET pwd = ? WHERE username = ?";
+					String param[] = {Utility.byteArrayToString(newPW),username};
+					dbm.update(query,param);
+					//System.out.println("after update query");
+					Boolean b = new Boolean(true);
+					return (byte[])Utility.encrypt(b);
+				}else{
+					Boolean b = new Boolean(false);
+					return (byte[])Utility.encrypt(b);
+				}
+			}catch (Exception e){
+				//System.out.println("Exception");
+				Boolean b = new Boolean(false);
+				return (byte[])Utility.encrypt(b);
+			}
+		}
+		Boolean b = new Boolean(false);
+		return (byte[])Utility.encrypt(b);
+	}
 
 }
