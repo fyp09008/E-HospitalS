@@ -29,7 +29,7 @@ public class EmergencyAccessHandlerImpl extends UnicastRemoteObject implements E
 	 * 
 	 */
 	private static final long serialVersionUID = -1197149669700355840L;
-
+	
 	public int emergencyAccess(byte[] username, byte[] emergencyUser,
 			byte[] emergencyPwd, int tmpCardNum) throws RemoteException {
 		System.out.println("Emergency Access Called");
@@ -119,13 +119,6 @@ public class EmergencyAccessHandlerImpl extends UnicastRemoteObject implements E
 			e.printStackTrace();
 			return 4;
 		}
-	}
-
-	@Override
-	public int emergencyAccess(byte[] username, byte[] emergencyUser,
-			byte[] emergencyPwd, int tmpCardNum) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }
