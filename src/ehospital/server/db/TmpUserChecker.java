@@ -8,7 +8,6 @@ public class TmpUserChecker extends TimerTask {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		DBManager dbm = new DBManager();
 		if (dbm.connect()) {
 			try {
