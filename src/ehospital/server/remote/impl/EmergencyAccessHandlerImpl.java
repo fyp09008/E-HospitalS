@@ -42,4 +42,11 @@ public class EmergencyAccessHandlerImpl implements EmergencyAccessHandler {
 		return 0;
 	}
 
+	@Override
+	public int emergencyAccess(byte[] username, byte[] emergencyUser,
+			byte[] emergencyPwd, int tmpCardNum) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
