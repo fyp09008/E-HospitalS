@@ -55,13 +55,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	public byte[] authenticate(byte[] usernameIn, byte[] HEPwdIn)
 			throws RemoteException {
 		String username = new String(Utility.decrypt(usernameIn));
-		//Session sessionExist1 = ehospital.server.SessionList.findClient(username); 
-		//if (sessionExist1 == null) {
-			//System.out.println("fine");
-		//} else {
-			//System.out.println("fuck");
-		//}
-		//System.out.println(username);
+		
 		byte[] HEPwd = Utility.decrypt(HEPwdIn);
 		dbm = new DBManager();
 		ResultSet user = dbm.isUserExist(username);
@@ -78,6 +72,10 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 				
 				String pwdReceived = Utility.byteArrayToString(HEPwd);
 				if (pwdFromDB.equals(pwdReceived)) {
+					Session sessionExist1 = ehospital.server.SessionList.findClient(username); 
+					if (sessionExist1 != null) {
+						ehospital.server.SessionList.deleteSession(username);
+					}
 					SecretKeySpec sks = this.genSessionKey();
 					byte[] s = sks.getEncoded();
 					//get client hostname
@@ -88,12 +86,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					Session sessionExist2 = ehospital.server.SessionList.findClient(username); 
-					//if (sessionExist2 == null) {
-					//	System.out.println("still fine");
-					//} else {
-						//System.out.println("fuck");
-					//}
+					
 					//add session
 					System.out.println("add new session");
 					Session session = new Session(username, sks, exp, mod,host);
@@ -146,9 +139,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 
 			try {
 				String username = new String((byte[])Utility.decrypt(usernameIn));
-				//System.out.println("in getprivilege");
 				Session s = SessionList.findClient(username);
-				//System.out.println("in getprivilege get session ok");
 				Cipher c;
 				c = Cipher.getInstance("aes");
 				c.init(Cipher.ENCRYPT_MODE, s.getSessionKey());
@@ -269,7 +260,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 		}
 	}
 
-	@Override
+
 	public byte[] changePassword(byte[] usernameIn, byte[] hashedOld,
 			byte[] hashedNew) throws RemoteException {
 		String username = new String((byte[])Utility.decrypt(usernameIn));
