@@ -240,7 +240,7 @@ public class DBManager{
 		try {
 			if (this.connect()) {
 				Statement stmt = getConn().createStatement();
-				String q = "SELECT `username`,`pwd`,`pub_key`,`mod` FROM `user` WHERE `username` LIKE '"+username+"';";
+				String q = "SELECT `username`,`pwd`,`pub_key`,`mod`,`uid` FROM `user` WHERE `username` LIKE '"+username+"';";
 				ResultSet rs =  stmt.executeQuery(q);
 				if(rs.first()) {
 					return rs;

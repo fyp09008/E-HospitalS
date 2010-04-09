@@ -253,7 +253,6 @@ public class RMIConsole {
 		} catch (NotBoundException e) {
 			System.out.println("Some of the Handlers are not bind.");
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
