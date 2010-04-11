@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.rmi.server.RemoteServer;
+import java.rmi.server.ServerNotActiveException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -18,52 +20,66 @@ import javax.crypto.spec.SecretKeySpec;
 
 import ehospital.server.handler.Handler;
 /*
- * This class provide utility for all classes, 
+ * This class provide utility for all classes.
+ * @author mc, chun, Gilbert
  */
 public class Utility {
 	public static final byte[] key = {-19, -11, 122, 111, -37, -13, 16, -47, -65, 78, -126, -128, -88, 54, 101, 86};
 	public static final SecretKeySpec ProgramKey = new SecretKeySpec(key, "AES");
 	
+	/**
+	 * Default constructor.
+	 */
 	private Utility() {}
 	
-	public static byte[] encrypt(Object o)
+	/**
+	 * encrypt with program key
+	 * @param o
+	 * @return an byte array with encrypted message, null if unable to encrypt
+	 */
+	public static byte[] encryptProgKey(byte[] o)
 	{
-		Handler h = new Handler();
-		h.setSessionKeySpec(ProgramKey);
-		return  h.encryptAES(h.objToBytes(o));
-	}
-	public static byte[] encryptBytes(byte[] o)
-	{
-//		Handler h = new Handler();
-//		h.setSessionKeySpec(ProgramKey);
-//		return  h.encryptAES(o);
 		try {
 			Cipher cipher = Cipher.getInstance("aes");
 			cipher.init(Cipher.ENCRYPT_MODE, ProgramKey);
 			return cipher.doFinal(o);
 		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return o;
+		return null;
 	}
-	public static byte[] decrypt(byte[] o)
+	
+	/**
+	 * encrypt with program key
+	 * @param o
+	 * @return an byte array with decrypted message, null if unable to decrypt
+	 */
+	public static byte[] decryptProgKey(byte[] o)
 	{
-		Handler h = new Handler();
-		h.setSessionKeySpec(ProgramKey);
-		return h.decryptAES( o);
+		try {
+			Cipher cipher = Cipher.getInstance("aes");
+			cipher.init(Cipher.ENCRYPT_MODE, ProgramKey);
+			return cipher.doFinal(o);
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static String byteArrayToString(byte[] b) {
@@ -82,6 +98,11 @@ public class Utility {
 		return new String(cStr);
 	}
 	
+	/**
+	 * convert a string to byte array
+	 * @param str
+	 * @return a byte array
+	 */
 	public static byte[] stringToByteArray(String str) {
 		String HEX_NUM = "0123456789abcdef";
 		int CHAR_NOT_FOUND = -1;
@@ -105,6 +126,11 @@ public class Utility {
 		return b;
 	}
 	
+	/**
+	 * convert object to byte array
+	 * @param obj
+	 * @return an byte array representation of the object
+	 */
 	public static byte[] objToBytes(Object obj){
 	      ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
 	      ObjectOutputStream oos;
@@ -125,6 +151,11 @@ public class Utility {
 		} return null;
 	}
 	
+	/**
+	 * convert byte array to object
+	 * @param b
+	 * @return Object 
+	 */
 	public static Object BytesToObj(byte[] b){
 	      ByteArrayInputStream bis = new ByteArrayInputStream(b); 
 	      ObjectInputStream ois;
@@ -144,6 +175,11 @@ public class Utility {
 	    return null;
 	}
 	
+	/**
+	 * convert integer to byte array.
+	 * @param integer
+	 * @return an byte array 
+	 */
 	public static byte[] intToByteArray (int integer) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -157,6 +193,12 @@ public class Utility {
 		}
 	}
 	
+	/**
+	 * compare the compare two byte arrays.
+	 * @param b1
+	 * @param b2
+	 * @return true of b1 and b2 is the same 
+	 */
 	public static boolean compareByte(byte[] b1, byte[] b2)
 	{
 		if (b1.length != b2.length)
@@ -167,5 +209,18 @@ public class Utility {
 				return false;
 		
 		return true;
+	}
+
+	/**
+	 * get the hostname of the client
+	 * @return hostname of the client
+	 */
+	public static String getClientHost() {
+		try {
+			return RemoteServer.getClientHost();
+		} catch (ServerNotActiveException e1) {
+			
+			return null;
+		}
 	}
 }

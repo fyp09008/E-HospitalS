@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ehospital.server.handler;
 
 import java.sql.ResultSet;
@@ -15,7 +12,8 @@ import message.UpdateRequestMessage;
 import message.UpdateResponseMessage;
 
 /**
- * @author mc
+ * obsolete class, developed in 09/10 semester 1 using socket programming, reference only.
+ * @author mc, Gilbert
  *
  */
 public class UpdateHandler extends Handler {

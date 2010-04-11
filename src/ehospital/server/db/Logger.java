@@ -6,11 +6,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author wilson
+ *
+ */
 public class Logger {
 	
 	private Logger() {
 	}
 	
+	/**
+	 * log event into the data logger
+	 * @param user1
+	 * @param content
+	 * @return 0 if success, -1 if fails 
+	 */
 	public static int log(String user1, String content) {
 		DBManager dbm = new DBManager();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -26,7 +36,6 @@ public class Logger {
 				dbm.disconnect();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
 		} 

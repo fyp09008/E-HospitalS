@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
-import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -27,6 +26,7 @@ import ehospital.server.Session;
 import ehospital.server.SessionList;
 import ehospital.server.Utility;
 import ehospital.server.db.DBManager;
+import ehospital.server.db.Logger;
 
 public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.AuthHandler {
 
@@ -37,26 +37,37 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	
 	private DBManager dbm;
 	
+	/**
+	 * Default constructor. Initialize DBManager.
+	 * @throws RemoteException
+	 */
 	public AuthHandlerImpl() throws RemoteException {
 		dbm = new DBManager();
 	}
 
+	/**
+	 * Generate and return a session key
+	 * @return Session Key
+	 */
 	public SecretKeySpec genSessionKey() {
 		try {
 			KeyGenerator keyGen = KeyGenerator.getInstance("AES");
 			keyGen.init(128);
 			return new SecretKeySpec(keyGen.generateKey().getEncoded(), "aes");
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see remote.obj.AuthHandler#authenticate(byte[], byte[])
+	 */
 	public byte[] authenticate(byte[] usernameIn, byte[] HEPwdIn)
 			throws RemoteException {
-		String username = new String(Utility.decrypt(usernameIn));
+		String clientIP = Utility.getClientHost();
+		String username = new String(Utility.decryptProgKey(usernameIn));
 		
-		byte[] HEPwd = Utility.decrypt(HEPwdIn);
+		byte[] HEPwd = Utility.decryptProgKey(HEPwdIn);
 		dbm = new DBManager();
 		ResultSet user = dbm.isUserExist(username);
 		if (user != null && HEPwd != null) {
@@ -78,45 +89,47 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 					}
 					SecretKeySpec sks = this.genSessionKey();
 					byte[] s = sks.getEncoded();
-					//get client hostname
-					String host = "";
-					try {
-						host = java.rmi.server.RemoteServer.getClientHost();
-					} catch (ServerNotActiveException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					
 					//add session
 					System.out.println("add new session");
 					
 					Session sessionExist = ehospital.server.SessionList.findClient(username); 
 					if (sessionExist == null) {
-						System.out.println("no such session, create new now");
 						Session session = new Session(username, sks, exp, mod,host);
 						ehospital.server.SessionList.clientList.add(session);
 					} else {
 						sessionExist.setSessionKey(sks);
 					}
-					return  Utility.encryptBytes(rsa.encrypt(s, s.length));
+					Logger.log(clientIP, username+" successfully authenticate.");
+					return  Utility.encryptProgKey(rsa.encrypt(s, s.length));
 				} 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.log(clientIP, " failed to authenticate due to: \n"+e.getMessage());
 			}
 		}
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see remote.obj.AuthHandler#getEncryptedSessionKey(byte[])
+	 */
 	public byte[] getEncryptedSessionKey(byte[] usernameIn) {
 		String username = (String)Console.decrypt(usernameIn);
 		Session s = SessionList.findClient(username);
 		byte[] sessionKey = s.getSessionKey().getEncoded();
 		RSASoftware rsa = new RSASoftware();
 		rsa.setPublicKey(s.getExp(), s.getMod());
-		return (byte[]) Utility.encryptBytes(rsa.encrypt(sessionKey, sessionKey.length));
+		//RSA encrypt
+		byte[] encSessionKey = rsa.encrypt(sessionKey, sessionKey.length);
+		//sign with program key
+		return (byte[]) Utility.encryptProgKey(encSessionKey);
 	}
 
+	/**
+	 * serialize the object into a byte array
+	 * @param obj
+	 * @return byte array representation of obj
+	 */
 	private byte[] objToBytes(Object obj){
 	      ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
 	      ObjectOutputStream oos;
@@ -129,17 +142,19 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 			byte [] data = bos.toByteArray();
 			return data;
 		} catch (NotSerializableException e){
-			e.printStackTrace();
 			return null;
 		}catch (IOException e) {
-			e.printStackTrace();
-		} return null;
+		} 
+		return null;
 	}
 	
+	/* (non-Javadoc)
+	 * @see remote.obj.AuthHandler#getPrivilege(byte[])
+	 */
 	public byte[] getPrivilege(byte[] usernameIn) {	
-
+		String clientIP = Utility.getClientHost();
 			try {
-				String username = new String((byte[])Utility.decrypt(usernameIn));
+				String username = new String((byte[])Utility.decryptProgKey(usernameIn));
 				Session s = SessionList.findClient(username);
 				Cipher c;
 				c = Cipher.getInstance("aes");
@@ -148,34 +163,42 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 				ResultSet rs = this.dbm.query("SELECT uid, `Read`, `Write`, `Add` FROM privilege, user WHERE user.Role=privilege.Role AND user.username='"+username+"'; ");
 				CachedRowSetImpl crs = new CachedRowSetImpl();
 				crs.populate(rs);
-				return (byte[]) Utility.encryptBytes(c.doFinal(this.objToBytes(crs)));
+				return (byte[]) Utility.encryptProgKey(c.doFinal(this.objToBytes(crs)));
 
 				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.log(clientIP, " failed to get privilege due to: \n"
+							+e.getMessage());
 				} catch (NoSuchPaddingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
+					Logger.log(clientIP, " failed to get privilege due to: \n"
+							+e.getMessage());
 				} catch (InvalidKeyException e) {
-				// TODO Auto-generated catch block
-					e.printStackTrace();
+
+					Logger.log(clientIP, " failed to get privilege due to: \n"
+							+e.getMessage());
 				} catch (IllegalBlockSizeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
+					Logger.log(clientIP, " failed to get privilege due to: \n"
+							+e.getMessage());
 				} catch (BadPaddingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				catch (SQLException e) {
-					e.printStackTrace();
-					return null;
+
+					Logger.log(clientIP, " failed to get privilege due to: \n"
+							+e.getMessage());
+				} catch (SQLException e) {
+
+					Logger.log(clientIP, " failed to get privilege due to: \n"
+							+e.getMessage());
 				}
 			return null;
 			
 	}
 
+	/* (non-Javadoc)
+	 * @see remote.obj.AuthHandler#getLoMsg(byte[])
+	 */
 	public byte[] getLoMsg(byte[] usernameIn) {
-		String username = new String((byte[])Utility.decrypt(usernameIn));
+		String clientIP = Utility.getClientHost();
+		String username = new String((byte[])Utility.decryptProgKey(usernameIn));
 		Session s = SessionList.findClient(username);
 		//System.out.println("get session ok in get log out msg");
 		if (s != null) {
@@ -183,77 +206,81 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 				byte[] lomsg = s.getLomsg();
 				Cipher c = Cipher.getInstance("aes");
 				c.init(Cipher.ENCRYPT_MODE, s.getSessionKey());
-				//TODO add program key
-				//lomsg = c.doFinal(lomsg);
-				//c.init(Cipher.ENCRYPT_MODE, ehospital.server.Console.ProgramKey);
-				return  Utility.encryptBytes(c.doFinal(lomsg));
+				return  Utility.encryptProgKey(c.doFinal(lomsg));
 			} catch (InvalidKeyException e) {
-				e.printStackTrace();
+				Logger.log(clientIP, " failed to get logout message due to: \n"
+						+e.getMessage());
 			} catch (IllegalBlockSizeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.log(clientIP, " failed to get logout message due to: \n"
+						+e.getMessage());
 			} catch (BadPaddingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.log(clientIP, " failed to get logout message due to: \n"
+						+e.getMessage());
 			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.log(clientIP, " failed to get logout message due to: \n"
+						+e.getMessage());
 			} catch (NoSuchPaddingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.log(clientIP, " failed to get logout message due to: \n"
+						+e.getMessage());
 			}
 		}
-
+		Logger.log(clientIP, " failed to get logout message due to: \n"+"no such session.");
 		return null;
 	}
 	
+	/* (non-Javadoc)
+	 * @see remote.obj.AuthHandler#logout(byte[], byte[])
+	 */
 	public byte[] logout(byte[] usernameIn, byte[] lomsg) throws RemoteException {
-		String username = new String((byte[])Utility.decrypt(usernameIn));
+		String clientIP = Utility.getClientHost();
+		String username = new String((byte[])Utility.decryptProgKey(usernameIn));
 		Session s = ehospital.server.SessionList.findClient(username);
 		Cipher c = null;
 		try {
 			c = Cipher.getInstance("aes");
 			c.init(Cipher.DECRYPT_MODE, s.getSessionKey());
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (NoSuchPaddingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}catch (InvalidKeyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		} catch (NoSuchAlgorithmException e) {
+			Logger.log(clientIP, username+" failed to logout due to: \n"+e.getMessage());
+		} catch (NoSuchPaddingException e) {
+			Logger.log(clientIP, username+" failed to logout due to: \n"+e.getMessage());
+		} catch (InvalidKeyException e) {
+			Logger.log(clientIP, username+" failed to logout due to: \n"+e.getMessage());
+		}
 		if (s == null || lomsg == null) {
 			Boolean b = new Boolean(false);
-			return (byte[])Utility.encrypt(b);
+			Logger.log(clientIP, username+" failed to logout due to: " +
+									"no such session or no logout message.");
+			return Utility.encryptProgKey(Utility.objToBytes(b));
 		}
 		RSASoftware rsa = new RSASoftware();
 		rsa.setPublicKey(s.getExp(), s.getMod());
 		byte[] decMsg = null;
 		try {
-			lomsg = c.doFinal(Utility.decrypt(lomsg));
+			lomsg = c.doFinal(Utility.decryptProgKey(lomsg));
 			decMsg = rsa.unsign(lomsg, lomsg.length);
 		} catch (IllegalBlockSizeException e) {
 			 
-			e.printStackTrace();
 		} catch (BadPaddingException e) {
 			
-			e.printStackTrace();
 		}
 
 		if (Utility.compareByte(decMsg, s.getLomsg())) {
 			ehospital.server.SessionList.deleteSession(username);
 			Boolean b = new Boolean(true);
-			return (byte[])Utility.encrypt(b);
+			Logger.log(clientIP, username+" successfully logout.");
+			return Utility.encryptProgKey(Utility.objToBytes(b));
 		}
 		
 		s.getTimer().cancel();
 		Boolean b = new Boolean(false);
-		return (byte[])Utility.encrypt(b);
+		return Utility.encryptProgKey(Utility.objToBytes(b));
 	}
+	
+	/* (non-Javadoc)
+	 * @see remote.obj.AuthHandler#unplugCard(byte[])
+	 */
 	public void unplugCard(byte[] usernameIn) throws RemoteException{
-		String username = new String((byte[])Utility.decrypt(usernameIn));
+		String username = new String((byte[])Utility.decryptProgKey(usernameIn));
 		Session s = ehospital.server.SessionList.findClient(username);
 		if ( s != null){
 			s.getTimer().cancel();
@@ -262,12 +289,15 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	}
 
 
+	/* (non-Javadoc)
+	 * @see remote.obj.AuthHandler#changePassword(byte[], byte[], byte[])
+	 */
 	public byte[] changePassword(byte[] usernameIn, byte[] hashedOld,
 			byte[] hashedNew) throws RemoteException {
-		String username = new String((byte[])Utility.decrypt(usernameIn));
-		Session s = ehospital.server.SessionList.findClient(username);
-		byte[] oldPW = Utility.decrypt(hashedOld);
-		byte[] newPW = Utility.decrypt(hashedNew);
+		String clientIP = Utility.getClientHost();
+		String username = new String((byte[])Utility.decryptProgKey(usernameIn));
+		byte[] oldPW = Utility.decryptProgKey(hashedOld);
+		byte[] newPW = Utility.decryptProgKey(hashedNew);
 		dbm = new DBManager();
 		ResultSet user = dbm.isUserExist(username);
 		if (user != null && oldPW!= null) {
@@ -281,31 +311,30 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 				
 				oldPW = rsa.unsign(oldPW, oldPW.length);
 				newPW = rsa.unsign(newPW, newPW.length);
-				//System.out.println("unsigned 2 passwords");
 				String pwdReceived = Utility.byteArrayToString(oldPW);
-				//System.out.println("after pwdReceived");
 				if (pwdFromDB.equals(pwdReceived)) {
 					DBManager dbm = new DBManager();
 					dbm.connect();
-					//System.out.println("after new dmb");
 					String query = "UPDATE user SET pwd = ? WHERE username = ?";
 					String param[] = {Utility.byteArrayToString(newPW),username};
 					dbm.update(query,param);
-					//System.out.println("after update query");
 					Boolean b = new Boolean(true);
-					return (byte[])Utility.encrypt(b);
+					Logger.log(clientIP, username+" successfully change his/her password.");
+					return Utility.encryptProgKey(Utility.objToBytes(b));
 				}else{
+					Logger.log(clientIP, username+" failed to change his/her password due to incorrect password");
 					Boolean b = new Boolean(false);
-					return (byte[])Utility.encrypt(b);
+					return Utility.encryptProgKey(Utility.objToBytes(b));
 				}
 			}catch (Exception e){
-				//System.out.println("Exception");
 				Boolean b = new Boolean(false);
-				return (byte[])Utility.encrypt(b);
+				Logger.log(clientIP, username+" failed to change his/her password due to :\n" + e.getMessage());
+				return Utility.encryptProgKey(Utility.objToBytes(b));
 			}
 		}
 		Boolean b = new Boolean(false);
-		return (byte[])Utility.encrypt(b);
+		Logger.log(clientIP, username+" failed to change his/her password due to incorrect password");
+		return Utility.encryptProgKey(Utility.objToBytes(b));
 	}
 
 }

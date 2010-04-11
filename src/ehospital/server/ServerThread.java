@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
+ * obsolete class, developed in 09/10 semester 1 using socket programming.
  * @author mc
  *
  */

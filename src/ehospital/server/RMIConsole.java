@@ -30,7 +30,8 @@ import ehospital.server.remote.impl.DataHandlerImpl;
 import ehospital.server.remote.impl.EmergencyAccessHandlerImpl;
 import ehospital.server.remote.impl.ProgramAuthHandlerImpl;
 /**
- * @author mc
+ * new console.
+ * @author mc, Gilbert
  *
  */
 public class RMIConsole {
@@ -46,6 +47,7 @@ public class RMIConsole {
 	}
 	
 	/**
+	 * Server Main Class
 	 * @param args
 	 */
 	public static void main(String[] args) {
