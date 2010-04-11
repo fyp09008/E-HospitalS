@@ -47,8 +47,10 @@ public class Session extends TimerTask {
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
 			System.out.println("Session Timeout" + new Date() );
 			SessionList.deleteSession(username);
-			ccb.timeout();
 			t.cancel();
+			this.cancel();
+			ccb.timeout();
+			
 		} catch (Exception e){
 			SessionList.deleteSession(username);
 		}

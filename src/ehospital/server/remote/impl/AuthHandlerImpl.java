@@ -89,10 +89,11 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 					
 					//add session
 					System.out.println("add new session");
-					Session session = new Session(username, sks, exp, mod,host);
+					
 					Session sessionExist = ehospital.server.SessionList.findClient(username); 
 					if (sessionExist == null) {
 						System.out.println("no such session, create new now");
+						Session session = new Session(username, sks, exp, mod,host);
 						ehospital.server.SessionList.clientList.add(session);
 					} else {
 						sessionExist.setSessionKey(sks);
