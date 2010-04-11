@@ -1,25 +1,20 @@
 package ehospital.server.handler;
 
-import java.io.*;
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import ehospital.server.db.DBManager;
-
 import message.QueryRequestMessage;
+import ehospital.server.db.DBManager;
 /**
- * 
+ * obsolete class, developed in 09/10 semester 1 using socket programming. 
  * @author Gilbert mc
  * Handle Query from client
  *

@@ -9,8 +9,10 @@ import javax.crypto.spec.SecretKeySpec;
 import message.DisconnRequestMessage;
 
 /**
+ * obsolete class, developed in 09/10 semester 1 using socket programming.
+ * To check if the disconnect request is issued by the appropriate user 
  * @author mc
- * To check if the disconnect request is issued by the appropriate user
+ * 
  */
 public class DisconnHandler extends Handler {
 

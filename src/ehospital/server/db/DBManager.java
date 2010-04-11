@@ -13,10 +13,9 @@ import java.util.StringTokenizer;
 
 
 /**
+ * This class is used to manage the database
  * @author mc
  * 
- * This class is used to manage the database
- *
  */
 public class DBManager{
 	
@@ -32,6 +31,10 @@ public class DBManager{
 	public DBManager() {
 	}
 	
+	/**
+	 * connect to the database
+	 * @return true if connected
+	 */
 	public boolean connect() {
 		try {
 			Class.forName(dbdriver);
@@ -48,6 +51,7 @@ public class DBManager{
 	}
 	
 	/**
+	 * query from the database.
 	 * @param query
 	 * @return The result from the query
 	 * @throws SQLException
@@ -58,36 +62,7 @@ public class DBManager{
 		ResultSet rs = getConn().createStatement().executeQuery(query);
 		return rs;
 	}
-	
-	/**
-	 * @param query Basic Query String. e.g: "SELECT * FROM hospital"
-	 * @param param Array of name-val pairs of parameters
-	 * @return
-	 * @throws SQLException
-	 */
-//	public ResultSet query(String query, Param [] param) throws SQLException
-//	{
-//		this.connect();
-//		String whereclause = null;
-//		if (param != null && param.length != 0)
-//		{
-//			whereclause = " WHERE "+param[0].getName()+param[0].getOp()+"?";
-//			for (int i = 1; i < param.length; i++)
-//			{
-//				whereclause += " AND "+param[i].getName()+param[i].getOp()+"?";
-//			}
-//		}
-//		PreparedStatement prep = this.getConn().prepareStatement(whereclause == null ? query : query+" "+whereclause);
-//		if (param != null && param.length != 0)
-//		{
-//			for (int i = 0; i < param.length; i++)
-//			{
-//				prep.setString(i+1, param[i].getVal());
-//			}
-//		}
-//		ResultSet rs = prep.executeQuery();
-//		return rs;
-//	}
+
 	
 	/**
 	 * This query method is used as follow:
@@ -115,6 +90,11 @@ public class DBManager{
 		return prep.executeQuery();
 	}
 	
+	/**
+	 * update database with plain sql statement
+	 * @param query
+	 * @throws SQLException
+	 */
 	public void update(String query) throws SQLException
 	{
 		this.connect();
@@ -180,29 +160,14 @@ public class DBManager{
 		prep.executeUpdate();
 	}
 	
-	public void insert(String query, Param[] param) throws SQLException
-	{
-		this.connect();
-		String values = " (";
-		for (int i = 0; param != null && i < param.length; i++)
-		{
-			values += i == param.length - 1 ? " )" : ", ";
-		}
-		if (param != null && param.length != 0)
-		{
-			PreparedStatement prep = this.getConn().prepareStatement(query+values);
-			prep.executeUpdate();
-		}
-		
-	}
 	
 	/**
+	 * get the public key from the database according to the username
 	 * @param username
 	 * @return String array that store the public key exponent and modulus of user, return null if there is any problem
 	 */
 	public String [] getPubKeyAndMod(String username)
 	{
-		//TODO change to callable statement
 		String [] buf = new String[2];
 		try {
 			this.connect();
@@ -218,6 +183,15 @@ public class DBManager{
 		return buf;
 	}
 	
+	/**
+	 * insert a new user into database
+	 * @param role
+	 * @param username
+	 * @param pwdMDExp
+	 * @param publicKeyExp
+	 * @param modulus
+	 * @return 0 if success
+	 */
 	public int storeUser(String role, String username, String pwdMDExp, String publicKeyExp, String modulus) {
 		try {
 			//TODO change to callable statement
@@ -235,6 +209,12 @@ public class DBManager{
 		return 0;
 	}
 	
+	/**
+	 * get a result set with the username 
+	 * @param username
+	 * @return a result set with username, password, public keym modulus and id from database
+	 * 
+	 */
 	public ResultSet isUserExist(String username) {
 		//TODO change to callable statement
 		try {
@@ -255,6 +235,9 @@ public class DBManager{
 	}
 
 	
+	/**
+	 * disconnect from database server
+	 */
 	public void disconnect() {
 		try {
 			getConn().close();
@@ -337,6 +320,10 @@ public class DBManager{
 		}
 	}
 	
+	/**
+	 * 
+	 * @param conn
+	 */
 	public void setConn(Connection conn) {
 		this.conn = conn;
 	}

@@ -1,20 +1,19 @@
-/**
- * 
- */
 package ehospital.server.handler;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Random;
-import cipher.*;
+
+import cipher.RSAHardware;
 
 /**
- * @author mc
+ * Register User into the database.
+ * Remnant from semester 1 version. 
+ * @author mc, Gilbert
  *
  */
 public class RegisterHandler extends Handler{
@@ -26,17 +25,29 @@ public class RegisterHandler extends Handler{
 	private String pwdMDExp;
 	private RSAHardware rsaHard;
 	
+	/**
+	 * Default constructor. does Nothing
+	 */
 	public RegisterHandler()
 	{
 		
 	}
 	
+	/**
+	 * Constructor that intake a role and a username
+	 * @param role
+	 * @param username
+	 */
 	public RegisterHandler(String role, String username) {
 		this.role = role;
 		this.username = username;
 		rsaHard = new RSAHardware();
 	}
 	
+	/**
+	 * Register a user
+	 * @return 0 if success, -1 if failed
+	 */
 	public int register()
 	{
 		if (dbm.isUserExist(username) != null) return -1;
@@ -45,6 +56,10 @@ public class RegisterHandler extends Handler{
 		return 0;
 	}
 	
+	/**
+	 * Return a randomly generated password with 8 characters
+	 * @return password
+	 */
 	private String genPassword()
 	{
 		
@@ -81,6 +96,10 @@ public class RegisterHandler extends Handler{
 		return pwd;
 	}
 	
+	/**
+	 * generate key and put it into the Java Card
+	 * @return 0 if success, -1 if failed
+	 */
 	private int genKey()
 	{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -114,7 +133,6 @@ public class RegisterHandler extends Handler{
 			pwdMDExp = this.byteArrayToString(md.digest(genPwd.getBytes()));
 			
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -124,24 +142,31 @@ public class RegisterHandler extends Handler{
 		return 0;
 	}
 	
+	/**
+	 * store the new user into the database
+	 * @return 0 if success
+	 */
 	private int storeToDB() {
 		return dbm.storeUser(role, username, pwdMDExp, publicKeyExp, modulus);
 	}
 	
+	/**
+	 * register a temp user and store the keys into JAVA Card
+	 * @return 0 if success, 1 if the card fails, 2 if SQL error, 4 if database not available 
+	 */
 	public int regTmpUser() {
 		rsaHard = new RSAHardware(); 
-		if (genKey() < 0) return 2;
+		if (genKey() < 0) return 1;
 		String [] str = {rsaHard.getGeneratedPublicKeyExp(),rsaHard.getGeneratedModulus()};
 		if (dbm.connect()) {
 			try {
 				dbm.update("insert into `tmp_user` ( `pub_key`, `mod` ) VALUE (?,?)", str);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return 4;
+				return 2;
 			}
 		} else {
-			return 16;
+			return 4;
 		}
 		return 0;
 	}

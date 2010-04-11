@@ -1,7 +1,5 @@
 package ehospital.server;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Random;
@@ -12,6 +10,11 @@ import javax.crypto.spec.SecretKeySpec;
 
 import remote.obj.ClientCallback;
 
+/**
+ * A session 
+ * @author Gilbert
+ *
+ */
 public class Session extends TimerTask {
 	//5 minutes
 	private static int TIMEOUT = 300000;
@@ -27,6 +30,14 @@ public class Session extends TimerTask {
 	public Timer getTimer(){
 		return t;
 	}
+	/**
+	 * Constructor that initialize everything
+	 * @param username
+	 * @param sessionKey
+	 * @param exp
+	 * @param mod
+	 * @param host
+	 */
 	public Session(String username, SecretKeySpec sessionKey, String exp, String mod, String host) {
 		this.username = username;
 		this.sessionKey = sessionKey;

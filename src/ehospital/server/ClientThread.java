@@ -35,6 +35,7 @@ import ehospital.server.handler.UpdateHandler;
 import message.*;
 
 /**
+ * obsolete class, developed in 09/10 semester 1 using socket programming.
  * @author mc Gilbert
  *
  */

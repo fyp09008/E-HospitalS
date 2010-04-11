@@ -4,6 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.TimerTask;
 
+/**
+ * Check the `tmp_user` if the `tmp_user` expires, set it into invalid  
+ * @author Gilbert
+ *
+ */
 public class TmpUserChecker extends TimerTask {
 
 	@Override

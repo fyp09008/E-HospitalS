@@ -2,6 +2,12 @@ package ehospital.server.handler;
 
 import cipher.RSASoftware;
 
+/**
+ * obsolete class, developed in 09/10 semester 1 using socket programming. 
+ * reference only. not much documentation
+ * @author mc, Gilbert
+ *
+ */
 public class ServerAuthHandler extends Handler {
 	
 	private byte[] fingerprint = {(byte)0x16,(byte)0x27,(byte)0xac,(byte)0xa5,

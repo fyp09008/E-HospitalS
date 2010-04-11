@@ -29,6 +29,7 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 /**
+ * obsolete class, developed in 09/10 semester 1 using socket programming.
  * @author mc
  *
  */
