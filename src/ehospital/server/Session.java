@@ -2,6 +2,7 @@ package ehospital.server;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -55,7 +56,7 @@ public class Session extends TimerTask {
 		try {
 			Registry r = LocateRegistry.getRegistry(host,7788);
 			ClientCallback ccb = (ClientCallback)r.lookup("ClientCallback");
-			System.out.println("Session Timeout");
+			System.out.println("Session Timeout" + new Date() );
 			SessionList.deleteSession(username);
 			ccb.timeout();
 			t.cancel();

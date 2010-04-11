@@ -180,6 +180,7 @@ public class DataHandlerImpl extends UnicastRemoteObject implements DataHandler 
 			
 			if (valid)
 			{
+				dbm.connect();
 				dbm.update(new String(rawQuery), (Object[]) Utility.BytesToObj(p));
 				Logger.log(clientIP, "update success.");
 				return true;
