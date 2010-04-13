@@ -66,7 +66,7 @@ public class Utility {
 	{
 		try {
 			Cipher cipher = Cipher.getInstance("aes");
-			cipher.init(Cipher.ENCRYPT_MODE, ProgramKey);
+			cipher.init(Cipher.DECRYPT_MODE, ProgramKey);
 			return cipher.doFinal(o);
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();

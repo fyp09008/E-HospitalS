@@ -66,7 +66,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 			throws RemoteException {
 		String clientIP = Utility.getClientHost();
 		String username = new String(Utility.decryptProgKey(usernameIn));
-		
+		System.out.println(username);
 		byte[] HEPwd = Utility.decryptProgKey(HEPwdIn);
 		dbm = new DBManager();
 		ResultSet user = dbm.isUserExist(username);
@@ -82,6 +82,8 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 				HEPwd = rsa.unsign(HEPwd, HEPwd.length);
 				
 				String pwdReceived = Utility.byteArrayToString(HEPwd);
+				System.out.println(pwdFromDB);
+				System.out.println(pwdReceived);
 				if (pwdFromDB.equals(pwdReceived)) {
 					Session sessionExist1 = ehospital.server.SessionList.findClient(username); 
 					if (sessionExist1 != null) {
@@ -95,7 +97,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 					
 					Session sessionExist = ehospital.server.SessionList.findClient(username); 
 					if (sessionExist == null) {
-						Session session = new Session(username, sks, exp, mod,host);
+						Session session = new Session(username, sks, exp, mod,clientIP);
 						ehospital.server.SessionList.clientList.add(session);
 					} else {
 						sessionExist.setSessionKey(sks);
