@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.4
+-- version 3.2.0.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Apr 09, 2010 at 02:17 �U��
--- Server version: 5.1.41
--- PHP Version: 5.3.1
+-- 主機: localhost
+-- 建立日期: Apr 16, 2010, 06:39 
+-- 伺服器版本: 5.1.37
+-- PHP 版本: 5.3.0
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,13 +16,13 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `hospital_rec`
+-- 資料庫: `hospital_rec`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `allergy`
+-- 資料表格式： `allergy`
 --
 
 CREATE TABLE IF NOT EXISTS `allergy` (
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `allergy` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=23 ;
 
 --
--- Dumping data for table `allergy`
+-- 列出以下資料庫的數據： `allergy`
 --
 
 INSERT INTO `allergy` (`id`, `name`, `description`) VALUES
@@ -61,7 +61,7 @@ INSERT INTO `allergy` (`id`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dia-allergy_rec`
+-- 資料表格式： `dia-allergy_rec`
 --
 
 CREATE TABLE IF NOT EXISTS `dia-allergy_rec` (
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `dia-allergy_rec` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `dia-allergy_rec`
+-- 列出以下資料庫的數據： `dia-allergy_rec`
 --
 
 INSERT INTO `dia-allergy_rec` (`id`, `pat_id`, `allergy_id`, `valid`) VALUES
@@ -85,7 +85,7 @@ INSERT INTO `dia-allergy_rec` (`id`, `pat_id`, `allergy_id`, `valid`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dia-disease_rec`
+-- 資料表格式： `dia-disease_rec`
 --
 
 CREATE TABLE IF NOT EXISTS `dia-disease_rec` (
@@ -96,14 +96,14 @@ CREATE TABLE IF NOT EXISTS `dia-disease_rec` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `dia-disease_rec`
+-- 列出以下資料庫的數據： `dia-disease_rec`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `disease`
+-- 資料表格式： `disease`
 --
 
 CREATE TABLE IF NOT EXISTS `disease` (
@@ -114,38 +114,37 @@ CREATE TABLE IF NOT EXISTS `disease` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `disease`
+-- 列出以下資料庫的數據： `disease`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `log`
+-- 資料表格式： `log`
 --
 
 CREATE TABLE IF NOT EXISTS `log` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` varchar(20) NOT NULL,
   `user` varchar(20) NOT NULL,
   `content` varchar(50) NOT NULL,
-  KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=108 ;
+  `hash_value` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`),
+  KEY `id_2` (`id`),
+  KEY `id_3` (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=248 ;
 
 --
--- Dumping data for table `log`
+-- 列出以下資料庫的數據： `log`
 --
 
-INSERT INTO `log` (`id`, `date`, `user`, `content`) VALUES
-(104, '2010/04/09 21:43:16', 'admin', 'Server starts'),
-(105, '2010/04/09 21:47:30', 'admin', 'Server starts'),
-(106, '2010/04/09 21:53:51', 'admin', 'Server starts'),
-(107, '2010/04/09 22:09:32', 'admin', 'Server starts');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `medicine`
+-- 資料表格式： `medicine`
 --
 
 CREATE TABLE IF NOT EXISTS `medicine` (
@@ -156,14 +155,14 @@ CREATE TABLE IF NOT EXISTS `medicine` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `medicine`
+-- 列出以下資料庫的數據： `medicine`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `patient_personal`
+-- 資料表格式： `patient_personal`
 --
 
 CREATE TABLE IF NOT EXISTS `patient_personal` (
@@ -176,18 +175,18 @@ CREATE TABLE IF NOT EXISTS `patient_personal` (
   `pic` int(11) NOT NULL,
   `description` text CHARACTER SET latin1,
   PRIMARY KEY (`pid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=20 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
 --
--- Dumping data for table `patient_personal`
+-- 列出以下資料庫的數據： `patient_personal`
 --
 
 INSERT INTO `patient_personal` (`pid`, `name`, `gender`, `address`, `contact_no`, `birthday`, `pic`, `description`) VALUES
-(1, 'Carrie Ding C.D', 'F', 'HKU, HK', '12345678', '1900-01-01', 5, 'carrie ding works in hku'),
-(2, 'Tang Chi Chun', 'M', 'Sai Ying Pun, Hong Kong', '95206892', '1922-01-01', 5, 'Tang Chi chun Chris is one of the developer'),
-(3, 'Wat Chun Pang Gilbert', 'M', 'N.T', '34567812', '1904-04-01', 5, 'Old man'),
-(4, 'Apple Chan', 'F', 'Road 9, First Street, Hong Kong', '12348902', '1938-10-02', 5, ''),
-(5, 'Chung Man Ho Pizza', 'M', 'Hill Road, Hong Kong', '90892713', '1987-01-01', 5, 'pizza is living in mini'),
+(1, 'Carrie Ding C.D', 'F', 'HKU, HK', '12345678', '1900-01-01', 6, 'carrie ding works in hku'),
+(2, 'Tang Chi Chun', 'M', 'Sai Ying Pun, Hong Kong', '95206892', '1922-01-01', 6, 'Tang Chi chun Chris is one of the developer'),
+(3, 'Wat Chun Pang Gilbert', 'M', 'N.T', '34567812', '1904-04-01', 6, 'Old man'),
+(4, 'Apple Chan', 'F', 'Road 9, First Street, Hong Kong', '12348902', '1938-10-02', 6, ''),
+(5, 'Chung Man Ho Pizza', 'M', 'Hill Road, Hong Kong', '90892713', '1987-01-01', 6, 'pizza is living in mini'),
 (6, 'Wilson Yeung', 'M', 'Kowloon, Hong Kong', '12890312', '2008-01-01', 5, 'Small kid'),
 (7, 'Ivy Yu ', 'F', 'CausewayBay, Hong Kong', '90829412', '1975-01-05', 5, 'Ivy loves shopping'),
 (8, 'David Chan', 'M', 'Teacher Road, Hong Kong', '12390482', '1945-01-01', 5, 'He is a teacher	'),
@@ -201,12 +200,13 @@ INSERT INTO `patient_personal` (`pid`, `name`, `gender`, `address`, `contact_no`
 (16, 'Egg Wong', 'M', 'Hong Kong', '90876524', '1900-01-01', 5, ''),
 (17, 'Eddie Yeung', 'M', 'N.Y', '90876555', '1900-01-01', 5, ''),
 (18, 'Maple Wong', 'M', 'Wilson Street', '78665555', '1900-01-01', 5, ''),
-(19, 'Yeung Siu Wai', 'M', 'Hong Kong', '88887652', '1900-01-01', 5, '');
+(19, 'Yeung Siu Wai', 'M', 'Hong Kong', '88887652', '1900-01-01', 6, ''),
+(20, 'Pizza Box', 'M', 'Bonham Road', '12378652', '1977-01-01', 6, '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `privilege`
+-- 資料表格式： `privilege`
 --
 
 CREATE TABLE IF NOT EXISTS `privilege` (
@@ -218,17 +218,17 @@ CREATE TABLE IF NOT EXISTS `privilege` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `privilege`
+-- 列出以下資料庫的數據： `privilege`
 --
 
 INSERT INTO `privilege` (`Role`, `Read`, `Write`, `Add`) VALUES
 ('doctor', 1, 1, 1),
-('nurse', 1, 1, 0);
+('nurse', 1, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `swapped_user`
+-- 資料表格式： `swapped_user`
 --
 
 CREATE TABLE IF NOT EXISTS `swapped_user` (
@@ -240,17 +240,17 @@ CREATE TABLE IF NOT EXISTS `swapped_user` (
   `tmp_card_num` int(11) NOT NULL,
   `isValid` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`cid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
--- Dumping data for table `swapped_user`
+-- 列出以下資料庫的數據： `swapped_user`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `t-m_rec`
+-- 資料表格式： `t-m_rec`
 --
 
 CREATE TABLE IF NOT EXISTS `t-m_rec` (
@@ -261,14 +261,14 @@ CREATE TABLE IF NOT EXISTS `t-m_rec` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `t-m_rec`
+-- 列出以下資料庫的數據： `t-m_rec`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tmp_user`
+-- 資料表格式： `tmp_user`
 --
 
 CREATE TABLE IF NOT EXISTS `tmp_user` (
@@ -277,17 +277,19 @@ CREATE TABLE IF NOT EXISTS `tmp_user` (
   `mod` text COLLATE utf8_unicode_ci NOT NULL,
   `isTaken` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `tmp_user`
+-- 列出以下資料庫的數據： `tmp_user`
 --
 
+INSERT INTO `tmp_user` (`id`, `pub_key`, `mod`, `isTaken`) VALUES
+(1, '10001', 'bab4f93f57687d9b1b6c6aa4a27078351f6b24806fa2ccb1368d6f6f8755adeb4dc464ed0f000b4e4e3366783a0e1c736bd4df8d3517a255538b6f6a2547057eafb7ae1cec33972ec54452dacd989afce9559126adc3647aef144993b861c49425a2e91da6a4b0439f448727d7b11e7974ba8d776543f24d7463e2f4dfa69abf', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `treatment`
+-- 資料表格式： `treatment`
 --
 
 CREATE TABLE IF NOT EXISTS `treatment` (
@@ -300,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `treatment` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `treatment`
+-- 列出以下資料庫的數據： `treatment`
 --
 
 INSERT INTO `treatment` (`id`, `pid`, `pic`, `description`, `date_of_issue`) VALUES
@@ -310,7 +312,7 @@ INSERT INTO `treatment` (`id`, `pid`, `pic`, `description`, `date_of_issue`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- 資料表格式： `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -322,14 +324,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `RegDate` date NOT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=27 ;
 
 --
--- Dumping data for table `user`
+-- 列出以下資料庫的數據： `user`
 --
 
 INSERT INTO `user` (`uid`, `Role`, `pub_key`, `mod`, `pwd`, `RegDate`, `username`) VALUES
-(5, 'doctor', '10001', 'cbfb8a3f71e51716a562caee8734011a56353ff9796798dcc38960dcc2b3df75bcbd3d0d1e461495eae4b588a0823ad72996e1c9936581b7634a361b5932b46036aebd62b0425729c16a5b9d8727159727ee59aec1ee482bf64a23bf781ea33e61e7ec7f2438ef839a82c26641efe51a8570aa84f9e92b19e2092332abbdb98f', '098f6bcd4621d373cade4e832627b4f6', '2010-04-09', 'test');
+(6, 'nurse', '10001', 'd9c94de943f8a0ad3138b78c6902e11dbf2ee048d2c89f4d9d0b02a5054a1a913e8fbafb9a20baf9dac2e291226898221376cedc41aa7cd5f4bf95b71b587d49a550513828c759a25619a08a9b19bed229ea5822b72c6f2e5ef373750881ebca3da166e1af364c51d3e0d82e6cdc8a1085bc971f2e0e948b942611e43e0b133d', '289dff07669d7a23de0ef88d2f7129e7', '2010-04-13', 'nurse'),
+(26, 'doctor', '10001', '8759348a8ec8110c9ee9ded752b1062fd7d5afe973a160796a381707235972cd7bef1e74a6b51be27ee68e678c0ea7b7b1978c90e18cd9461265508fe9639b730911eff2fdef70ea5249b5bf9c4b1f99f9f7de70aa26d56263ea4f68a36addca806b5c0d34e2477c92f4c02696257c278aedcd68008958d4f2e2ba377d561345', '202cb962ac59075b964b07152d234b70', '2010-04-13', 'doctor');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

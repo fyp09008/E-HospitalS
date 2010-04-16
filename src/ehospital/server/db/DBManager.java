@@ -20,9 +20,9 @@ import java.util.StringTokenizer;
 public class DBManager{
 	
 	private static final String dbdriver = "com.mysql.jdbc.Driver";
-	private static final String dbstr = "jdbc:mysql://127.0.0.1/hospital_rec";
-	private static final String username = "FYP09";
-	private static final String password = "1234qwer";
+	private static final String dbstr = "jdbc:mysql://localhost/hospital_rec"; //127.0.0.1
+	private static final String username = "root";//"FYP09";
+	private static final String password = "";//1234qwer";
 	
 	private Connection conn;
 	/**
