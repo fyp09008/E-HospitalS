@@ -106,7 +106,7 @@ public class RMIConsole {
 			            name = "EmergencyAccessHandler";
 			            EmergencyAccessHandler engine4 = new EmergencyAccessHandlerImpl();
 			            reg.rebind(name, engine4);
-			            System.out.println("Authentication Service online.");
+			            System.out.println("Service online.");
 			            
 			        } catch (Exception e) {
 			            System.err.println("Service exception:");
@@ -128,20 +128,19 @@ public class RMIConsole {
 					ResultSet rs = null;
 					DBManager dbm = new DBManager();
 					if (dbm.connect()) {
-						rs = dbm.query("select Role from privilege;"); 
+						rs = dbm.query("select `Role` from `privilege`;"); 
 					}
 					ArrayList<String> roleList = new ArrayList<String>();
-					
 					if (rs != null && rs.first()) {
 						do {
-							roleList.add(rs.getString(rs.getRow()));
+							roleList.add(rs.getString("Role"));
 						} while (rs.next());
 					}
 					
 					for ( int i = 0; i < roleList.size() - 1; i ++) {
 						System.out.print(roleList.get(i)+ " / ");
 					}
-					System.out.print(roleList.get(roleList.size()) + ")");
+					System.out.print(roleList.get(roleList.size()-1) + ")");
 					cmd = cmdreader.readLine();
 					System.out.print("User name? ");
 					
