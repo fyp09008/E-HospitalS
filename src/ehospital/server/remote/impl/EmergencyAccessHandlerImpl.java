@@ -68,9 +68,7 @@ public class EmergencyAccessHandlerImpl extends UnicastRemoteObject implements E
 					emergencyPwd = c.doFinal(emergencyPwd);
 					
 					String strEmergencyUser = new String(emergencyUser);
-					System.out.println(strEmergencyUser);
 					ResultSet emergencyUserData = dbm.isUserExist(strEmergencyUser);
-					System.out.println();
 					if (dbm.isUserExist(strUsername) != null  && emergencyUserData != null ){
 						try {
 							String strEmergencyPwd = Utility.byteArrayToString(emergencyPwd);
@@ -79,9 +77,7 @@ public class EmergencyAccessHandlerImpl extends UnicastRemoteObject implements E
 								return 1;
 							}
 							ResultSet tmpUser = dbm.query("select * from `tmp_user` where `isTaken` = 0 AND `id` = " + tmpCardNum, null);
-							System.out.println(tmpCardNum);
 							if (tmpUser.first()) {
-								System.out.println(tmpUser.getString(1));
 								dbm.update("update `tmp_user` set `isTaken` = 1 where `id` = " + tmpUser.getString(1));
 							} else {
 								Logger.log(clientIP, "failed to authorize a temp card due to the temp card is authorized to other users.");
@@ -93,7 +89,8 @@ public class EmergencyAccessHandlerImpl extends UnicastRemoteObject implements E
 							//swap key pair
 							String [] o = {tmpUser.getString("pub_key"),tmpUser.getString("mod"),emergencyUserData.getString("uid")};
 							dbm.update("update `user` set `pub_key` = ?, `mod` = ? where `uid` = ?", o);
-						
+							System.out.println(strUsername+" is authorizing " + strEmergencyUser + " in " + clientIP);
+							System.out.print("~>");
 							Logger.log(clientIP, " successfully authorized temp card no."+tmpCardNum+".");
 							return 0;
 						} catch (SQLException e) {

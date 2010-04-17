@@ -8,11 +8,11 @@ import java.util.Date;
 
 import mail.mail;
 
-public class check_log {
+public class LogChecker {
 
 	  DBManager dbm = new DBManager();
 	  
-      public check_log(){
+      public LogChecker(){
 
      }
       
@@ -31,10 +31,6 @@ public class check_log {
 					content = rs.getString("content");
 					hash_value = rs.getInt("hash_value");
 					}
-				//System.out.println(date);
-				//System.out.println(user);
-				//System.out.println(content);
-				//System.out.println(hash_value);
 				
 				String logString = date+user+content;
 				
@@ -42,16 +38,9 @@ public class check_log {
 				try {
 					md = MessageDigest.getInstance("md5");
 				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//byte[] hashed_value = md.digest(logString.getBytes());
-				//byte[] hashed_value2 = md.digest(logString.getBytes());
-				//System.out.println(hashed_value);
-				//System.out.println(hashed_value2);
-				//System.out.println(logString.hashCode());
 			
-				//System.out.println(logString.hashCode());
 				if (logString.hashCode()== hash_value){
 					return true;} 
 				else{
@@ -65,7 +54,6 @@ public class check_log {
 					return false;
 				}
 					
-				//System.out.println(date+";"+user+";"+content+";"+hash_value);		
 		  }
     	  dbm.disconnect();
     	  return false; 

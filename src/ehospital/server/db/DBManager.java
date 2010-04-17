@@ -176,7 +176,6 @@ public class DBManager{
 			buf[0] = rs.getString(1);
 			buf[1] = rs.getString(2);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println("SQLException");
 			return null;
 		}

@@ -5,15 +5,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 
 /**
- * 
- */
-
-/**
+ * This class is for intrusion detection.
  * @author mc
  *
  */

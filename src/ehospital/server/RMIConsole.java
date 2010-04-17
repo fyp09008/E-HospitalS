@@ -12,6 +12,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.ExportException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -91,67 +92,56 @@ public class RMIConsole {
 					}
 					try {
 			            String name = "AuthHandler";
-			            remote.obj.AuthHandler engine = new AuthHandlerImpl();
-			            reg.rebind(name, engine);			            	
+			            remote.obj.AuthHandler engine1 = new AuthHandlerImpl();
+			            reg.rebind(name, engine1);
 			            
-			            System.out.println("AuthenticatorImpl bound");
+			            name = "DataHandler";
+			            remote.obj.DataHandler engine2 = new DataHandlerImpl();
+			            reg.rebind(name, engine2);
 			            
-			        } catch (Exception e) {
-			            System.err.println("AuthenticatorImpl exception:");
-			            e.printStackTrace();
-			        }
-			        
-			        try {
-			            String name = "DataHandler";
-			            remote.obj.DataHandler engine = new DataHandlerImpl();
-			            reg.rebind(name, engine);
-			            System.out.println("DataHandlerImpl bound");
+			            name = "ProgramAuthHandler";
+			            remote.obj.ProgramAuthHandler engine3 = new ProgramAuthHandlerImpl();
+			            reg.rebind(name, engine3);
 			            
-			        } catch (Exception e) {
-			            System.err.println("DataHandlerImpl exception:");
-			            e.printStackTrace();
-			        }
-			        	
-			        try {
-			            String name = "ProgramAuthHandler";
-			            remote.obj.ProgramAuthHandler engine = new ProgramAuthHandlerImpl();
-			            reg.rebind(name, engine);			            	
-			            
-			            System.out.println("ProgramAuthHandlerImpl bound");
+			            name = "EmergencyAccessHandler";
+			            EmergencyAccessHandler engine4 = new EmergencyAccessHandlerImpl();
+			            reg.rebind(name, engine4);
+			            System.out.println("Authentication Service online.");
 			            
 			        } catch (Exception e) {
-			            System.err.println("ProgramAuthHandlerImpl exception:");
+			            System.err.println("Service exception:");
 			            e.printStackTrace();
-			        }
-			        
-			        try {
-			            String name = "EmergencyAccessHandler";
-			            EmergencyAccessHandler engine = new EmergencyAccessHandlerImpl();
-			            reg.rebind(name, engine);			            	
-			            
-			            System.out.println("EmergencyAccessHandlerImpl bound");
-			            
-			        } catch (Exception e) {
-			            System.err.println("EmergencyAccessHandlerImpl exception:");
-			            e.printStackTrace();
+			            Logger.log("server", "Service cannot be started due to" + e.getMessage());
 			        }
 			        
 			        System.out.println("Server Started");
 					Logger.log("admin", "Server starts");
 				}
-				else if (cmd.equalsIgnoreCase("genkey"))
-				{
-					cipher.RSASoftware rsaSoft = new cipher.RSASoftware();
-					rsaSoft.genKey();			
-				}
+				
 				else if (cmd.equalsIgnoreCase("shutdown")) {
 					shutdown();
 				}
+				
 				else if (cmd.equalsIgnoreCase("register"))
 				{
-					System.out.print("Role? ");
+					System.out.print("Role? (");
+					ResultSet rs = null;
+					DBManager dbm = new DBManager();
+					if (dbm.connect()) {
+						rs = dbm.query("select Role from privilege;"); 
+					}
+					ArrayList<String> roleList = new ArrayList<String>();
 					
+					if (rs != null && rs.first()) {
+						do {
+							roleList.add(rs.getString(rs.getRow()));
+						} while (rs.next());
+					}
 					
+					for ( int i = 0; i < roleList.size() - 1; i ++) {
+						System.out.print(roleList.get(i)+ " / ");
+					}
+					System.out.print(roleList.get(roleList.size()) + ")");
 					cmd = cmdreader.readLine();
 					System.out.print("User name? ");
 					
@@ -174,11 +164,7 @@ public class RMIConsole {
 						System.out.println("Register Temp Card Failed!");
 					}
 				}
-				else if (cmd.equalsIgnoreCase("Threadchk"))
-				{
-					System.out.println(Thread.activeCount());
-					Logger.log("admin", Thread.activeCount()+"");					
-				}
+				
 				else if (cmd.equalsIgnoreCase("status"))
 				{
 					if (reg != null) {
