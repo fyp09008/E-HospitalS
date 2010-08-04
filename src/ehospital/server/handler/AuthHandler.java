@@ -15,7 +15,7 @@ import message.AuthRequestMessage;
 
 /**
  * obsolete class, developed in 09/10 semester 1 using socket programming.
- * To check if the disconnect request is issued by the appropriate user
+ * To authenticate the user
  * @author Gilbert
  *
  */

@@ -18,8 +18,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import ehospital.server.handler.Handler;
-/*
+/**
  * This class provide utility for all classes.
  * @author mc, chun, Gilbert
  */
@@ -33,7 +32,7 @@ public class Utility {
 	private Utility() {}
 	
 	/**
-	 * encrypt with program key
+	 * Encrypt with program key.
 	 * @param o
 	 * @return an byte array with encrypted message, null if unable to encrypt
 	 */
@@ -58,7 +57,7 @@ public class Utility {
 	}
 	
 	/**
-	 * encrypt with program key
+	 * Encrypt with program key.
 	 * @param o
 	 * @return an byte array with decrypted message, null if unable to decrypt
 	 */
@@ -82,6 +81,11 @@ public class Utility {
 		return null;
 	}
 	
+	/**
+	 * Convert byte array to string.
+	 * @param b
+	 * @return a String representation of the byte array
+	 */
 	public static String byteArrayToString(byte[] b) {
 		if(b == null)
 			return null;
@@ -99,7 +103,7 @@ public class Utility {
 	}
 	
 	/**
-	 * convert a string to byte array
+	 * Convert a string to byte array.
 	 * @param str
 	 * @return a byte array
 	 */
@@ -127,7 +131,7 @@ public class Utility {
 	}
 	
 	/**
-	 * convert object to byte array
+	 * Convert object to byte array.
 	 * @param obj
 	 * @return an byte array representation of the object
 	 */
@@ -152,7 +156,7 @@ public class Utility {
 	}
 	
 	/**
-	 * convert byte array to object
+	 * Convert byte array to object.
 	 * @param b
 	 * @return Object 
 	 */
@@ -176,7 +180,7 @@ public class Utility {
 	}
 	
 	/**
-	 * convert integer to byte array.
+	 * Convert integer to byte array.
 	 * @param integer
 	 * @return an byte array 
 	 */
@@ -194,7 +198,7 @@ public class Utility {
 	}
 	
 	/**
-	 * compare the compare two byte arrays.
+	 * Compare the difference between two byte arrays.
 	 * @param b1
 	 * @param b2
 	 * @return true of b1 and b2 is the same 
@@ -212,7 +216,7 @@ public class Utility {
 	}
 
 	/**
-	 * get the hostname of the client
+	 * Get the hostname of the client.
 	 * @return hostname of the client
 	 */
 	public static String getClientHost() {

@@ -6,20 +6,25 @@ import java.util.Calendar;
 
 import javax.crypto.spec.SecretKeySpec;
 
+import message.UpdateRequestMessage;
 import ehospital.server.db.DBManager;
 
-import message.UpdateRequestMessage;
-import message.UpdateResponseMessage;
-
 /**
- * obsolete class, developed in 09/10 semester 1 using socket programming, reference only.
- * @author mc, Gilbert
- *
+ * obsolete class, developed in 09/10 semester 1 using socket programming, reference only. Handle update request from server program.
+ * @author   mc, Gilbert
  */
 public class UpdateHandler extends Handler {
 	
 	private String updatesql;
+	/**
+	 * @uml.property  name="dbm"
+	 * @uml.associationEnd  
+	 */
 	private DBManager dbm;
+	/**
+	 * @uml.property  name="m"
+	 * @uml.associationEnd  
+	 */
 	private UpdateRequestMessage m;
 	private String IP;
 	private boolean isGranted;
@@ -47,6 +52,10 @@ public class UpdateHandler extends Handler {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return true if update successful
+	 */
 	public boolean update()
 	{
 		try {
@@ -57,6 +66,7 @@ public class UpdateHandler extends Handler {
 			}
 			else
 			{
+				@SuppressWarnings("unused")
 				String Subj = "Intrusion Detected!";
 				String msg = "Time: "+Calendar.getInstance().getTime().toString()+"\r\n";
 				msg += "User: "+m.username+"\r\n";
@@ -70,18 +80,26 @@ public class UpdateHandler extends Handler {
 				return false;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Fail to Update the database, abort.");
 			System.err.println("Error: " + e.getMessage());
 			return false;
 		}
 	}
 
+	/**
+	 * Decrypt query in ciphertext.
+	 * @param cipher
+	 * @return decrypted plaintext query String.
+	 */
 	private String getQueryString(byte[] cipher)
 	{
 		return new String(this.decryptAES(cipher));
 	}
 
+	/**
+	 * @param  ip
+	 * @uml.property  name="iP"
+	 */
 	public void setIP(String ip) {
 		IP = ip;
 	}

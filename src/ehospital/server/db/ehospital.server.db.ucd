@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="1081,994" id="ehospital.server.db" metadata="uml2-1.0" initialized="true" zoom="0.5" scrolledX="-20" scrolledY="-11" tag="1000" key="32303038303431342D3130303020452D486F73706974616C5365727665722F47696C62657274">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.0 //@children.2/@sourceConnections.0 //@children.4/@sourceConnections.1 //@children.1/@sourceConnections.0" name="DBManager" location="330,29" size="145,416" id="ehospital.server.db/DBManager" runTimeClassModel="query(Ljava.lang.String;[Ljava.lang.Object;),connect(),storeUser(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;),isUserExist(Ljava.lang.String;),query(Ljava.lang.String;),DBManager(),update(Ljava.lang.String;[Lehospital.server.db.DBManager.Param;[Lehospital.server.db.DBManager.Param;),update(Ljava.lang.String;),update(Ljava.lang.String;[Ljava.lang.Object;),getPubKeyAndMod(Ljava.lang.String;),disconnect(),ehospital.server.db.DBManager.Param,conn">
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="conn" id="ehospital.server.db/DBManager#conn"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,198">
+      <children xsi:type="editmodel:MethodEditModel" name="DBManager" id="ehospital.server.db/DBManager#DBManager()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="connect" id="ehospital.server.db/DBManager#connect()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="disconnect" id="ehospital.server.db/DBManager#disconnect()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPubKeyAndMod" id="ehospital.server.db/DBManager#getPubKeyAndMod(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isUserExist" id="ehospital.server.db/DBManager#isUserExist(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="query" id="ehospital.server.db/DBManager#query(Ljava.lang.String;[Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="query" id="ehospital.server.db/DBManager#query(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="storeUser" id="ehospital.server.db/DBManager#storeUser(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="ehospital.server.db/DBManager#update(Ljava.lang.String;[Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="ehospital.server.db/DBManager#update(Ljava.lang.String;[Lehospital.server.db.DBManager.Param;[Lehospital.server.db.DBManager.Param;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="ehospital.server.db/DBManager#update(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="102,141">
+      <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.2" name="Param" location="769,257" size="102,139" id="ehospital.server.db/DBManager$Param" runTimeClassModel="op,val,Param(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;),Param(Ljava.lang.String;Ljava.lang.String;),name">
+        <children xsi:type="editmodel:CompartmentEditModel" size="79,54">
+          <children xsi:type="editmodel:AttributeEditModel" name="name" id="ehospital.server.db/DBManager$Param#name"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="op" id="ehospital.server.db/DBManager$Param#op"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="val" id="ehospital.server.db/DBManager$Param#val"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="60,36">
+          <children xsi:type="editmodel:MethodEditModel" name="Param" id="ehospital.server.db/DBManager$Param#Param(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="Param" id="ehospital.server.db/DBManager$Param#Param(Ljava.lang.String;Ljava.lang.String;)"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+      </children>
+    </children>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="ehospital.server.db/DBManager@dbm+ehospital.server/ClientThread@" source="//@children.0" target="//@children.3" targetEnd="//@children.0/@sourceConnections.0/@children.2" label="//@children.0/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="dbm" location="0,92" id="ehospital.server.db/DBManager@dbm+ehospital.server/ClientThread@|ehospital.server.db/DBManager#dbm" attachSource="true" multiplicityLabel="//@children.0/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.0/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - dbm" location="293,99" size="30,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="305,127" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="124,76" id="ehospital.server.db/DBManager@dbm+ehospital.server/ClientThread@|ehospital.server/ClientThread#"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="ehospital.server.db/DBManager@dbm+ehospital.server.db/LogChecker@" source="//@children.0" target="//@children.2" targetEnd="//@children.0/@sourceConnections.1/@children.2" label="//@children.0/@sourceConnections.1/@children.0" sourceEnd="//@children.0/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="dbm" location="145,342" id="ehospital.server.db/DBManager@dbm+ehospital.server.db/LogChecker@|ehospital.server.db/DBManager#dbm" attachSource="true" multiplicityLabel="//@children.0/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.0/@sourceConnections.1/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" ~ dbm" location="481,349" size="32,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="481,377" size="6,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,42" id="ehospital.server.db/DBManager@dbm+ehospital.server.db/LogChecker@|ehospital.server.db/LogChecker#"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.db/DBManager-Soyatec::Import->ehospital.server.db/DBManager$Param" source="//@children.0" target="//@children.0/@children.2/@children.0" targetEnd="//@children.0/@sourceConnections.2/@children.2" label="//@children.0/@sourceConnections.2/@children.0" sourceEnd="//@children.0/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="41,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,326" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,69"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="TmpUserChecker" location="659,74" size="150,67" id="ehospital.server.db/TmpUserChecker" runTimeClassModel="run()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="46,18">
+      <children xsi:type="editmodel:MethodEditModel" name="run" id="ehospital.server.db/TmpUserChecker#run()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.db/TmpUserChecker-Standard::Call->ehospital.server.db/DBManager*ehospital.server.db/TmpUserChecker-Standard::Instantiate->ehospital.server.db/DBManager*ehospital.server.db/TmpUserChecker-Soyatec::Import->ehospital.server.db/DBManager" source="//@children.1" target="//@children.0" targetEnd="//@children.1/@sourceConnections.0/@children.2" label="//@children.1/@sourceConnections.0/@children.0" sourceEnd="//@children.1/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Instantiate, Call»" size="119,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,33" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,78"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.1 //@children.4/@sourceConnections.0" name="LogChecker" location="645,329" size="118,85" id="ehospital.server.db/LogChecker" runTimeClassModel="LogChecker(),checking()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="88,36">
+      <children xsi:type="editmodel:MethodEditModel" name="LogChecker" id="ehospital.server.db/LogChecker#LogChecker()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checking" id="ehospital.server.db/LogChecker#checking()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.db/LogChecker-Standard::Call->ehospital.server.db/DBManager*ehospital.server.db/LogChecker-Standard::Instantiate->ehospital.server.db/DBManager*ehospital.server.db/LogChecker-Soyatec::Import->ehospital.server.db/DBManager" source="//@children.2" target="//@children.0" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Instantiate, Call»" size="119,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,46" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,373"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.0" name="ClientThread" location="-1,45" size="124,153" id="ehospital.server/ClientThread" runTimeClassModel="getRemoteIP(),username,CloseSocket(),ClientThread(Ljava.net.Socket;),run()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="101,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="username" id="ehospital.server/ClientThread#username"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="90,72">
+      <children xsi:type="editmodel:MethodEditModel" name="ClientThread" id="ehospital.server/ClientThread#ClientThread(Ljava.net.Socket;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="CloseSocket" id="ehospital.server/ClientThread#CloseSocket()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRemoteIP" id="ehospital.server/ClientThread#getRemoteIP()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="run" id="ehospital.server/ClientThread#run()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server/ClientThread-Standard::Instantiate->ehospital.server.db/DBManager*ehospital.server/ClientThread-Soyatec::Import->ehospital.server.db/DBManager" source="//@children.3" target="//@children.0" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Instantiate»" size="96,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="124,56" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,61"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Logger" location="525,495" size="87,67" id="ehospital.server.db/Logger" runTimeClassModel="log(Ljava.lang.String;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="44,18">
+      <children xsi:type="editmodel:MethodEditModel" name="log" id="ehospital.server.db/Logger#log(Ljava.lang.String;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.db/Logger-Standard::Call->ehospital.server.db/LogChecker*ehospital.server.db/Logger-Standard::Instantiate->ehospital.server.db/LogChecker*ehospital.server.db/Logger-Soyatec::Import->ehospital.server.db/LogChecker" source="//@children.4" target="//@children.2" targetEnd="//@children.4/@sourceConnections.0/@children.2" label="//@children.4/@sourceConnections.0/@children.0" sourceEnd="//@children.4/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Instantiate, Call»" size="119,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="72,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="22,85"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.db/Logger-Standard::Call->ehospital.server.db/DBManager*ehospital.server.db/Logger-Standard::Instantiate->ehospital.server.db/DBManager*ehospital.server.db/Logger-Soyatec::Import->ehospital.server.db/DBManager" source="//@children.4" target="//@children.0" targetEnd="//@children.4/@sourceConnections.1/@children.2" label="//@children.4/@sourceConnections.1/@children.0" sourceEnd="//@children.4/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Instantiate, Call»" size="119,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="24,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,336"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=7;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

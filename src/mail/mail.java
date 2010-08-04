@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.net.URLEncoder;
 
 /**
- * This class is for intrusion detection.
+ * Provide service for intrusion detection.
  * @author mc
  *
  */
@@ -31,6 +31,10 @@ public class mail {
 
 
 
+	/**
+	 * Email notification to specified address. 
+	 * @return true if email is successfully sent
+	 */
 	public boolean sendmail()
 	{
 		if (Subject != null && Msg != null)
@@ -60,7 +64,8 @@ public class mail {
 	
 			    // Get response
 			    BufferedReader rd = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			    String line;
+			    @SuppressWarnings("unused")
+				String line;
 			    while ((line = rd.readLine()) != null) {
 			        // Process line...
 			    }

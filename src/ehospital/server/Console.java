@@ -7,27 +7,19 @@ package ehospital.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.crypto.spec.SecretKeySpec;
+
 import ehospital.server.db.DBManager;
 import ehospital.server.db.Logger;
 import ehospital.server.handler.Handler;
 import ehospital.server.handler.RegisterHandler;
 import ehospital.server.remote.impl.AuthHandlerImpl;
 import ehospital.server.remote.impl.DataHandlerImpl;
-
-//For logging by Wilson
-//DBManager, add a function "log(String,String,String)"for loging
-//Add these few libraries 
-//logged exit,startup,startwith,shutdown,register,show_client, testauth and threadchk
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 /**
  * obsolete class, developed in 09/10 semester 1 using socket programming.
  * @author mc

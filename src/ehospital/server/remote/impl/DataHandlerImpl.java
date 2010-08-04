@@ -23,7 +23,7 @@ import ehospital.server.db.DBManager;
 import ehospital.server.db.Logger;
 
 /**
- * The implementation of data manipulation in the database
+ * The handler of data manipulation request from the user.
  * @author Gilbert
  *
  */

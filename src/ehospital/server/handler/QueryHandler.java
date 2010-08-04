@@ -14,52 +14,58 @@ import javax.crypto.spec.SecretKeySpec;
 import message.QueryRequestMessage;
 import ehospital.server.db.DBManager;
 /**
- * obsolete class, developed in 09/10 semester 1 using socket programming. 
- * @author Gilbert mc
- * Handle Query from client
- *
+ * obsolete class, developed in 09/10 semester 1 using socket programming.  Handle Query from client
+ * @author   Gilbert mc
  */
 public class QueryHandler extends Handler{
 
+	/**
+	 * @uml.property  name="query"
+	 */
 	private String query;
+	/**
+	 * @uml.property  name="rs"
+	 */
 	private ResultSet rs;
+	/**
+	 * @uml.property  name="dbman"
+	 * @uml.associationEnd  
+	 */
 	private DBManager dbman;
 	
 	public QueryHandler(QueryRequestMessage msg, SecretKeySpec sks) {
 		try {
 			byte[] rawQuery = msg.query;
+			@SuppressWarnings("unused")
 			String username = msg.username;
 			this.setSessionKeySpec(sks);
 			dbman = new DBManager();
 			this.query = getQueryString(rawQuery);
 		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// TODO query username session & sign, decrypt sign, decrypt session, create query by calling cypto man
+		
 	}
 	
 	/**
-	 * @return the query
+	 * @return   the query
+	 * @uml.property  name="query"
 	 */
 	public String getQuery() {
 		return query;
 	}
 	
 	/**
-	 * @return the rs
+	 * @return   the rs
+	 * @uml.property  name="rs"
 	 */
 	public ResultSet getRs() {
 		return rs;
@@ -84,14 +90,16 @@ public class QueryHandler extends Handler{
 	}
 	
 	/**
-	 * @param query the query to set
+	 * @param query   the query to set
+	 * @uml.property  name="query"
 	 */
 	public void setQuery(String query) {
 		this.query = query;
 	}
 	
 	/**
-	 * @param rs the rs to set
+	 * @param rs   the rs to set
+	 * @uml.property  name="rs"
 	 */
 	public void setRs(ResultSet rs) {
 		this.rs = rs;

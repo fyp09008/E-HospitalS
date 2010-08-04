@@ -7,7 +7,7 @@ import java.util.Date;
 import java.security.*;
 
 /**
- * This is the class where Logging is done.
+ * Provide Logging service for the whole system.
  * @author wilson
  *
  */
@@ -17,7 +17,7 @@ public class Logger {
 	}
 	
 	/**
-	 * log event into the data logger
+	 * Log event into the data logger.
 	 * @param user1
 	 * @param content
 	 * @return 0 if success, -1 if fails 
@@ -45,7 +45,8 @@ public class Logger {
 				}
 				else if (count ==1){
 					Statement stmt = dbm.getConn().createStatement();
-			    	MessageDigest md = null;
+			    	@SuppressWarnings("unused")
+					MessageDigest md = null;
 				    try {
 					    md = MessageDigest.getInstance("md5");
 				      } catch (NoSuchAlgorithmException e) {
@@ -62,7 +63,8 @@ public class Logger {
 				     if (cl.checking()){
 				    	 
 					    Statement stmt = dbm.getConn().createStatement();
-				    	MessageDigest md = null;
+				    	@SuppressWarnings("unused")
+						MessageDigest md = null;
 					    try {
 						    md = MessageDigest.getInstance("md5");
 					      } catch (NoSuchAlgorithmException e) {

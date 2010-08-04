@@ -9,21 +9,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.StringTokenizer;
 
 
 /**
- * This class is used to manage the database
- * @author mc
- * 
+ * <p>Provide communication between database connector and server program.</p> <p>Our database is using MySQL. The database connector is JDBC. </p> <p>Other then Update, Insert and Create, some other commonly used functions regarding data can be found.</p>
+ * @author   mc
  */
 public class DBManager{
 	
 	private static final String dbdriver = "com.mysql.jdbc.Driver";
-	private static final String dbstr = "jdbc:mysql://localhost/hospital_rec"; //127.0.0.1
-	private static final String username = "root";//"FYP09";
-	private static final String password = "";//1234qwer";
+	private static final String dbstr = "jdbc:mysql://localhost/hospital_rec";
+	private static final String username = "root";
+	private static final String password = "";
 	
+	/**
+	 * @uml.property  name="conn"
+	 */
 	private Connection conn;
 	/**
 	 * Build a connection to the database using predefined param.
@@ -32,8 +33,8 @@ public class DBManager{
 	}
 	
 	/**
-	 * connect to the database
-	 * @return true if connected
+	 * Connect to the database.
+	 * @return true if the server program is successfully connected
 	 */
 	public boolean connect() {
 		try {
@@ -41,17 +42,15 @@ public class DBManager{
 			this.setConn(DriverManager.getConnection(dbstr, username, password));
 			return true;
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
 	
 	/**
-	 * query from the database.
+	 * Query the database by normal statement.
 	 * @param query
 	 * @return The result from the query
 	 * @throws SQLException
@@ -65,8 +64,12 @@ public class DBManager{
 
 	
 	/**
-	 * This query method is used as follow:
-	 * ResultSet rs = query("SELECT * FROM tbl1 WHERE field1=?, field2=?", param);
+	 * <p>Query the database by prepared statement. </p>
+	 * <p>For more information about prepared statement, please read 
+	 * <a href="http://download.oracle.com/docs/cd/E17409_01/javase/tutorial/jdbc/basics/prepared.html"
+	 * >tutorial of oracle</a>, or take the course CSIS0402.</p>
+	 * This query method is used as follow:<br>
+	 * ResultSet rs = query("SELECT * FROM tbl1 WHERE field1=?, field2=?", param);<br>
 	 * where param is the array of parameters
 	 * @param query The query with all parameters set to ?
 	 * @param param The val of each parameters.  
@@ -91,7 +94,7 @@ public class DBManager{
 	}
 	
 	/**
-	 * update database with plain sql statement
+	 * Update database with plain SQL statement.
 	 * @param query
 	 * @throws SQLException
 	 */
@@ -100,6 +103,7 @@ public class DBManager{
 		this.connect();
 		getConn().createStatement().executeUpdate(query);
 	}
+	
 	
 	public void update(String query, Param [] SETparam, Param [] WHEREparam) throws SQLException
 	{
@@ -136,9 +140,13 @@ public class DBManager{
 	}
 	
 	/**
-	 * Example:
-	 * update("UPDATE tbl SET field1=?", param);
-	 * where param is a array of parameter
+	 * * <p>Query the database by prepared statement. </p>
+	 * <p>For more information about prepared statement, please read 
+	 * <a href="http://download.oracle.com/docs/cd/E17409_01/javase/tutorial/jdbc/basics/prepared.html">
+	 * tutorial of oracle</a>, or take the course CSIS0402.</p>
+	 * Example:<br>
+	 * update("UPDATE tbl SET field1=?", param);<br>
+	 * where param is the array of parameters
 	 * @param query The update or insert query
 	 * @param param The parameters
 	 * @throws SQLException 
@@ -162,7 +170,7 @@ public class DBManager{
 	
 	
 	/**
-	 * get the public key from the database according to the username
+	 * Get the public key from the database according to the username.
 	 * @param username
 	 * @return String array that store the public key exponent and modulus of user, return null if there is any problem
 	 */
@@ -183,7 +191,7 @@ public class DBManager{
 	}
 	
 	/**
-	 * insert a new user into database
+	 * Insert a new user into database.
 	 * @param role
 	 * @param username
 	 * @param pwdMDExp
@@ -193,7 +201,6 @@ public class DBManager{
 	 */
 	public int storeUser(String role, String username, String pwdMDExp, String publicKeyExp, String modulus) {
 		try {
-			//TODO change to callable statement
 			if(this.connect()) {
 				Statement stmt = getConn().createStatement();
 				String q = "INSERT INTO user (Role, pub_key,`mod`, pwd, RegDate, username) VALUES ( '"+role+"', '"+publicKeyExp+"', '"+modulus+"', '"+pwdMDExp+"', CURDATE(),'"+username+"');";
@@ -201,7 +208,6 @@ public class DBManager{
 				stmt.executeUpdate(q);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
 		} 
@@ -209,13 +215,12 @@ public class DBManager{
 	}
 	
 	/**
-	 * get a result set with the username 
+	 * Get a result set containing user information. 
 	 * @param username
 	 * @return a result set with username, password, public keym modulus and id from database
 	 * 
 	 */
 	public ResultSet isUserExist(String username) {
-		//TODO change to callable statement
 		try {
 			if (this.connect()) {
 				Statement stmt = getConn().createStatement();
@@ -235,37 +240,45 @@ public class DBManager{
 
 	
 	/**
-	 * disconnect from database server
+	 * Disconnect from database server
 	 */
 	public void disconnect() {
 		try {
 			getConn().close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * @author mhchung
-	 * Param class to store name-val pair of parameter
-	 *
+	 * @author   mhchung  Param class to store name-val pair of parameter(Obsolete).
 	 */
 	public class Param
 	{
+		/**
+		 * @uml.property  name="name"
+		 */
 		private String name;
+		/**
+		 * @uml.property  name="val"
+		 */
 		private String val;
+		/**
+		 * @uml.property  name="op"
+		 */
 		private String op;
 		
 		/**
-		 * @return the op
+		 * @return   the op
+		 * @uml.property  name="op"
 		 */
 		public String getOp() {
 			return op;
 		}
 
 		/**
-		 * @param op the op to set
+		 * @param op   the op to set
+		 * @uml.property  name="op"
 		 */
 		public void setOp(String op) {
 			this.op = op;
@@ -294,25 +307,29 @@ public class DBManager{
 		}
 		
 		/**
-		 * @return the name
+		 * @return   the name
+		 * @uml.property  name="name"
 		 */
 		public String getName() {
 			return name;
 		}
 		/**
-		 * @param name the name to set
+		 * @param name   the name to set
+		 * @uml.property  name="name"
 		 */
 		public void setName(String name) {
 			this.name = name;
 		}
 		/**
-		 * @return the val
+		 * @return   the val
+		 * @uml.property  name="val"
 		 */
 		public String getVal() {
 			return val;
 		}
 		/**
-		 * @param val the val to set
+		 * @param val   the val to set
+		 * @uml.property  name="val"
 		 */
 		public void setVal(String val) {
 			this.val = val;
@@ -320,13 +337,19 @@ public class DBManager{
 	}
 	
 	/**
-	 * 
-	 * @param conn
+	 * Set Connection Object.
+	 * @param  conn
+	 * @uml.property  name="conn"
 	 */
-	public void setConn(Connection conn) {
+	private void setConn(Connection conn) {
 		this.conn = conn;
 	}
 
+	/**
+	 * Get Connection Object.
+	 * @return   a Connection object
+	 * @uml.property  name="conn"
+	 */
 	public Connection getConn() {
 		return conn;
 	}

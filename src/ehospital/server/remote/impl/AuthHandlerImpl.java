@@ -28,6 +28,10 @@ import ehospital.server.Utility;
 import ehospital.server.db.DBManager;
 import ehospital.server.db.Logger;
 
+/**
+ * Provide service for user authentication
+ * @author   Gilbert
+ */
 public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.AuthHandler {
 
 	/**
@@ -35,6 +39,10 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	 */
 	private static final long serialVersionUID = 40327953895437380L;
 	
+	/**
+	 * @uml.property  name="dbm"
+	 * @uml.associationEnd  
+	 */
 	private DBManager dbm;
 	
 	/**
@@ -125,7 +133,7 @@ public class AuthHandlerImpl extends UnicastRemoteObject implements remote.obj.A
 	}
 
 	/**
-	 * serialize the object into a byte array
+	 * Serialize the object into a byte array
 	 * @param obj
 	 * @return byte array representation of obj
 	 */

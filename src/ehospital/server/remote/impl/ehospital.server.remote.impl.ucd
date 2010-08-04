@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="916,940" id="ehospital.server.remote.impl" metadata="uml2-1.0" initialized="true" scrolledY="54" tag="1000" key="32303038303431342D3130303020452D486F73706974616C5365727665722F47696C62657274">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.0" name="DBManager" location="267,50" size="145,430" id="ehospital.server.db/DBManager" runTimeClassModel="query(Ljava.lang.String;[Ljava.lang.Object;),connect(),storeUser(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;),isUserExist(Ljava.lang.String;),query(Ljava.lang.String;),DBManager(),update(Ljava.lang.String;[Lehospital.server.db.DBManager.Param;[Lehospital.server.db.DBManager.Param;),update(Ljava.lang.String;),update(Ljava.lang.String;[Ljava.lang.Object;),getPubKeyAndMod(Ljava.lang.String;),disconnect(),ehospital.server.db.DBManager.Param,conn">
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="conn" id="ehospital.server.db/DBManager#conn"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,198">
+      <children xsi:type="editmodel:MethodEditModel" name="DBManager" id="ehospital.server.db/DBManager#DBManager()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="connect" id="ehospital.server.db/DBManager#connect()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="disconnect" id="ehospital.server.db/DBManager#disconnect()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPubKeyAndMod" id="ehospital.server.db/DBManager#getPubKeyAndMod(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isUserExist" id="ehospital.server.db/DBManager#isUserExist(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="query" id="ehospital.server.db/DBManager#query(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="query" id="ehospital.server.db/DBManager#query(Ljava.lang.String;[Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="storeUser" id="ehospital.server.db/DBManager#storeUser(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="ehospital.server.db/DBManager#update(Ljava.lang.String;[Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="ehospital.server.db/DBManager#update(Ljava.lang.String;[Lehospital.server.db.DBManager.Param;[Lehospital.server.db.DBManager.Param;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="ehospital.server.db/DBManager#update(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="102,141">
+      <children xsi:type="editmodel:ClassEditModel" name="Param" size="102,139" id="ehospital.server.db/DBManager$Param" runTimeClassModel="op,val,Param(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;),Param(Ljava.lang.String;Ljava.lang.String;),name">
+        <children xsi:type="editmodel:CompartmentEditModel" size="79,54">
+          <children xsi:type="editmodel:AttributeEditModel" name="name" id="ehospital.server.db/DBManager$Param#name"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="op" id="ehospital.server.db/DBManager$Param#op"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="val" id="ehospital.server.db/DBManager$Param#val"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="60,36">
+          <children xsi:type="editmodel:MethodEditModel" name="Param" id="ehospital.server.db/DBManager$Param#Param(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="Param" id="ehospital.server.db/DBManager$Param#Param(Ljava.lang.String;Ljava.lang.String;)"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+      </children>
+    </children>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.0" name="ProgramAuthHandler" location="263,564" size="176,95" id="remote.obj/ProgramAuthHandler" runTimeClassModel="authProgram([B[B)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="91,18">
+      <children xsi:type="editmodel:MethodEditModel" name="authProgram" id="remote.obj/ProgramAuthHandler#authProgram([B[B)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="ProgramAuthHandlerImpl" location="249,709" size="204,85" id="ehospital.server.remote.impl/ProgramAuthHandlerImpl" runTimeClassModel="ProgramAuthHandlerImpl(),authProgram([B[B)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="148,36">
+      <children xsi:type="editmodel:MethodEditModel" name="ProgramAuthHandlerImpl" id="ehospital.server.remote.impl/ProgramAuthHandlerImpl#ProgramAuthHandlerImpl()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="authProgram" id="ehospital.server.remote.impl/ProgramAuthHandlerImpl#authProgram([B[B)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="remote.obj/ProgramAuthHandler&lt;-ehospital.server.remote.impl/ProgramAuthHandlerImpl" source="//@children.2" target="//@children.1" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="102,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="88,95"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.4/@sourceConnections.0" name="EmergencyAccessHandler" location="476,50" size="206,95" id="remote.obj/EmergencyAccessHandler" runTimeClassModel="emergencyAccess([B[B[BI)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,18">
+      <children xsi:type="editmodel:MethodEditModel" name="emergencyAccess" id="remote.obj/EmergencyAccessHandler#emergencyAccess([B[B[BI)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="EmergencyAccessHandlerImpl" location="462,195" size="234,85" id="ehospital.server.remote.impl/EmergencyAccessHandlerImpl" runTimeClassModel="emergencyAccess([B[B[BI),EmergencyAccessHandlerImpl()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="177,36">
+      <children xsi:type="editmodel:MethodEditModel" name="EmergencyAccessHandlerImpl" id="ehospital.server.remote.impl/EmergencyAccessHandlerImpl#EmergencyAccessHandlerImpl()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="emergencyAccess" id="ehospital.server.remote.impl/EmergencyAccessHandlerImpl#emergencyAccess([B[B[BI)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="remote.obj/EmergencyAccessHandler&lt;-ehospital.server.remote.impl/EmergencyAccessHandlerImpl" source="//@children.4" target="//@children.3" targetEnd="//@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.4/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="117,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="103,95"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.6/@sourceConnections.0" name="DataHandler" location="64,564" size="121,149" id="remote.obj/DataHandler" runTimeClassModel="update(Ljava.lang.String;[B[B),update(Ljava.lang.String;[B),query(Ljava.lang.String;[B[B),query(Ljava.lang.String;[B)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="63,72">
+      <children xsi:type="editmodel:MethodEditModel" name="query" id="remote.obj/DataHandler#query(Ljava.lang.String;[B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="query" id="remote.obj/DataHandler#query(Ljava.lang.String;[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="remote.obj/DataHandler#update(Ljava.lang.String;[B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="remote.obj/DataHandler#update(Ljava.lang.String;[B)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DataHandlerImpl" location="50,763" size="149,157" id="ehospital.server.remote.impl/DataHandlerImpl" runTimeClassModel="main([Ljava.lang.String;),update(Ljava.lang.String;[B[B),update(Ljava.lang.String;[B),query(Ljava.lang.String;[B[B),DataHandlerImpl(),query(Ljava.lang.String;[B)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="107,108">
+      <children xsi:type="editmodel:MethodEditModel" name="DataHandlerImpl" id="ehospital.server.remote.impl/DataHandlerImpl#DataHandlerImpl()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="main" id="ehospital.server.remote.impl/DataHandlerImpl#main([Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="query" id="ehospital.server.remote.impl/DataHandlerImpl#query(Ljava.lang.String;[B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="query" id="ehospital.server.remote.impl/DataHandlerImpl#query(Ljava.lang.String;[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="ehospital.server.remote.impl/DataHandlerImpl#update(Ljava.lang.String;[B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="ehospital.server.remote.impl/DataHandlerImpl#update(Ljava.lang.String;[B)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="remote.obj/DataHandler&lt;-ehospital.server.remote.impl/DataHandlerImpl" source="//@children.6" target="//@children.5" targetEnd="//@children.6/@sourceConnections.0/@children.1" sourceEnd="//@children.6/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="74,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="60,149"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="AuthHandlerImpl" location="50,303" size="175,211" id="ehospital.server.remote.impl/AuthHandlerImpl" runTimeClassModel="getLoMsg([B),getEncryptedSessionKey([B),changePassword([B[B[B),genSessionKey(),getPrivilege([B),AuthHandlerImpl(),unplugCard([B),logout([B[B),authenticate([B[B)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="152,162">
+      <children xsi:type="editmodel:MethodEditModel" name="AuthHandlerImpl" id="ehospital.server.remote.impl/AuthHandlerImpl#AuthHandlerImpl()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="authenticate" id="ehospital.server.remote.impl/AuthHandlerImpl#authenticate([B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="changePassword" id="ehospital.server.remote.impl/AuthHandlerImpl#changePassword([B[B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="genSessionKey" id="ehospital.server.remote.impl/AuthHandlerImpl#genSessionKey()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getEncryptedSessionKey" id="ehospital.server.remote.impl/AuthHandlerImpl#getEncryptedSessionKey([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getLoMsg" id="ehospital.server.remote.impl/AuthHandlerImpl#getLoMsg([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPrivilege" id="ehospital.server.remote.impl/AuthHandlerImpl#getPrivilege([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="logout" id="ehospital.server.remote.impl/AuthHandlerImpl#logout([B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unplugCard" id="ehospital.server.remote.impl/AuthHandlerImpl#unplugCard([B)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="ehospital.server.db/DBManager@dbm+ehospital.server.remote.impl/AuthHandlerImpl@" source="//@children.7" target="//@children.0" targetEnd="//@children.7/@sourceConnections.0/@children.2" label="//@children.7/@sourceConnections.0/@children.0" sourceEnd="//@children.7/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="175,88" id="ehospital.server.db/DBManager@dbm+ehospital.server.remote.impl/AuthHandlerImpl@|ehospital.server.remote.impl/AuthHandlerImpl#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="dbm" location="0,341" id="ehospital.server.db/DBManager@dbm+ehospital.server.remote.impl/AuthHandlerImpl@|ehospital.server.db/DBManager#dbm" multiplicityLabel="//@children.7/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.7/@sourceConnections.0/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - dbm" location="230,370" size="30,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="242,398" size="18,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="remote.obj/AuthHandler&lt;-ehospital.server.remote.impl/AuthHandlerImpl" source="//@children.7" target="//@children.8" targetEnd="//@children.7/@sourceConnections.1/@children.1" sourceEnd="//@children.7/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="87,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="87,203"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.7/@sourceConnections.1" name="AuthHandler" location="50,50" size="175,203" id="remote.obj/AuthHandler" runTimeClassModel="getLoMsg([B),getEncryptedSessionKey([B),changePassword([B[B[B),getPrivilege([B),logout([B[B),unplugCard([B),authenticate([B[B)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="152,126">
+      <children xsi:type="editmodel:MethodEditModel" name="authenticate" id="remote.obj/AuthHandler#authenticate([B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="changePassword" id="remote.obj/AuthHandler#changePassword([B[B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getEncryptedSessionKey" id="remote.obj/AuthHandler#getEncryptedSessionKey([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getLoMsg" id="remote.obj/AuthHandler#getLoMsg([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPrivilege" id="remote.obj/AuthHandler#getPrivilege([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="logout" id="remote.obj/AuthHandler#logout([B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unplugCard" id="remote.obj/AuthHandler#unplugCard([B)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=3;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

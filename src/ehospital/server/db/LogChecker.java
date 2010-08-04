@@ -8,15 +8,29 @@ import java.util.Date;
 
 import mail.mail;
 
+/**
+ * <p>Checking consistency of the log entry in the database.</p> <p>The checking is pretty dummy for the moment. The checking is done while you enter the latest log</p>
+ * @author   Wilson
+ */
 public class LogChecker {
 
-	  DBManager dbm = new DBManager();
+	  /**
+	 * @uml.property  name="dbm"
+	 * @uml.associationEnd  
+	 */
+	DBManager dbm = new DBManager();
 	  
       public LogChecker(){
 
      }
       
-      public boolean checking() throws SQLException{
+   /**
+     * Check the hashed value of the previous record is the same as the hashed
+     * value of the record before previous plus its hashed value.
+     * @return true if it is consistency
+     * @throws SQLException
+     */
+    public boolean checking() throws SQLException{
     	  
     	  if(dbm.connect()) {
     		  Statement stmt = dbm.getConn().createStatement();
@@ -34,6 +48,7 @@ public class LogChecker {
 				
 				String logString = date+user+content;
 				
+				@SuppressWarnings("unused")
 				MessageDigest md = null;
 				try {
 					md = MessageDigest.getInstance("md5");

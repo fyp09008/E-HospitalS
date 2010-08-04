@@ -12,18 +12,32 @@ import javax.crypto.spec.SecretKeySpec;
 import remote.obj.ClientCallback;
 
 /**
- * A session 
- * @author Gilbert
- *
+ * Holding the session information in the server. 
+ * @author   Gilbert
  */
 public class Session extends TimerTask {
 	//5 minutes
 	private static int TIMEOUT = 300000;
 	
+	/**
+	 * @uml.property  name="username"
+	 */
 	private String username;
+	/**
+	 * @uml.property  name="sessionKey"
+	 */
 	private SecretKeySpec sessionKey;
+	/**
+	 * @uml.property  name="lomsg"
+	 */
 	private byte[] lomsg;
+	/**
+	 * @uml.property  name="exp"
+	 */
 	private String exp;
+	/**
+	 * @uml.property  name="mod"
+	 */
 	private String mod;
 	private String host;
 	private Timer t;
@@ -67,38 +81,83 @@ public class Session extends TimerTask {
 		}
 	}
 
+	/**
+	 * Get user name.
+	 * @return   user name
+	 * @uml.property  name="username"
+	 */
 	public String getUsername() {
 		return username;
 	}
 
+	/**
+	 * Get session key.
+	 * @return   session key
+	 * @uml.property  name="sessionKey"
+	 */
 	public SecretKeySpec getSessionKey() {
 		return sessionKey;
 	}
 
+	/**
+	 * Get exponent
+	 * @return   exponent
+	 * @uml.property  name="exp"
+	 */
 	public String getExp() {
 		return exp;
 	}
 
+	/**
+	 * Set exponent.
+	 * @param  exp
+	 * @uml.property  name="exp"
+	 */
 	public void setExp(String exp) {
 		this.exp = exp;
 	}
 
+	/**
+	 * Get modulus.
+	 * @return   modulus
+	 * @uml.property  name="mod"
+	 */
 	public String getMod() {
 		return mod;
 	}
 
+	/**
+	 * Set modulus.
+	 * @param  mod
+	 * @uml.property  name="mod"
+	 */
 	public void setMod(String mod) {
 		this.mod = mod;
 	}
 	
+	/**
+	 * Get logout message
+	 * @return   logout message
+	 * @uml.property  name="lomsg"
+	 */
 	public byte[] getLomsg() {
 		return lomsg;
 	}
 
+	/**
+	 * Set logout message.
+	 * @param  lomsg
+	 * @uml.property  name="lomsg"
+	 */
 	public void setLomsg(byte[] lomsg) {
 		this.lomsg = lomsg;
 	}
 
+	/**
+	 * set session key
+	 * @param  sessionKey
+	 * @uml.property  name="sessionKey"
+	 */
 	public void setSessionKey(SecretKeySpec sessionKey) {
 		this.sessionKey = sessionKey;
 	}

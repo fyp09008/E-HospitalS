@@ -24,7 +24,7 @@ public class ServerThread extends Thread {
 	private static ArrayList<ClientThread> ctls;
 
 	/**
-	 * 
+	 * Open server thread listening to port 8888
 	 */
 	public ServerThread() {
 		port = 8888;
@@ -35,6 +35,7 @@ public class ServerThread extends Thread {
 	}
 
 	/**
+	 * Listening to a custom port
 	 * @param port
 	 */
 	public ServerThread(int port) {
@@ -83,23 +84,10 @@ public class ServerThread extends Thread {
 			e.printStackTrace();
 		}
 	}
-
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
-	}
-
-	public boolean isFlag() {
-		return flag;
-	}
-
-	public void setFlag(boolean flag) {
-		this.flag = flag;
-	}
-
+	
+	/**
+	 * Close server socket.
+	 */
 	public void closeServerSocket()
 	{
 		try {
@@ -124,6 +112,9 @@ public class ServerThread extends Thread {
 		}
 	}
 	
+	/**
+	 * Print user list.
+	 */
 	public void printUserList()
 	{
 		Iterator<ClientThread> i = ctls.iterator();
@@ -136,6 +127,10 @@ public class ServerThread extends Thread {
 		System.out.println("~>");
 	}
 	
+	/**
+	 * Remove a user from the user list.
+	 * @param ct
+	 */
 	public static void RemoveThread(ClientThread ct)
 	{
 		ctls.remove(ct);

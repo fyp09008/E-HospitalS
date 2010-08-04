@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="749,713" id="ehospital.server" metadata="uml2-1.0" initialized="true" tag="1000" key="32303038303431342D3130303020452D486F73706974616C5365727665722F47696C62657274">
+  <children xsi:type="editmodel:ClassEditModel" name="ClientThread" location="50,554" size="124,139" id="ehospital.server/ClientThread" runTimeClassModel="getRemoteIP(),username,CloseSocket(),ClientThread(Ljava.net.Socket;),run()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="101,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="username" id="ehospital.server/ClientThread#username"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="90,72">
+      <children xsi:type="editmodel:MethodEditModel" name="ClientThread" id="ehospital.server/ClientThread#ClientThread(Ljava.net.Socket;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="CloseSocket" id="ehospital.server/ClientThread#CloseSocket()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRemoteIP" id="ehospital.server/ClientThread#getRemoteIP()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="run" id="ehospital.server/ClientThread#run()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Console" location="514,50" size="183,175" id="ehospital.server/Console" runTimeClassModel="key,main([Ljava.lang.String;),Console(),encrypt(Ljava.lang.Object;),decrypt(Ljava.lang.Object;),cmdList,programKey">
+    <children xsi:type="editmodel:CompartmentEditModel" size="160,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="cmdList" id="ehospital.server/Console#cmdList"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="key" id="ehospital.server/Console#key"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="programKey" id="ehospital.server/Console#programKey"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="69,72">
+      <children xsi:type="editmodel:MethodEditModel" name="Console" id="ehospital.server/Console#Console()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="decrypt" id="ehospital.server/Console#decrypt(Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="encrypt" id="ehospital.server/Console#encrypt(Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="main" id="ehospital.server/Console#main([Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="RMIConsole" location="50,347" size="183,157" id="ehospital.server/RMIConsole" runTimeClassModel="key,main([Ljava.lang.String;),cmdList,RMIConsole(),programKey,reg">
+    <children xsi:type="editmodel:CompartmentEditModel" size="160,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="cmdList" id="ehospital.server/RMIConsole#cmdList"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="key" id="ehospital.server/RMIConsole#key"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="programKey" id="ehospital.server/RMIConsole#programKey"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="reg" id="ehospital.server/RMIConsole#reg"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="86,36">
+      <children xsi:type="editmodel:MethodEditModel" name="RMIConsole" id="ehospital.server/RMIConsole#RMIConsole()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="main" id="ehospital.server/RMIConsole#main([Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="ServerThread" location="283,347" size="145,157" id="ehospital.server/ServerThread" runTimeClassModel="printUserList(),closeServerSocket(),RemoveThread(Lehospital.server.ClientThread;),ServerThread(I),run(),ServerThread()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,108">
+      <children xsi:type="editmodel:MethodEditModel" name="RemoveThread" id="ehospital.server/ServerThread#RemoveThread(Lehospital.server.ClientThread;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="ServerThread" id="ehospital.server/ServerThread#ServerThread(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="ServerThread" id="ehospital.server/ServerThread#ServerThread()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="closeServerSocket" id="ehospital.server/ServerThread#closeServerSocket()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="printUserList" id="ehospital.server/ServerThread#printUserList()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="run" id="ehospital.server/ServerThread#run()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Session" location="283,50" size="181,193" id="ehospital.server/Session" runTimeClassModel="getTimer(),sessionKey,exp,Session(Ljava.lang.String;Ljavax.crypto.spec.SecretKeySpec;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;),lomsg,username,mod,run()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="158,90">
+      <children xsi:type="editmodel:AttributeEditModel" name="exp" id="ehospital.server/Session#exp"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="lomsg" id="ehospital.server/Session#lomsg"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mod" id="ehospital.server/Session#mod"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sessionKey" id="ehospital.server/Session#sessionKey"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="username" id="ehospital.server/Session#username"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="71,54">
+      <children xsi:type="editmodel:MethodEditModel" name="Session" id="ehospital.server/Session#Session(Ljava.lang.String;Ljavax.crypto.spec.SecretKeySpec;Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTimer" id="ehospital.server/Session#getTimer()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="run" id="ehospital.server/Session#run()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="SessionList" location="478,347" size="173,103" id="ehospital.server/SessionList" runTimeClassModel="deleteSession(Ljava.lang.String;),findClient(Ljava.lang.String;),clientList">
+    <children xsi:type="editmodel:CompartmentEditModel" size="150,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="clientList" id="ehospital.server/SessionList#clientList"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="98,36">
+      <children xsi:type="editmodel:MethodEditModel" name="deleteSession" id="ehospital.server/SessionList#deleteSession(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="findClient" id="ehospital.server/SessionList#findClient(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Utility" location="50,50" size="183,247" id="ehospital.server/Utility" runTimeClassModel="key,encryptProgKey([B),byteArrayToString([B),objToBytes(Ljava.lang.Object;),BytesToObj([B),programKey,intToByteArray(I),getClientHost(),decryptProgKey([B),compareByte([B[B),stringToByteArray(Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="160,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="key" id="ehospital.server/Utility#key"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="programKey" id="ehospital.server/Utility#programKey"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="118,162">
+      <children xsi:type="editmodel:MethodEditModel" name="BytesToObj" id="ehospital.server/Utility#BytesToObj([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="byteArrayToString" id="ehospital.server/Utility#byteArrayToString([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="compareByte" id="ehospital.server/Utility#compareByte([B[B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="decryptProgKey" id="ehospital.server/Utility#decryptProgKey([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="encryptProgKey" id="ehospital.server/Utility#encryptProgKey([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getClientHost" id="ehospital.server/Utility#getClientHost()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="intToByteArray" id="ehospital.server/Utility#intToByteArray(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="objToBytes" id="ehospital.server/Utility#objToBytes(Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="stringToByteArray" id="ehospital.server/Utility#stringToByteArray(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=1;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

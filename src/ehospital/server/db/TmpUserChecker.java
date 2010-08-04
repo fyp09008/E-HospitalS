@@ -5,12 +5,16 @@ import java.sql.SQLException;
 import java.util.TimerTask;
 
 /**
+ * Provide timed subroutine to check whether the temporary card expires.<br>
  * Check the `tmp_user` if the `tmp_user` expires, set it into invalid  
  * @author Gilbert
  *
  */
 public class TmpUserChecker extends TimerTask {
 
+	/* (non-Javadoc)
+	 * @see java.util.TimerTask#run()
+	 */
 	@Override
 	public void run() {
 		DBManager dbm = new DBManager();

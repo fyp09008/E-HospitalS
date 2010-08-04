@@ -3,25 +3,31 @@
  */
 package ehospital.server;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Random;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+
+import message.AuthRequestMessage;
+import message.AuthResponseMessage;
+import message.DisconnRequestMessage;
+import message.DisconnResponseMessage;
+import message.QueryRequestMessage;
+import message.QueryResponseMessage;
+import message.ServerAuthRequestMessage;
+import message.ServerAuthResponseMessage;
+import message.UpdateRequestMessage;
+import message.UpdateResponseMessage;
 
 import com.sun.rowset.CachedRowSetImpl;
 
@@ -32,20 +38,25 @@ import ehospital.server.handler.QueryHandler;
 import ehospital.server.handler.ServerAuthHandler;
 import ehospital.server.handler.UpdateHandler;
 
-import message.*;
-
 /**
- * obsolete class, developed in 09/10 semester 1 using socket programming.
- * @author mc Gilbert
- *
+ * obsolete class, developed in 09/10 semester 1 using socket programming. <br>Thread class handling client requests and responses.
+ * @author  Gilbert
+ * @author  mc
  */
 public class ClientThread extends Thread {
 
 	private Socket csocket;
 	private ObjectInputStream objIn;
 	private ObjectOutputStream objOut;
+	/**
+	 * @uml.property  name="dbm"
+	 * @uml.associationEnd  
+	 */
 	private DBManager dbm;
 	private SecretKeySpec sks;
+	/**
+	 * @uml.property  name="username"
+	 */
 	private String username;
 	private byte[] lomsg;
 	/**
@@ -58,7 +69,6 @@ public class ClientThread extends Thread {
 			this.objIn = new ObjectInputStream(this.csocket.getInputStream());
 			this.objOut = new ObjectOutputStream(this.csocket.getOutputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -93,6 +103,7 @@ public class ClientThread extends Thread {
 				else if (o instanceof AuthRequestMessage)
 				{
 					AuthRequestMessage request = (AuthRequestMessage) o;
+					@SuppressWarnings("unused")
 					AuthHandler ah = new AuthHandler(request, dbm);
 					QueryRequestMessage req = (QueryRequestMessage) o;
 					QueryHandler qh = new QueryHandler(req, this.sks);
@@ -127,8 +138,8 @@ public class ClientThread extends Thread {
 						re.resultSet = ah.encryptAES(b);
 						//*********************
 						int i = new Random().nextInt();
-						this.lomsg = this.intToByteArray(i);
-						re.logoutmsg = ah.encryptAES(intToByteArray(i));
+						this.lomsg = Utility.intToByteArray(i);
+						re.logoutmsg = ah.encryptAES(Utility.intToByteArray(i));
 						this.username = authRequest.getUsername();
 						//*********************
 					} else {
@@ -159,35 +170,27 @@ public class ClientThread extends Thread {
 					System.out.print("~>");
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				flag = false;
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				flag = false;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				flag = false;
 			} catch (InvalidKeyException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				flag = false;
 			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				flag = false;
 			} catch (NoSuchPaddingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				flag = false;
 			} catch (IllegalBlockSizeException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				flag = false;
 			} catch (BadPaddingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				flag = false;
 			}
@@ -197,35 +200,33 @@ public class ClientThread extends Thread {
 		System.out.print("~>");
 	}
 	
-	// pos: return a byte array representation of integer
-	private byte[] intToByteArray (final int integer) {
-		try {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			DataOutputStream dos = new DataOutputStream(bos);
-			dos.writeInt(integer);
-			dos.flush();
-			return bos.toByteArray();
-		} catch(IOException ex) {
-			ex.printStackTrace();
-			return null;
-		}
-	}
-	
+	/**
+	 * 
+	 * @return true if successfully closed
+	 */
 	public boolean CloseSocket()
 	{
 		try {
 			this.csocket.close();
 			return true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			return false;
 		}
 	}
 
+	/**
+	 * Get user name
+	 * @return   user name
+	 * @uml.property  name="username"
+	 */
 	public String getUsername() {
 		return username;
 	}
 	
+	/**
+	 * get IP address of the client machine.
+	 * @return user IP address
+	 */
 	public String getRemoteIP()
 	{
 		return this.csocket.getRemoteSocketAddress().toString();

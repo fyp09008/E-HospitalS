@@ -11,10 +11,8 @@ import java.util.Random;
 import cipher.RSAHardware;
 
 /**
- * Register User into the database.
- * Remnant from semester 1 version. 
- * @author mc, Gilbert
- *
+ * Register User into the database. Remnant from semester 1 version. 
+ * @author   mc, Gilbert
  */
 public class RegisterHandler extends Handler{
 	
@@ -23,6 +21,10 @@ public class RegisterHandler extends Handler{
 	private String publicKeyExp;
 	private String modulus;
 	private String pwdMDExp;
+	/**
+	 * @uml.property  name="rsaHard"
+	 * @uml.associationEnd  
+	 */
 	private RSAHardware rsaHard;
 	
 	/**

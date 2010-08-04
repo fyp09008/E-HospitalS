@@ -23,18 +23,28 @@ import ehospital.server.db.DBManager;
 
 /**
  * The super class that provide utility to all other handler.
- * @author Gilbert,mh
- *
+ * @author   Gilbert,mh
  */
 public class Handler {
 
 	
 	
 	
+	/**
+	 * @uml.property  name="dbm"
+	 * @uml.associationEnd  
+	 */
 	protected DBManager dbm;
 
+	/**
+	 * @uml.property  name="rsa"
+	 * @uml.associationEnd  
+	 */
 	private RSASoftware rsa;
 	
+	/**
+	 * @uml.property  name="sessionKeySpec"
+	 */
 	private SecretKeySpec sessionKeySpec;
 	
 	/**
@@ -157,7 +167,8 @@ public class Handler {
 
 	/**
 	 * set session key
-	 * @param sessionKeySpec the sessionKeySpec to set
+	 * @param sessionKeySpec   the sessionKeySpec to set
+	 * @uml.property  name="sessionKeySpec"
 	 */
 	public void setSessionKeySpec(SecretKeySpec sessionKeySpec) {
 		this.sessionKeySpec = sessionKeySpec;
@@ -165,21 +176,24 @@ public class Handler {
 
 	/**
 	 * get session key
-	 * @return the sessionKeySpec
+	 * @return   the sessionKeySpec
+	 * @uml.property  name="sessionKeySpec"
 	 */
 	public SecretKeySpec getSessionKeySpec() {
 		return sessionKeySpec;
 	}
 	
 	/**
-	 * @param rsa the rsa to set
+	 * @param rsa   the rsa to set
+	 * @uml.property  name="rsa"
 	 */
 	protected void setRsa(RSASoftware rsa) {
 		this.rsa = rsa;
 	}
 
 	/**
-	 * @return the rsa
+	 * @return   the rsa
+	 * @uml.property  name="rsa"
 	 */
 	protected RSASoftware getRsa() {
 		return rsa;
