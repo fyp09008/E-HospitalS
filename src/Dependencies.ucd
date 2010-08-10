@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="Dependencies" size="766,536" id="." metadata="uml2-1.0" initialized="true" tag="1000" key="32303038303431342D3130303020452D486F73706974616C5365727665722F47696C62657274">
+  <children xsi:type="editmodel:PackageEditModel" targetConnections="//@children.3/@sourceConnections.2" name="ehospital.server.handler" location="50,84" size="188,60" id="ehospital.server.handler">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.handler-Standard::Call->ehospital.server.db*ehospital.server.handler-Standard::Instantiate->ehospital.server.db*ehospital.server.handler-Soyatec::Import->ehospital.server.db" source="//@children.0" target="//@children.4" targetEnd="//@children.0/@sourceConnections.0/@children.2" label="//@children.0/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="119,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="168,60" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="19,0"/>
+    </sourceConnections>
+  </children>
+  <children xsi:type="editmodel:PackageEditModel" targetConnections="//@children.2/@sourceConnections.1 //@children.4/@sourceConnections.0" name="mail" location="327,456" size="80,60" id="mail"/>
+  <children xsi:type="editmodel:PackageEditModel" targetConnections="//@children.3/@sourceConnections.1" name="ehospital.server.remote.impl" location="425,243" size="216,60" id="ehospital.server.remote.impl">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.remote.impl-Standard::Call->ehospital.server*ehospital.server.remote.impl-Soyatec::Access->ehospital.server*ehospital.server.remote.impl-Standard::Instantiate->ehospital.server*ehospital.server.remote.impl-Soyatec::Import->ehospital.server" source="//@children.2" target="//@children.3" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Access, Call, Import, Instantiate»" size="163,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="58,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="77,60"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.remote.impl-Standard::Call->mail*ehospital.server.remote.impl-Standard::Instantiate->mail*ehospital.server.remote.impl-Soyatec::Import->mail" source="//@children.2" target="//@children.1" targetEnd="//@children.2/@sourceConnections.1/@children.2" label="//@children.2/@sourceConnections.1/@children.0" sourceEnd="//@children.2/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="119,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="85,60" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="63,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.remote.impl-Standard::Call->ehospital.server.db*ehospital.server.remote.impl-Standard::Instantiate->ehospital.server.db*ehospital.server.remote.impl-Soyatec::Import->ehospital.server.db" source="//@children.2" target="//@children.4" targetEnd="//@children.2/@sourceConnections.2/@children.2" label="//@children.2/@sourceConnections.2/@children.0" sourceEnd="//@children.2/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="119,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,39" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="155,20"/>
+    </sourceConnections>
+  </children>
+  <children xsi:type="editmodel:PackageEditModel" targetConnections="//@children.2/@sourceConnections.0" name="ehospital.server" location="406,30" size="136,60" id="ehospital.server">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server-Standard::Call->ehospital.server.db*ehospital.server-Standard::Instantiate->ehospital.server.db*ehospital.server-Soyatec::Import->ehospital.server.db" source="//@children.3" target="//@children.4" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="119,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="42,60" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="103,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server-Standard::Instantiate->ehospital.server.remote.impl" source="//@children.3" target="//@children.2" targetEnd="//@children.3/@sourceConnections.1/@children.2" label="//@children.3/@sourceConnections.1/@children.0" sourceEnd="//@children.3/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate»" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="57,60" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="38,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server-Standard::Call->ehospital.server.handler*ehospital.server-Standard::Instantiate->ehospital.server.handler*ehospital.server-Soyatec::Import->ehospital.server.handler" source="//@children.3" target="//@children.0" targetEnd="//@children.3/@sourceConnections.2/@children.2" label="//@children.3/@sourceConnections.2/@children.0" sourceEnd="//@children.3/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,56" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="188,2"/>
+    </sourceConnections>
+  </children>
+  <children xsi:type="editmodel:PackageEditModel" targetConnections="//@children.3/@sourceConnections.0 //@children.2/@sourceConnections.2 //@children.0/@sourceConnections.0" name="ehospital.server.db" location="199,262" size="155,60" id="ehospital.server.db">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="ehospital.server.db-Standard::Call->mail*ehospital.server.db-Standard::Instantiate->mail*ehospital.server.db-Soyatec::Import->mail" source="//@children.4" target="//@children.1" targetEnd="//@children.4/@sourceConnections.0/@children.2" label="//@children.4/@sourceConnections.0/@children.0" sourceEnd="//@children.4/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="119,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="141,60" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="13,0"/>
+    </sourceConnections>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" interactive="false" properties="wireOptions=4;Product=eUML2;displayOptions=1"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+</editmodel:ClassDiagramEditModel>
